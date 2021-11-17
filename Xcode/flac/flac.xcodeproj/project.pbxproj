@@ -1077,7 +1077,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = include/FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/FLAC;
 			};
 			name = Debug;
 		};
@@ -1086,7 +1088,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = include/FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include/FLAC;
 			};
 			name = Release;
 		};
