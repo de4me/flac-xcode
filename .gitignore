@@ -94,3 +94,11 @@ CTestTestfile.cmake
 _deps
 
 /.vs*/
+
+# for Xcode
+*.mode1*
+*.perspective*
+*.pbxuser
+(^|/)build($|/)
+.DS_Store
+**/xcuserdata/
