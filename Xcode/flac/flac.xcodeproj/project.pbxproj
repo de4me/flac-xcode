@@ -1077,9 +1077,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
-				PRIVATE_HEADERS_FOLDER_PATH = include/FLAC;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = include/FLAC;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
 			};
 			name = Debug;
 		};
@@ -1088,9 +1088,9 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
-				PRIVATE_HEADERS_FOLDER_PATH = include/FLAC;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = include/FLAC;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
 			};
 			name = Release;
 		};
@@ -1158,10 +1158,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				PRIVATE_HEADERS_FOLDER_PATH = "include/FLAC++";
+				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "include/FLAC++";
+				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 			};
 			name = Debug;
 		};
@@ -1171,10 +1171,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				PRIVATE_HEADERS_FOLDER_PATH = "include/FLAC++";
+				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "include/FLAC++";
+				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 			};
 			name = Release;
 		};
