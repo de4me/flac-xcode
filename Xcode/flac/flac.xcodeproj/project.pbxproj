@@ -118,6 +118,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BD7C135127463B240073ED0E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD3C8E01274435CB008DED93;
+			remoteInfo = libFLAC;
+		};
 		BD9EFC2E2744622400DC1510 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
@@ -174,7 +181,6 @@
 		BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_sse41.c; sourceTree = "<group>"; };
 		BD3C8E1627443624008DED93 /* stream_decoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_decoder.c; sourceTree = "<group>"; };
 		BD3C8E1727443624008DED93 /* ogg_helper.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ogg_helper.c; sourceTree = "<group>"; };
-		BD3C8E1927443624008DED93 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		BD3C8E1B27443624008DED93 /* float.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = float.h; sourceTree = "<group>"; };
 		BD3C8E1C27443624008DED93 /* stream_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 		BD3C8E1D27443624008DED93 /* fixed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed.h; sourceTree = "<group>"; };
@@ -444,7 +450,6 @@
 		BD3C8E1827443624008DED93 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				BD3C8E1927443624008DED93 /* Makefile.am */,
 				BD3C8E1A27443624008DED93 /* private */,
 				BD3C8E3127443624008DED93 /* protected */,
 			);
@@ -689,6 +694,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BD7C135227463B240073ED0E /* PBXTargetDependency */,
 			);
 			name = "libFLAC++";
 			productName = "libFLAC++";
@@ -885,6 +891,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BD7C135227463B240073ED0E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD3C8E01274435CB008DED93 /* libFLAC */;
+			targetProxy = BD7C135127463B240073ED0E /* PBXContainerItemProxy */;
+		};
 		BD9EFC2F2744622400DC1510 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BD077CC727443DD100C1E879 /* FLAC */;
@@ -1157,7 +1168,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1170,7 +1180,6 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
