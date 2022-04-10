@@ -170,7 +170,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.3.3"
+#define PACKAGE_STRING "flac 1.3.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
