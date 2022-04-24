@@ -82,7 +82,9 @@ EXTRA_DIST = \
 	libFLAC_static.vcxproj \
 	libFLAC_static.vcxproj.filters \
 	libFLAC.m4 \
-	windows_unicode_filenames.c
+	windows_unicode_filenames.c \
+	deduplication/lpc_compute_autocorrelation_intrin_sse2.c \
+	deduplication/lpc_compute_autocorrelation_intrin_vsx.c
 
 if OS_IS_WINDOWS
 windows_unicode_compat = windows_unicode_filenames.c
@@ -111,7 +113,6 @@ libFLAC_sources = \
 	float.c \
 	format.c \
 	lpc.c \
-	lpc_intrin_sse.c \
 	lpc_intrin_sse2.c \
 	lpc_intrin_sse41.c \
 	lpc_intrin_avx2.c \

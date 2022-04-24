@@ -50,6 +50,15 @@
 /* define to enable use of VSX instructions */
 #cmakedefine FLAC__USE_VSX
 
+/* Define to the commit date of the current git HEAD */
+#cmakedefine GIT_COMMIT_DATE "@GIT_COMMIT_DATE@"
+
+/* Define to the short hash of the current git HEAD */
+#cmakedefine GIT_COMMIT_HASH "@GIT_COMMIT_HASH@"
+
+/* Define to the tag of the current git HEAD */
+#cmakedefine GIT_COMMIT_TAG "@GIT_COMMIT_TAG@"
+
 /* Compiler has the __builtin_bswap16 intrinsic */
 #cmakedefine01 HAVE_BSWAP16
 
@@ -64,12 +73,6 @@
 
 /* Define to 1 if you have the <cpuid.h> header file. */
 #cmakedefine HAVE_CPUID_H
-
-/* Define to 1 if C++ supports variable-length arrays. */
-#cmakedefine HAVE_CXX_VARARRAYS
-
-/* Define to 1 if C supports variable-length arrays. */
-#cmakedefine HAVE_C_VARARRAYS
 
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 #cmakedefine HAVE_FSEEKO
@@ -161,9 +164,6 @@
 /* The size of `void*', as computed by sizeof. */
 #cmakedefine SIZEOF_VOIDP
 
-/* Define to 1 if you have the ANSI C header files. */
-#cmakedefine STDC_HEADERS
-
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
 #define _ALL_SOURCE
@@ -174,14 +174,11 @@
 #define _GNU_SOURCE
 #endif
 
-#ifndef _FORTIFY_SOURCE
-#cmakedefine DODEFINE_FORTIFY_SOURCE 2
-#define _FORTIFY_SOURCE DODEFINE_FORTIFY_SOURCE
-#endif
-
 #ifndef _XOPEN_SOURCE
 #cmakedefine DODEFINE_XOPEN_SOURCE 500
+#ifdef DODEFINE_XOPEN_SOURCE
 #define _XOPEN_SOURCE DODEFINE_XOPEN_SOURCE
+#endif
 #endif
 
 /* Enable threading extensions on Solaris.  */
@@ -195,7 +192,9 @@
 /* Enable general extensions on Solaris.  */
 #ifndef __EXTENSIONS__
 #cmakedefine DODEFINE_EXTENSIONS
+#ifdef DODEFINE_EXTENSIONS
 #define __EXTENSIONS__ DODEFINE_EXTENSIONS
+#endif
 #endif
 
 

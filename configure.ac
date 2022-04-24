@@ -19,7 +19,7 @@
 # instead of FLAC__ since autoconf triggers off 'AC_' in strings
 
 AC_PREREQ(2.60)
-AC_INIT([flac], [1.3.4], [flac-dev@xiph.org], [flac], [https://www.xiph.org/flac/])
+AC_INIT([flac],[1.3.4],[flac-dev@xiph.org],[flac],[https://www.xiph.org/flac/])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/flac/main.c])
 AC_CONFIG_MACRO_DIR([m4])
@@ -36,7 +36,7 @@ AX_CHECK_ENABLE_DEBUG
 user_cflags=$CFLAGS
 
 #Prefer whatever the current ISO standard is.
-AC_PROG_CC_STDC
+AC_PROG_CC
 AC_USE_SYSTEM_EXTENSIONS
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([win32-dll disable-static pic-only])
@@ -54,19 +54,8 @@ AC_CHECK_SIZEOF(off_t,1)	# Fake default value.
 AC_CHECK_SIZEOF([void*])
 AC_SEARCH_LIBS([lround],[m], [AC_DEFINE(HAVE_LROUND,1,lround support)])
 
-AC_LANG_PUSH([C++])
-# c++ flavor first
-AC_C_VARARRAYS
-if test $ac_cv_c_vararrays = yes; then
-	AC_DEFINE([HAVE_CXX_VARARRAYS], 1, [Define to 1 if C++ supports variable-length arrays.])
-fi
-AC_LANG_POP([C++])
-
-# c flavor
-AC_HEADER_STDC
 AM_PROG_CC_C_O
 AC_C_INLINE
-AC_C_VARARRAYS
 AC_C_TYPEOF
 
 AC_CHECK_HEADERS([stdint.h inttypes.h byteswap.h sys/param.h sys/ioctl.h termios.h x86intrin.h cpuid.h])
@@ -90,7 +79,7 @@ AC_DEFINE_UNQUOTED(CPU_IS_LITTLE_ENDIAN, ${ac_cv_c_little_endian},
 AC_DEFINE_UNQUOTED(WORDS_BIGENDIAN, ${ac_cv_c_big_endian},
 					[Target processor is big endian.])
 
-AC_ARG_ENABLE(asm-optimizations, AC_HELP_STRING([--disable-asm-optimizations], [Don't use any assembly optimization routines]), asm_opt=no, asm_opt=yes)
+AC_ARG_ENABLE(asm-optimizations, AS_HELP_STRING([--disable-asm-optimizations],[Don't use any assembly optimization routines]), asm_opt=no, asm_opt=yes)
 dnl ' Terminate the damn single quote
 AM_CONDITIONAL(FLaC__NO_ASM, test "x$asm_opt" = xno)
 if test "x$asm_opt" = xno ; then
@@ -210,6 +199,8 @@ case "$host" in
 	*mingw*)
 		CPPFLAGS="-D__MSVCRT_VERSION__=0x0601 $CPPFLAGS"
 		os_is_windows=yes
+		AC_SEARCH_LIBS(__memset_chk, ssp, , mingw_has_memset_chk=no)
+		AC_SEARCH_LIBS(__stack_chk_fail, ssp, , mingw_has_stack_chk_fail=no)
 		;;
 esac
 
@@ -238,7 +229,7 @@ fi
 AM_CONDITIONAL([DEBUG], [test "x${ax_enable_debug}" = "xyes" || test "x${ax_enable_debug}" = "xinfo"])
 
 AC_ARG_ENABLE(sse,
-AC_HELP_STRING([--disable-sse], [Disable passing of -msse2 to the compiler]),
+AS_HELP_STRING([--disable-sse],[Disable passing of -msse2 to the compiler]),
 [case "${enableval}" in
 	yes) sse_os=yes ;;
 	no)  sse_os=no ;;
@@ -246,7 +237,7 @@ AC_HELP_STRING([--disable-sse], [Disable passing of -msse2 to the compiler]),
 esac],[sse_os=yes])
 
 AC_ARG_ENABLE(altivec,
-AC_HELP_STRING([--disable-altivec], [Disable Altivec optimizations]),
+AS_HELP_STRING([--disable-altivec],[Disable Altivec optimizations]),
 [case "${enableval}" in
 	yes) use_altivec=true ;;
 	no)  use_altivec=false ;;
@@ -259,7 +250,7 @@ AH_TEMPLATE(FLAC__USE_ALTIVEC, [define to enable use of Altivec instructions])
 fi
 
 AC_ARG_ENABLE(vsx,
-AC_HELP_STRING([--disable-vsx], [Disable VSX optimizations]),
+AS_HELP_STRING([--disable-vsx],[Disable VSX optimizations]),
 [case "${enableval}" in
 	yes) use_vsx=true ;;
 	no)  use_vsx=false ;;
@@ -272,7 +263,7 @@ AH_TEMPLATE(FLAC__USE_VSX, [define to enable use of VSX instructions])
 fi
 
 AC_ARG_ENABLE(avx,
-AC_HELP_STRING([--disable-avx], [Disable AVX, AVX2 optimizations]),
+AS_HELP_STRING([--disable-avx],[Disable AVX, AVX2 optimizations]),
 [case "${enableval}" in
 	yes) use_avx=true ;;
 	no)  use_avx=false ;;
@@ -285,14 +276,14 @@ AH_TEMPLATE(FLAC__USE_AVX, [define to enable use of AVX instructions])
 fi
 
 AC_ARG_ENABLE(thorough-tests,
-AC_HELP_STRING([--disable-thorough-tests], [Disable thorough (long) testing, do only basic tests]),
+AS_HELP_STRING([--disable-thorough-tests],[Disable thorough (long) testing, do only basic tests]),
 [case "${enableval}" in
 	yes) thorough_tests=true ;;
 	no)  thorough_tests=false ;;
 	*) AC_MSG_ERROR(bad value ${enableval} for --enable-thorough-tests) ;;
 esac],[thorough_tests=true])
 AC_ARG_ENABLE(exhaustive-tests,
-AC_HELP_STRING([--enable-exhaustive-tests], [Enable exhaustive testing (VERY long)]),
+AS_HELP_STRING([--enable-exhaustive-tests],[Enable exhaustive testing (VERY long)]),
 [case "${enableval}" in
 	yes) exhaustive_tests=true ;;
 	no)  exhaustive_tests=false ;;
@@ -308,15 +299,15 @@ fi
 AC_SUBST(FLAC__TEST_LEVEL)
 
 AC_ARG_ENABLE(werror,
-	AC_HELP_STRING([--enable-werror], [Enable -Werror in all Makefiles]))
+	AS_HELP_STRING([--enable-werror],[Enable -Werror in all Makefiles]))
 
 AC_ARG_ENABLE([stack-smash-protection],
     [AS_HELP_STRING([--disable-stack-smash-protection],[Disable GNU GCC stack smash protection])],,
-    [AS_IF([test "$ac_cv_c_compiler_gnu" = "yes" && test "$os_is_windows" = "no"],
+    [AS_IF([test "$ac_cv_c_compiler_gnu" = "yes" && test "x$mingw_has_stack_chk_fail" != "xno"],
         [enable_stack_smash_protection=yes],[enable_stack_smash_protection=no])])
 
 AC_ARG_ENABLE(64-bit-words,
-	AC_HELP_STRING([--enable-64-bit-words], [Set FLAC__BYTES_PER_WORD to 8 (4 is the default)]))
+	AS_HELP_STRING([--enable-64-bit-words],[Set FLAC__BYTES_PER_WORD to 8 (4 is the default)]))
 if test "x$enable_64_bit_words" = xyes ; then
 	AC_DEFINE_UNQUOTED([ENABLE_64_BIT_WORDS],1,[Set FLAC__BYTES_PER_WORD to 8 (4 is the default)])
 else
@@ -325,7 +316,7 @@ else
 AC_SUBST(ENABLE_64_BIT_WORDS)
 
 AC_ARG_ENABLE(valgrind-testing,
-AC_HELP_STRING([--enable-valgrind-testing], [Run all tests inside Valgrind]),
+AS_HELP_STRING([--enable-valgrind-testing],[Run all tests inside Valgrind]),
 [case "${enableval}" in
 	yes) FLAC__TEST_WITH_VALGRIND=yes ;;
 	no)  FLAC__TEST_WITH_VALGRIND=no ;;
@@ -334,7 +325,7 @@ esac],[FLAC__TEST_WITH_VALGRIND=no])
 AC_SUBST(FLAC__TEST_WITH_VALGRIND)
 
 AC_ARG_ENABLE(doxygen-docs,
-AC_HELP_STRING([--disable-doxygen-docs], [Disable API documentation building via Doxygen]),
+AS_HELP_STRING([--disable-doxygen-docs],[Disable API documentation building via Doxygen]),
 [case "${enableval}" in
 	yes) enable_doxygen_docs=true ;;
 	no)  enable_doxygen_docs=false ;;
@@ -346,7 +337,7 @@ fi
 AM_CONDITIONAL(FLaC__HAS_DOXYGEN, test -n "$DOXYGEN")
 
 AC_ARG_ENABLE(local-xmms-plugin,
-AC_HELP_STRING([--enable-local-xmms-plugin], [Install XMMS plugin to ~/.xmms/Plugins instead of system location]),
+AS_HELP_STRING([--enable-local-xmms-plugin],[Install XMMS plugin to ~/.xmms/Plugins instead of system location]),
 [case "${enableval}" in
 	yes) install_xmms_plugin_locally=true ;;
 	no)  install_xmms_plugin_locally=false ;;
@@ -355,7 +346,7 @@ esac],[install_xmms_plugin_locally=false])
 AM_CONDITIONAL(FLaC__INSTALL_XMMS_PLUGIN_LOCALLY, test "x$install_xmms_plugin_locally" = xtrue)
 
 AC_ARG_ENABLE(xmms-plugin,
-AC_HELP_STRING([--disable-xmms-plugin], [Do not build XMMS plugin]),
+AS_HELP_STRING([--disable-xmms-plugin],[Do not build XMMS plugin]),
 [case "${enableval}" in
 	yes) enable_xmms_plugin=true ;;
 	no)  enable_xmms_plugin=false ;;
@@ -368,7 +359,7 @@ AM_CONDITIONAL(FLaC__HAS_XMMS, test -n "$XMMS_INPUT_PLUGIN_DIR")
 
 dnl build FLAC++ or not
 AC_ARG_ENABLE([cpplibs],
-AC_HELP_STRING([--disable-cpplibs], [Do not build libFLAC++]),
+AS_HELP_STRING([--disable-cpplibs],[Do not build libFLAC++]),
 [case "${enableval}" in
 	yes) disable_cpplibs=false ;;
 	no)  disable_cpplibs=true ;;
@@ -391,20 +382,18 @@ if test "x$have_oss_fuzzers" = "xyes"; then
   else
     AM_CONDITIONAL([USE_OSSFUZZERS], [test "false" = "true"])
     # Disable fuzzer if the compiler is not Clang.
-    AC_MSG_WARN([*** Ozz-Fuzz is disabled because that requres the  Clang compiler.])
-    have_oss_fuzzers="no (compiler is GCC)"
+    AC_MSG_WARN([*** Ozz-Fuzz is disabled because that requires the Clang compiler.])
+    have_oss_fuzzers="no (compiler is not Clang)"
   fi
 else
   AM_CONDITIONAL([USE_OSSFUZZERS], [test "false" = "true"])
 fi
 
-AM_CONDITIONAL([USE_OSSFUZZ_FLAG], [test "x$LIB_FUZZING_ENGINE" = "x-fsanitize=fuzzer"])
-AM_CONDITIONAL([USE_OSSFUZZ_STATIC], [test -f "$LIB_FUZZING_ENGINE"])
 AC_SUBST([LIB_FUZZING_ENGINE])
 
 dnl check for ogg library
 AC_ARG_ENABLE([ogg],
-	AC_HELP_STRING([--disable-ogg], [Disable ogg support (default: test for libogg)]),
+	AS_HELP_STRING([--disable-ogg],[Disable ogg support (default: test for libogg)]),
 	[ want_ogg=$enableval ], [ want_ogg=yes ] )
 
 if test "x$want_ogg" != "xno"; then
@@ -427,6 +416,12 @@ dnl Build examples?
 AC_ARG_ENABLE([examples],
 	AS_HELP_STRING([--disable-examples], [Don't build and install examples]))
 AM_CONDITIONAL([EXAMPLES], [test "x$enable_examples" != "xno"])
+
+dnl Ask git which version FLAC is
+AC_ARG_ENABLE([version-from-git],
+	AS_HELP_STRING([--disable-version-from-git], [Don't use git tag, commit hash and commit date for version number]),
+       [ enable_version_from_git=$enableval ], [ enable_version_from_git=yes ])
+
 
 dnl check for i18n(internationalization); these are from libiconv/gettext
 AM_ICONV
@@ -471,7 +466,11 @@ if test x$ac_cv_c_compiler_gnu = xyes -o x$xiph_cv_c_compiler_clang = xyes ; the
 	dnl some distributions (such as Gentoo) have _FORTIFY_SOURCE always
 	dnl enabled. We test for this situation in order to prevent polluting
 	dnl the console with messages of macro redefinitions.
-	AX_ADD_FORTIFY_SOURCE
+
+	if test "x$mingw_has_memset_chk" != "xno"
+	then
+		AX_ADD_FORTIFY_SOURCE
+	fi
 
 	AC_LANG_PUSH([C++])
 	XIPH_ADD_CXXFLAGS([-Weffc++])
@@ -542,10 +541,32 @@ AH_VERBATIM([FLAC_API_EXPORTS],
 #endif
 #endif])
 
-if test x$enable_shared != "xyes" ; then
+if test x$enable_static = "xyes" ; then
 dnl for correct FLAC_API
 	CPPFLAGS="-DFLAC__NO_DLL $CPPFLAGS"
 	fi
+
+AC_CHECK_PROG(GIT_FOUND,git,yes)
+
+if test x$GIT_FOUND$enable_version_from_git = "xyesyes"; then
+	GIT_COMMIT_TAG=`git -C $srcdir describe --tags --exact-match 2>/dev/null`
+	GIT_COMMIT_HASH=`git -C $srcdir log -1 --pretty=format:%h 2>/dev/null`
+	GIT_COMMIT_DATE=`git -C $srcdir log -1 --pretty=format:%cd --date=format:%Y%m%d 2>/dev/null`
+	if test ${#GIT_COMMIT_HASH} = 8 && test ${#GIT_COMMIT_DATE} = 8; then
+		GIT_COMMIT_VERSION_AVAIL=yes
+		if test ${#GIT_COMMIT_TAG} != 0 ; then
+			GIT_COMMIT_TAG_AVAIL=yes
+			AC_DEFINE_UNQUOTED(GIT_COMMIT_TAG, "${GIT_COMMIT_TAG}", "Define to the tag of the current git HEAD")
+		else
+			GIT_COMMIT_VERSION_HASH=yes
+		fi
+		AC_DEFINE_UNQUOTED(GIT_COMMIT_HASH, "${GIT_COMMIT_HASH}", "Define to the short hash of the current git HEAD")
+		AC_DEFINE_UNQUOTED(GIT_COMMIT_DATE, "${GIT_COMMIT_DATE}", "Define to the commit date of the current git HEAD")
+	fi
+fi
+
+AC_SUBST(GIT_COMMIT_VERSION_HASH)
+
 
 AC_CONFIG_FILES([ \
 	Makefile \
@@ -621,6 +642,12 @@ AC_MSG_RESULT([
     Host OS : ................................. ${host_os}
 ])
 
+if test x$GIT_COMMIT_TAG_AVAIL = xyes ; then
+	echo "    Version string : reference libFLAC ${GIT_COMMIT_TAG} ${GIT_COMMIT_DATE}"
+elif test x$GIT_COMMIT_VERSION_AVAIL = xyes ; then
+	echo "    Version string : reference libFLAC git-${GIT_COMMIT_HASH} ${GIT_COMMIT_DATE}"
+fi
+	echo ""
 	echo "    Compiler is GCC : ......................... ${ac_cv_c_compiler_gnu}"
 if test x$ac_cv_c_compiler_gnu = xyes ; then
 	echo "    GCC version : ............................. ${GCC_VERSION}"

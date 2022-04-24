@@ -43,12 +43,16 @@ LD_LIBRARY_PATH=../src/share/utf8/.libs:$LD_LIBRARY_PATH
 
 export LD_LIBRARY_PATH
 
+PATH=`pwd`/../objs/$CMAKE_CONFIG_TYPE:$PATH
+PATH=`pwd`/../objs:$PATH
+
 EXE=@EXEEXT@
 
 # Needed for building out-of-tree where source files are in the $top_srcdir tree
 # and build products in the $top_builddir tree.
 top_srcdir=@top_srcdir@
 top_builddir=@top_builddir@
+git_commit_version_hash=@GIT_COMMIT_VERSION_HASH@
 
 # Set `is_win` variable which is used in other scripts that source this one.
 if test $(env | grep -ic '^comspec=') != 0 ; then

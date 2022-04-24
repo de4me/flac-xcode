@@ -133,6 +133,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libtool-bin libogg-dev doxygen libxml2-utils w3c-sgml-lib
 
+      - name: Install Windows dependencies
+        if: startsWith(matrix.os,'windows')
+        run: |
+          choco install busybox
+
       - name: Build with Autotools
         if: startsWith(matrix.build-system,'autotools')
         env:
@@ -165,7 +170,7 @@ jobs:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
         working-directory: cmake-build
-        run: cmake --build .
+        run: cmake --build . --config Release
 
       - name: CMake test
         if: startsWith(matrix.build-system,'cmake')
@@ -173,7 +178,7 @@ jobs:
           CC: ${{ matrix.cc }}
           CXX: ${{ matrix.cxx }}
         working-directory: cmake-build
-        run: ctest -V -C Debug
+        run: ctest -V -C Release
 
       - name: Upload logs on failure
         uses: actions/upload-artifact@v2

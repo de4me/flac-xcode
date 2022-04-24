@@ -43,31 +43,25 @@ AC_DEFUN([XIPH_GCC_STACK_PROTECTOR],
 	xiph_stack_check_old_cflags="$CFLAGS"
 	SSP_FLAGS="-fstack-protector-strong"
 	CFLAGS=$SSP_FLAGS
-	AC_TRY_LINK([
+	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 			#include <stdio.h>
-			],
-		[puts("Hello, World!"); return 0;],
-		AC_MSG_RESULT([yes])
-			CFLAGS="$xiph_stack_check_old_cflags $SSP_FLAGS",
-		AC_MSG_RESULT([no])
+			]], [[puts("Hello, World!"); return 0;]])],[AC_MSG_RESULT(yes)
+			CFLAGS="$xiph_stack_check_old_cflags $SSP_FLAGS"],[AC_MSG_RESULT(no)
 			CFLAGS="$xiph_stack_check_old_cflags"
-		)
+		])
 ])# XIPH_GCC_STACK_PROTECTOR
 
 AC_DEFUN([XIPH_GXX_STACK_PROTECTOR],
 [AC_LANG_PUSH([C++])
 	AC_MSG_CHECKING([if $CXX supports stack smash protection])
-	xiph_stack_check_old_cflags="$CFLAGS"
+	xiph_stack_check_old_cxxflags="$CXXFLAGS"
 	SSP_FLAGS="-fstack-protector-strong"
-	CFLAGS=$SSP_FLAGS
-	AC_TRY_LINK([
+	CXXFLAGS=$SSP_FLAGS
+	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 			#include <cstdio>
-			],
-		[puts("Hello, World!"); return 0;],
-		AC_MSG_RESULT([yes])
-			CFLAGS="$xiph_stack_check_old_cflags $SSP_FLAGS",
-		AC_MSG_RESULT([no])
-			CFLAGS="$xiph_stack_check_old_cflags"
-		)
+			]], [[puts("Hello, World!"); return 0;]])],[AC_MSG_RESULT(yes)
+			CXXFLAGS="$xiph_stack_check_old_cxxflags $SSP_FLAGS"],[AC_MSG_RESULT(no)
+			CXXFLAGS="$xiph_stack_check_old_cxxflags"
+		])
 	AC_LANG_POP([C++])
 ])# XIPH_GXX_STACK_PROTECTOR
