@@ -27,7 +27,6 @@
 		BD077CD727443DFF00C1E879 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4E27443624008DED93 /* float.c */; };
 		BD077CD827443E0100C1E879 /* format.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1427443624008DED93 /* format.c */; };
 		BD077CD927443E0C00C1E879 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
-		BD077CDA27443E0F00C1E879 /* lpc_intrin_sse.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3A27443624008DED93 /* lpc_intrin_sse.c */; };
 		BD077CDB27443E1100C1E879 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
 		BD077CDC27443E1400C1E879 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
 		BD077CDD27443E1700C1E879 /* lpc_intrin_vsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */; };
@@ -63,7 +62,6 @@
 		BD3C8E8F274437BF008DED93 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4E27443624008DED93 /* float.c */; };
 		BD3C8E90274437C3008DED93 /* format.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1427443624008DED93 /* format.c */; };
 		BD3C8E91274437CD008DED93 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
-		BD3C8E92274437D1008DED93 /* lpc_intrin_sse.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3A27443624008DED93 /* lpc_intrin_sse.c */; };
 		BD3C8E93274437D7008DED93 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
 		BD3C8E94274437DC008DED93 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
 		BD3C8E95274437E0008DED93 /* lpc_intrin_vsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */; };
@@ -171,6 +169,8 @@
 		BD077CB827443B3D00C1E879 /* alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alloc.h; sourceTree = "<group>"; };
 		BD077CB927443B3D00C1E879 /* utf8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
 		BD077CC827443DD100C1E879 /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_vsx.c; sourceTree = "<group>"; };
+		BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_sse2.c; sourceTree = "<group>"; };
 		BD3C8E02274435CB008DED93 /* libFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD3C8E0B27443624008DED93 /* stream_encoder_framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder_framing.c; sourceTree = "<group>"; };
 		BD3C8E0F27443624008DED93 /* metadata_object.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metadata_object.c; sourceTree = "<group>"; };
@@ -207,7 +207,6 @@
 		BD3C8E3527443624008DED93 /* stream_decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_decoder.h; sourceTree = "<group>"; };
 		BD3C8E3727443624008DED93 /* stream_encoder_intrin_avx2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder_intrin_avx2.c; sourceTree = "<group>"; };
 		BD3C8E3827443624008DED93 /* ogg_decoder_aspect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ogg_decoder_aspect.c; sourceTree = "<group>"; };
-		BD3C8E3A27443624008DED93 /* lpc_intrin_sse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_sse.c; sourceTree = "<group>"; };
 		BD3C8E3C27443624008DED93 /* bitmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitmath.c; sourceTree = "<group>"; };
 		BD3C8E3D27443624008DED93 /* metadata_iterators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metadata_iterators.c; sourceTree = "<group>"; };
 		BD3C8E3E27443624008DED93 /* bitreader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitreader.c; sourceTree = "<group>"; };
@@ -215,7 +214,6 @@
 		BD3C8E4427443624008DED93 /* nasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nasm.h; sourceTree = "<group>"; };
 		BD3C8E4527443624008DED93 /* fixed_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = fixed_asm.nasm; sourceTree = "<group>"; };
 		BD3C8E4627443624008DED93 /* lpc_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = lpc_asm.nasm; sourceTree = "<group>"; };
-		BD3C8E4827443624008DED93 /* lpc_asm-unrolled.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = "lpc_asm-unrolled.nasm"; sourceTree = "<group>"; };
 		BD3C8E4927443624008DED93 /* cpu_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = cpu_asm.nasm; sourceTree = "<group>"; };
 		BD3C8E4A27443624008DED93 /* fixed.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fixed.c; sourceTree = "<group>"; };
 		BD3C8E4B27443624008DED93 /* windows_unicode_filenames.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = windows_unicode_filenames.c; sourceTree = "<group>"; };
@@ -373,6 +371,15 @@
 			path = grabbag;
 			sourceTree = "<group>";
 		};
+		BD18A1402815FA5E0058D668 /* deduplication */ = {
+			isa = PBXGroup;
+			children = (
+				BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */,
+				BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */,
+			);
+			path = deduplication;
+			sourceTree = "<group>";
+		};
 		BD3C8DF9274435CB008DED93 = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +421,7 @@
 				BD3C8E5427443624008DED93 /* bitwriter.c */,
 				BD3C8E1327443624008DED93 /* cpu.c */,
 				BD3C8E5227443624008DED93 /* crc.c */,
+				BD18A1402815FA5E0058D668 /* deduplication */,
 				BD3C8E5127443624008DED93 /* fixed_intrin_sse2.c */,
 				BD3C8E5327443624008DED93 /* fixed_intrin_ssse3.c */,
 				BD3C8E4A27443624008DED93 /* fixed.c */,
@@ -422,7 +430,6 @@
 				BD3C8E4227443624008DED93 /* ia32 */,
 				BD3C8E1827443624008DED93 /* include */,
 				BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */,
-				BD3C8E3A27443624008DED93 /* lpc_intrin_sse.c */,
 				BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */,
 				BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */,
 				BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */,
@@ -500,7 +507,6 @@
 				BD3C8E4427443624008DED93 /* nasm.h */,
 				BD3C8E4527443624008DED93 /* fixed_asm.nasm */,
 				BD3C8E4627443624008DED93 /* lpc_asm.nasm */,
-				BD3C8E4827443624008DED93 /* lpc_asm-unrolled.nasm */,
 				BD3C8E4927443624008DED93 /* cpu_asm.nasm */,
 			);
 			path = ia32;
@@ -805,7 +811,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD077CD827443E0100C1E879 /* format.c in Sources */,
-				BD077CDA27443E0F00C1E879 /* lpc_intrin_sse.c in Sources */,
 				BD077CD727443DFF00C1E879 /* float.c in Sources */,
 				BD077CDB27443E1100C1E879 /* lpc_intrin_sse2.c in Sources */,
 				BD077CE027443E1F00C1E879 /* memory.c in Sources */,
@@ -839,7 +844,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD3C8E90274437C3008DED93 /* format.c in Sources */,
-				BD3C8E92274437D1008DED93 /* lpc_intrin_sse.c in Sources */,
 				BD3C8E8F274437BF008DED93 /* float.c in Sources */,
 				BD3C8E93274437D7008DED93 /* lpc_intrin_sse2.c in Sources */,
 				BD3C8E98274437ED008DED93 /* memory.c in Sources */,
@@ -922,7 +926,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -950,7 +954,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1123,7 +1127,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
@@ -1152,7 +1156,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";

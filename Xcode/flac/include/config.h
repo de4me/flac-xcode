@@ -38,7 +38,8 @@
 /* #undef FLAC__HAS_NASM */
 
 /* define if you have the ogg library */
-#define FLAC__HAS_OGG 0
+#define OGG_FOUND 0
+#define FLAC__HAS_OGG OGG_FOUND
 
 /* define if compiler has __attribute__((target("cpu=power8"))) support */
 /* #undef FLAC__HAS_TARGET_POWER8 */
@@ -62,7 +63,8 @@
 #define FLAC__USE_ALTIVEC 1
 
 /* define to enable use of AVX instructions */
-#define FLAC__USE_AVX 1
+#define WITH_AVX 1
+#define FLAC__USE_AVX WITH_AVX
 
 /* define to enable use of VSX instructions */
 #define FLAC__USE_VSX 1
@@ -179,7 +181,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.3.3"
+#define PACKAGE_VERSION "1.3.4"
 
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
@@ -213,10 +215,10 @@
 
 
 /* Version number of package */
-#define VERSION "1.3.3"
+#define VERSION "1.3.4"
 
 /* Target processor is big endian. */
-#define WORDS_BIGENDIAN 0
+#define WORDS_BIGENDIAN CPU_IS_BIG_ENDIAN
 
 /* Enable large inode numbers on Mac OS X 10.5.  */
 #ifndef _DARWIN_USE_64_BIT_INODE
@@ -224,10 +226,14 @@
 #endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
-/* #undef _FILE_OFFSET_BITS */
+#ifndef _FILE_OFFSET_BITS
+# define _FILE_OFFSET_BITS 64
+#endif
 
 /* Define to 1 to make fseeko visible on some hosts (e.g. glibc 2.2). */
-/* #undef _LARGEFILE_SOURCE */
+#ifndef _LARGEFILE_SOURCE
+# define _LARGEFILE_SOURCE 1
+#endif
 
 /* Define for large files, on AIX-style hosts. */
 /* #undef _LARGE_FILES */
