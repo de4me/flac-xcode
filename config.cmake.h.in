@@ -9,6 +9,12 @@
 /* Target processor is little endian. */
 #cmakedefine01 CPU_IS_LITTLE_ENDIAN
 
+/* Target processor PPC */
+#cmakedefine FLAC__CPU_PPC
+
+/* Target processor PPC64 */
+#cmakedefine FLAC__CPU_PPC64
+
 /* Set FLAC__BYTES_PER_WORD to 8 (4 is the default) */
 #cmakedefine01 ENABLE_64_BIT_WORDS
 
@@ -44,8 +50,10 @@
 #cmakedefine FLAC__USE_ALTIVEC
 
 /* define to enable use of AVX instructions */
-#cmakedefine01 WITH_AVX
-#define FLAC__USE_AVX WITH_AVX
+#cmakedefine WITH_AVX
+#ifdef WITH_AVX
+  #define FLAC__USE_AVX
+#endif
 
 /* define to enable use of VSX instructions */
 #cmakedefine FLAC__USE_VSX
