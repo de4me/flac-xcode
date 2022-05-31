@@ -361,6 +361,11 @@ typedef struct FLAC__StreamEncoderPrivate {
 	void (*local_lpc_compute_residual_from_qlp_coefficients_64bit)(const FLAC__int32 *data, uint32_t data_len, const FLAC__int32 qlp_coeff[], uint32_t order, int lp_quantization, FLAC__int32 residual[]);
 	void (*local_lpc_compute_residual_from_qlp_coefficients_16bit)(const FLAC__int32 *data, uint32_t data_len, const FLAC__int32 qlp_coeff[], uint32_t order, int lp_quantization, FLAC__int32 residual[]);
 #endif
+	FLAC__bool disable_mmx;
+	FLAC__bool disable_sse2;
+	FLAC__bool disable_ssse3;
+	FLAC__bool disable_sse41;
+	FLAC__bool disable_avx2;
 	FLAC__bool disable_constant_subframes;
 	FLAC__bool disable_fixed_subframes;
 	FLAC__bool disable_verbatim_subframes;
@@ -866,6 +871,18 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 	 * get the CPU info and set the function pointers
 	 */
 	FLAC__cpu_info(&encoder->private_->cpuinfo);
+	/* remove cpu info as requested by
+	 * FLAC__stream_encoder_disable_instruction_set */
+	if(encoder->private_->disable_mmx)
+		encoder->private_->cpuinfo.x86.mmx = false;
+	if(encoder->private_->disable_sse2)
+		encoder->private_->cpuinfo.x86.sse2 = false;
+	if(encoder->private_->disable_ssse3)
+		encoder->private_->cpuinfo.x86.ssse3 = false;
+	if(encoder->private_->disable_sse41)
+		encoder->private_->cpuinfo.x86.sse41 = false;
+	if(encoder->private_->disable_avx2)
+		encoder->private_->cpuinfo.x86.avx2 = false;
 	/* first default to the non-asm routines */
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 	encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation;
@@ -906,7 +923,24 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 			encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation;
 	}
 #endif
+#endif /* defined(FLAC__CPU_PPC64) && defined(FLAC__USE_VSX) */
+
+#if defined FLAC__CPU_ARM64 && FLAC__HAS_NEONINTRIN
+#if FLAC__HAS_A64NEONINTRIN
+	if(encoder->protected_->max_lpc_order < 8)
+		encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation_intrin_neon_lag_8;
+	else if(encoder->protected_->max_lpc_order < 10)
+		encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation_intrin_neon_lag_10;
+	else if(encoder->protected_->max_lpc_order < 14)
+		encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation_intrin_neon_lag_14;
+	else
+		encoder->private_->local_lpc_compute_autocorrelation = FLAC__lpc_compute_autocorrelation;
 #endif
+    encoder->private_->local_lpc_compute_residual_from_qlp_coefficients_16bit = FLAC__lpc_compute_residual_from_qlp_coefficients_intrin_neon;
+    encoder->private_->local_lpc_compute_residual_from_qlp_coefficients       = FLAC__lpc_compute_residual_from_qlp_coefficients_intrin_neon;
+    encoder->private_->local_lpc_compute_residual_from_qlp_coefficients_64bit = FLAC__lpc_compute_residual_from_qlp_coefficients_wide_intrin_neon;
+#endif /* defined FLAC__CPU_ARM64 && FLAC__HAS_NEONINTRIN */
+
 	if(encoder->private_->cpuinfo.use_asm) {
 #  ifdef FLAC__CPU_IA32
 		FLAC__ASSERT(encoder->private_->cpuinfo.type == FLAC__CPUINFO_TYPE_IA32);
@@ -1005,6 +1039,7 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 #  endif /* FLAC__CPU_... */
 	}
 # endif /* !FLAC__NO_ASM */
+
 #endif /* !FLAC__INTEGER_ONLY_LIBRARY */
 #if !defined FLAC__NO_ASM && FLAC__HAS_X86INTRIN
 	if(encoder->private_->cpuinfo.use_asm) {
@@ -1414,8 +1449,19 @@ FLAC_API FLAC__bool FLAC__stream_encoder_finish(FLAC__StreamEncoder *encoder)
 	FLAC__ASSERT(0 != encoder->private_);
 	FLAC__ASSERT(0 != encoder->protected_);
 
-	if(encoder->protected_->state == FLAC__STREAM_ENCODER_UNINITIALIZED)
+	if(encoder->protected_->state == FLAC__STREAM_ENCODER_UNINITIALIZED){
+		if(encoder->protected_->metadata){ // True in case FLAC__stream_encoder_set_metadata was used but init failed
+			free(encoder->protected_->metadata);
+			encoder->protected_->metadata = 0;
+			encoder->protected_->num_metadata_blocks = 0;
+		}
+		if(0 != encoder->private_->file) {
+			if(encoder->private_->file != stdout)
+				fclose(encoder->private_->file);
+			encoder->private_->file = 0;
+		}
 		return true;
+	}
 
 	if(encoder->protected_->state == FLAC__STREAM_ENCODER_OK && !encoder->private_->is_being_deleted) {
 		if(encoder->private_->current_sample_number != 0) {
@@ -1778,8 +1824,10 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_do_escape_coding(FLAC__StreamEncode
 	FLAC__ASSERT(0 != encoder->protected_);
 	if(encoder->protected_->state != FLAC__STREAM_ENCODER_UNINITIALIZED)
 		return false;
-#if 0
-	/*@@@ deprecated: */
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	/* was deprecated since FLAC 1.0.4 (24-Sep-2002), but is needed for
+	 * full spec coverage, so this should be reenabled at some point.
+	 * For now only enable while fuzzing */
 	encoder->protected_->do_escape_coding = value;
 #else
 	(void)value;
@@ -1880,10 +1928,36 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_metadata(FLAC__StreamEncoder *encod
 	return true;
 }
 
+FLAC_API FLAC__bool FLAC__stream_encoder_set_limit_min_bitrate(FLAC__StreamEncoder *encoder, FLAC__bool value)
+{
+	FLAC__ASSERT(0 != encoder);
+	FLAC__ASSERT(0 != encoder->private_);
+	FLAC__ASSERT(0 != encoder->protected_);
+	if(encoder->protected_->state != FLAC__STREAM_ENCODER_UNINITIALIZED)
+		return false;
+	encoder->protected_->limit_min_bitrate = value;
+	return true;
+}
+
 /*
- * These three functions are not static, but not publicly exposed in
- * include/FLAC/ either.  They are used by the test suite.
+ * These four functions are not static, but not publicly exposed in
+ * include/FLAC/ either.  They are used by the test suite and in fuzzing
  */
+FLAC_API FLAC__bool FLAC__stream_encoder_disable_instruction_set(FLAC__StreamEncoder *encoder, FLAC__bool value)
+{
+	FLAC__ASSERT(0 != encoder);
+	FLAC__ASSERT(0 != encoder->private_);
+	FLAC__ASSERT(0 != encoder->protected_);
+	if(encoder->protected_->state != FLAC__STREAM_ENCODER_UNINITIALIZED)
+		return false;
+	encoder->private_->disable_mmx = value & 1;
+	encoder->private_->disable_sse2 = value & 2;
+	encoder->private_->disable_ssse3 = value & 4;
+	encoder->private_->disable_sse41 = value & 8;
+	encoder->private_->disable_avx2 = value & 16;
+	return true;
+}
+
 FLAC_API FLAC__bool FLAC__stream_encoder_disable_constant_subframes(FLAC__StreamEncoder *encoder, FLAC__bool value)
 {
 	FLAC__ASSERT(0 != encoder);
@@ -2110,6 +2184,14 @@ FLAC_API FLAC__uint64 FLAC__stream_encoder_get_total_samples_estimate(const FLAC
 	return encoder->protected_->total_samples_estimate;
 }
 
+FLAC_API FLAC__bool FLAC__stream_encoder_get_limit_min_bitrate(const FLAC__StreamEncoder *encoder)
+{
+	FLAC__ASSERT(0 != encoder);
+	FLAC__ASSERT(0 != encoder->private_);
+	FLAC__ASSERT(0 != encoder->protected_);
+	return encoder->protected_->limit_min_bitrate;
+}
+
 FLAC_API FLAC__bool FLAC__stream_encoder_process(FLAC__StreamEncoder *encoder, const FLAC__int32 * const buffer[], uint32_t samples)
 {
 	uint32_t i, j = 0, k = 0, channel;
@@ -2120,7 +2202,9 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process(FLAC__StreamEncoder *encoder, c
 	FLAC__ASSERT(0 != encoder);
 	FLAC__ASSERT(0 != encoder->private_);
 	FLAC__ASSERT(0 != encoder->protected_);
-	FLAC__ASSERT(encoder->protected_->state == FLAC__STREAM_ENCODER_OK);
+
+	if(encoder->protected_->state != FLAC__STREAM_ENCODER_OK)
+		return false;
 
 	do {
 		const uint32_t n = flac_min(blocksize+OVERREAD_-encoder->private_->current_sample_number, samples-j);
@@ -2185,7 +2269,9 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process_interleaved(FLAC__StreamEncoder
 	FLAC__ASSERT(0 != encoder);
 	FLAC__ASSERT(0 != encoder->private_);
 	FLAC__ASSERT(0 != encoder->protected_);
-	FLAC__ASSERT(encoder->protected_->state == FLAC__STREAM_ENCODER_OK);
+
+	if(encoder->protected_->state != FLAC__STREAM_ENCODER_OK)
+		return false;
 
 	j = k = 0;
 	/*
@@ -2305,10 +2391,16 @@ void set_defaults_(FLAC__StreamEncoder *encoder)
 	encoder->protected_->max_residual_partition_order = 0;
 	encoder->protected_->rice_parameter_search_dist = 0;
 	encoder->protected_->total_samples_estimate = 0;
+	encoder->protected_->limit_min_bitrate = false;
 	encoder->protected_->metadata = 0;
 	encoder->protected_->num_metadata_blocks = 0;
 
 	encoder->private_->seek_table = 0;
+	encoder->private_->disable_mmx = false;
+	encoder->private_->disable_sse2 = false;
+	encoder->private_->disable_ssse3 = false;
+	encoder->private_->disable_sse41 = false;
+	encoder->private_->disable_avx2 = false;
 	encoder->private_->disable_constant_subframes = false;
 	encoder->private_->disable_fixed_subframes = false;
 	encoder->private_->disable_verbatim_subframes = false;
@@ -2570,7 +2662,8 @@ FLAC__bool write_bitbuffer_(FLAC__StreamEncoder *encoder, uint32_t samples, FLAC
 		else {
 			if(!FLAC__stream_decoder_process_single(encoder->private_->verify.decoder)
 			    || (!is_last_block
-				    && (FLAC__stream_encoder_get_verify_decoder_state(encoder) == FLAC__STREAM_DECODER_END_OF_STREAM))) {
+				    && (FLAC__stream_encoder_get_verify_decoder_state(encoder) == FLAC__STREAM_DECODER_END_OF_STREAM))
+			    || encoder->protected_->state == FLAC__STREAM_ENCODER_VERIFY_DECODER_ERROR /* Happens when error callback was used */) {
 				FLAC__bitwriter_release_buffer(encoder->private_->frame);
 				FLAC__bitwriter_clear(encoder->private_->frame);
 				if(encoder->protected_->state != FLAC__STREAM_ENCODER_VERIFY_MISMATCH_IN_AUDIO_DATA)
@@ -3102,7 +3195,7 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 {
 	FLAC__FrameHeader frame_header;
 	uint32_t channel, min_partition_order = encoder->protected_->min_residual_partition_order, max_partition_order;
-	FLAC__bool do_independent, do_mid_side;
+	FLAC__bool do_independent, do_mid_side, backup_disable_constant_subframes = encoder->private_->disable_constant_subframes, all_subframes_constant = true;
 
 	/*
 	 * Calculate the min,max Rice partition orders
@@ -3179,6 +3272,12 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 	 */
 	if(do_independent) {
 		for(channel = 0; channel < encoder->protected_->channels; channel++) {
+			if(encoder->protected_->limit_min_bitrate && all_subframes_constant && (channel + 1) == encoder->protected_->channels){
+				/* This frame contains only constant subframes at this point.
+				 * To prevent the frame from becoming too small, make sure
+				 * the last subframe isn't constant */
+				encoder->private_->disable_constant_subframes = true;
+			}
 			if(!
 				process_subframe_(
 					encoder,
@@ -3195,6 +3294,8 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 				)
 			)
 				return false;
+			if(encoder->private_->subframe_workspace[channel][encoder->private_->best_subframe[channel]].type != FLAC__SUBFRAME_TYPE_CONSTANT)
+				all_subframes_constant = false;
 		}
 	}
 
@@ -3256,7 +3357,11 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 
 			channel_assignment = FLAC__CHANNEL_ASSIGNMENT_INDEPENDENT;
 			min_bits = bits[channel_assignment];
-			for(ca = 1; ca <= 3; ca++) {
+
+			/* When doing loose mid-side stereo, ignore left-side
+			 * and right-side options */
+			ca = encoder->protected_->loose_mid_side_stereo ? 3 : 1;
+			for( ; ca <= 3; ca++) {
 				if(bits[ca] < min_bits) {
 					min_bits = bits[ca];
 					channel_assignment = (FLAC__ChannelAssignment)ca;
@@ -3340,6 +3445,7 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 	}
 
 	encoder->private_->last_channel_assignment = frame_header.channel_assignment;
+	encoder->private_->disable_constant_subframes = backup_disable_constant_subframes;
 
 	return true;
 }
@@ -3385,9 +3491,17 @@ FLAC__bool process_subframe_(
 	else
 		_best_bits = evaluate_verbatim_subframe_(encoder, integer_signal, frame_header->blocksize, subframe_bps, subframe[_best_subframe]);
 
-	if(frame_header->blocksize >= FLAC__MAX_FIXED_ORDER) {
+	if(frame_header->blocksize > FLAC__MAX_FIXED_ORDER) {
 		uint32_t signal_is_constant = false;
-		if(subframe_bps + 4 + FLAC__bitmath_ilog2((frame_header->blocksize-FLAC__MAX_FIXED_ORDER)|1) <= 32)
+		/* The next formula determines when to use a 64-bit accumulator
+		 * for the error of a fixed predictor, and when a 32-bit one. As
+		 * the error of a 4th order predictor for a given sample is the
+		 * sum of 17 sample values (1+4+6+4+1) and there are blocksize -
+		 * order error values to be summed, the maximum total error is
+		 * maximum_sample_value * (blocksize - order) * 17. As ilog2(x)
+		 * calculates floor(2log(x)), the result must be 31 or lower
+		 */
+		if(subframe_bps + FLAC__bitmath_ilog2((frame_header->blocksize-FLAC__MAX_FIXED_ORDER)*17) < 32)
 			guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor(integer_signal+FLAC__MAX_FIXED_ORDER, frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
 		else
 			guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor_wide(integer_signal+FLAC__MAX_FIXED_ORDER, frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
@@ -3756,7 +3870,7 @@ uint32_t evaluate_lpc_subframe_(
 	if(ret != 0)
 		return 0; /* this is a hack to indicate to the caller that we can't do lp at this order on this subframe */
 
-	if(subframe_bps + qlp_coeff_precision + FLAC__bitmath_ilog2(order) <= 32)
+	if(FLAC__lpc_max_prediction_before_shift_bps(subframe_bps, qlp_coeff, order) <= 32)
 		if(subframe_bps <= 16 && qlp_coeff_precision <= 16)
 			encoder->private_->local_lpc_compute_residual_from_qlp_coefficients_16bit(signal+order, residual_samples, qlp_coeff, order, quantization, residual);
 		else
@@ -3909,9 +4023,9 @@ uint32_t find_best_partition_order_(
 
 		/* save best parameters and raw_bits */
 		FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(prc, flac_max(6u, best_partition_order));
-		memcpy(prc->parameters, private_->partitioned_rice_contents_extra[best_parameters_index].parameters, sizeof(uint32_t)*(1<<(best_partition_order)));
+		memcpy(prc->parameters, private_->partitioned_rice_contents_extra[best_parameters_index].parameters, (uint32_t)sizeof(uint32_t)*(1<<(best_partition_order)));
 		if(do_escape_coding)
-			memcpy(prc->raw_bits, private_->partitioned_rice_contents_extra[best_parameters_index].raw_bits, sizeof(uint32_t)*(1<<(best_partition_order)));
+			memcpy(prc->raw_bits, private_->partitioned_rice_contents_extra[best_parameters_index].raw_bits, (uint32_t)sizeof(uint32_t)*(1<<(best_partition_order)));
 		/*
 		 * Now need to check if the type should be changed to
 		 * FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2 based on the
@@ -4321,6 +4435,11 @@ FLAC__StreamDecoderWriteStatus verify_write_callback_(const FLAC__StreamDecoder 
 	const uint32_t bytes_per_block = sizeof(FLAC__int32) * blocksize;
 
 	(void)decoder;
+
+	if(encoder->protected_->state == FLAC__STREAM_ENCODER_VERIFY_DECODER_ERROR) {
+		/* This is set when verify_error_callback_ was called */
+		return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
 
 	for(channel = 0; channel < channels; channel++) {
 		if(0 != memcmp(buffer[channel], encoder->private_->verify.input_fifo.data[channel], bytes_per_block)) {

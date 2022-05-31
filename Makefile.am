@@ -31,7 +31,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = doc include m4 man src test build microbench oss-fuzz
+SUBDIRS = doc include m4 man src test microbench oss-fuzz
 
 if EXAMPLES
 SUBDIRS += examples
@@ -41,22 +41,20 @@ EXTRA_DIST = \
 	CMakeLists.txt \
 	config.cmake.h.in \
 	flac-config.cmake.in \
-	cmake/FindOgg.cmake \
-	cmake/UseSystemExtensions.cmake \
-	cmake/CheckCPUArch.cmake \
-	cmake/CheckCPUArch.c.in \
+	cmake/CheckA64NEON.c.in \
+	cmake/CheckA64NEON.cmake \
 	cmake/CheckAttribute.c.in \
 	cmake/CheckAttribute.cmake \
+	cmake/CheckCPUArch.c.in \
+	cmake/CheckCPUArch.cmake \
 	cmake/CheckVSX.c.in \
 	cmake/CheckVSX.cmake \
+	cmake/FindOgg.cmake \
+	cmake/UseSystemExtensions.cmake \
 	COPYING.FDL \
 	COPYING.GPL \
 	COPYING.LGPL \
 	COPYING.Xiph \
-	FLAC.sln \
-	FLAC-vs2005.sln \
-	Makefile.lite \
-	Makefile.deps \
 	autogen.sh \
 	config.rpath \
 	depcomp \

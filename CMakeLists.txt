@@ -42,7 +42,11 @@ if(WITH_OGG)
             set_target_properties(test_bitwise test_framing PROPERTIES FOLDER Tests)
         endif()
     else()
-        find_package(Ogg REQUIRED)
+        if(NOT TARGET Ogg::ogg)
+            find_package(Ogg REQUIRED)
+        else()
+            set(OGG_FOUND 1 CACHE INTERNAL "ogg has already been built")
+        endif()
         set(OGG_PACKAGE "ogg")
     endif()
 endif()
@@ -104,6 +108,8 @@ enable_testing()
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
 check_include_file("inttypes.h" HAVE_INTTYPES_H)
 check_include_file("stdint.h" HAVE_STDINT_H)
+check_include_file("arm_neon.h" FLAC__HAS_NEONINTRIN)
+
 if(MSVC)
     check_include_file("intrin.h" FLAC__HAS_X86INTRIN)
 else()
@@ -158,10 +164,8 @@ add_compile_options(
     $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<BOOL:${HAVE_WEFFCXX_FLAG}>>:-Weffc++>
     $<$<AND:$<COMPILE_LANGUAGE:C>,$<BOOL:${HAVE_DECL_AFTER_STMT_FLAG}>>:-Wdeclaration-after-statement>)
 
-if(HAVE_LIBSSP) # Implies WITH_FORTIFY_SOURCE
+if(WITH_FORTIFY_SOURCE AND HAVE_LIBSSP)
   add_definitions(-D_FORTIFY_SOURCE=2)
-else(WITH_FORTIFY_SOURCE)
-  add_definitions(-D_FORTIFY_SOURCE=1)
 endif()
 
 if(HAVE_STACK_PROTECTOR_FLAG AND HAVE_LIBSSP)
@@ -228,12 +232,18 @@ if(INSTALL_CMAKE_CONFIG_MODULE)
         EXPORT targets
         DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake"
         NAMESPACE FLAC::)
+    export(EXPORT targets NAMESPACE FLAC:: FILE FLACTargets.cmake)
 
     configure_package_config_file(
-        flac-config.cmake.in flac-config.cmake
+        ${PROJECT_SOURCE_DIR}/flac-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/flac-config.cmake
         INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake")
     write_basic_package_version_file(
-        flac-config-version.cmake COMPATIBILITY AnyNewerVersion)
+        ${CMAKE_CURRENT_BINARY_DIR}/flac-config-version.cmake COMPATIBILITY AnyNewerVersion)
+
+    install(
+        FILES ${CMAKE_CURRENT_BINARY_DIR}/flac-config.cmake ${CMAKE_CURRENT_BINARY_DIR}/flac-config-version.cmake
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake"
+    )
 
     install(
         FILES

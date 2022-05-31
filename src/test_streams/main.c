@@ -104,6 +104,10 @@ static FLAC__bool write_little_endian_int32(FILE *f, FLAC__int32 x)
 }
 #endif
 
+#if defined(_MSC_VER)
+// silence 4 MSVC warnings 'conversion from 'FLAC__uint64' to 'int', possible loss of data'
+#pragma warning ( disable : 4244 )
+#endif
 static FLAC__bool write_little_endian_uint64(FILE *f, FLAC__uint64 x)
 {
 	return
@@ -117,6 +121,9 @@ static FLAC__bool write_little_endian_uint64(FILE *f, FLAC__uint64 x)
 		fputc(x >> 56, f) != EOF
 	;
 }
+#if defined(_MSC_VER)
+#pragma warning ( default : 4244 )
+#endif
 
 static FLAC__bool write_big_endian(FILE *f, FLAC__int32 x, size_t bytes)
 {
@@ -949,14 +956,15 @@ static FLAC__bool generate_noisy_sine(void)
 	int64_t randstate = 0x1243456;
 	double sample, last_val = 0.0;
 	int k;
+	int seconds = 300;
 
 	if(0 == (f = fopen("noisy-sine.wav", "wb")))
 		return false;
 
-	if(!write_simple_wavex_header (f, 44100, 1, 2, 220500))
+	if(!write_simple_wavex_header (f, 44100, 1, 2, 44100*seconds))
 		goto foo;
 
-	for (k = 0 ; k < 5 * 44100 ; k++) {
+	for (k = 0 ; k < seconds * 44100 ; k++) {
 		/* Obvioulsy not a crypto quality RNG. */
 		randstate = 11117 * randstate + 211231;
 		randstate = 11117 * randstate + 211231;

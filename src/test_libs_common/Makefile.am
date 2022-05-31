@@ -26,8 +26,4 @@ libtest_libs_common_la_SOURCES = \
 
 EXTRA_DIST = \
 	CMakeLists.txt \
-	Makefile.lite \
-	README \
-	test_libs_common_static.vcproj \
-	test_libs_common_static.vcxproj \
-	test_libs_common_static.vcxproj.filters
+	README

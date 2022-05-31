@@ -22,15 +22,7 @@ AM_CFLAGS = @OGG_CFLAGS@
 AM_CPPFLAGS = -I$(top_builddir) -I$(srcdir)/include -I$(top_srcdir)/include
 EXTRA_DIST = \
 	CMakeLists.txt \
-	Makefile.lite \
-	Makefile.lite.iffscan \
-	flac.vcproj \
-	flac.vcxproj \
-	flac.vcxproj.filters \
-	iffscan.c \
-	iffscan.vcproj \
-	iffscan.vcxproj \
-	iffscan.vcxproj.filters
+	iffscan.c
 
 flac_SOURCES = \
 	analyze.c \

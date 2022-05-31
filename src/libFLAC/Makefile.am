@@ -73,21 +73,14 @@ pkgconfig_DATA = flac.pc
 
 EXTRA_DIST = \
 	CMakeLists.txt \
-	Makefile.lite \
 	flac.pc.in \
-	libFLAC_dynamic.vcproj \
-	libFLAC_dynamic.vcxproj \
-	libFLAC_dynamic.vcxproj.filters \
-	libFLAC_static.vcproj \
-	libFLAC_static.vcxproj \
-	libFLAC_static.vcxproj.filters \
 	libFLAC.m4 \
-	windows_unicode_filenames.c \
 	deduplication/lpc_compute_autocorrelation_intrin_sse2.c \
-	deduplication/lpc_compute_autocorrelation_intrin_vsx.c
+	deduplication/lpc_compute_autocorrelation_intrin_vsx.c \
+	deduplication/lpc_compute_autocorrelation_intrin_neon.c
 
 if OS_IS_WINDOWS
-windows_unicode_compat = windows_unicode_filenames.c
+windows_unicode_compat = ../share/win_utf8_io/win_utf8_io.c
 endif
 
 if FLaC__HAS_OGG
@@ -99,7 +92,7 @@ extra_ogg_sources = \
 endif
 
 # see 'http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning' for numbering convention
-libFLAC_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined -version-info 11:0:3 $(LOCAL_EXTRA_LDFLAGS)
+libFLAC_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined -version-info 12:0:0 $(LOCAL_EXTRA_LDFLAGS)
 
 libFLAC_sources = \
 	bitmath.c \
@@ -117,6 +110,7 @@ libFLAC_sources = \
 	lpc_intrin_sse41.c \
 	lpc_intrin_avx2.c \
 	lpc_intrin_vsx.c \
+	lpc_intrin_neon.c \
 	md5.c \
 	memory.c \
 	metadata_iterators.c \

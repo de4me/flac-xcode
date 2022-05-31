@@ -35,6 +35,7 @@
 #endif
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "FLAC/assert.h"
 #include "FLAC/format.h"
@@ -257,6 +258,31 @@ int FLAC__lpc_quantize_coefficients(const FLAC__real lp_coeff[], uint32_t order,
 	}
 
 	return 0;
+}
+
+
+uint32_t FLAC__lpc_max_prediction_before_shift_bps(uint32_t subframe_bps, const FLAC__int32 * flac_restrict qlp_coeff, uint32_t order)
+{
+	/* This used to be subframe_bps + qlp_coeff_precision + FLAC__bitmath_ilog2(order)
+	 * but that treats both the samples as well as the predictor as unknown. The
+	 * predictor is known however, so taking the log2 of the sum of the absolute values
+	 * of all coefficients is a more accurate representation of the predictor */
+	FLAC__int32 abs_sum_of_qlp_coeff = 0;
+	for(uint32_t i = 0; i < order; i++)
+		abs_sum_of_qlp_coeff += abs(qlp_coeff[i]);
+	if(abs_sum_of_qlp_coeff == 0)
+		abs_sum_of_qlp_coeff = 1;
+	return subframe_bps + FLAC__bitmath_silog2(abs_sum_of_qlp_coeff);
+}
+
+
+uint32_t FLAC__lpc_max_residual_bps(uint32_t subframe_bps, const FLAC__int32 * flac_restrict qlp_coeff, uint32_t order, int lp_quantization)
+{
+	FLAC__int32 predictor_sum_bps = FLAC__lpc_max_prediction_before_shift_bps(subframe_bps, qlp_coeff, order) - lp_quantization;
+	if((int)subframe_bps > predictor_sum_bps)
+		return subframe_bps + 1;
+	else
+		return predictor_sum_bps + 1;
 }
 
 #if defined(_MSC_VER)
@@ -781,6 +807,15 @@ void FLAC__lpc_compute_residual_from_qlp_coefficients_wide(const FLAC__int32 * f
 
 #endif /* !defined FLAC__INTEGER_ONLY_LIBRARY */
 
+
+#ifdef FUZZING_BUILD_MODE_NO_SANITIZE_SIGNED_INTEGER_OVERFLOW
+/* The attribute below is to silence the undefined sanitizer of oss-fuzz.
+ * Because fuzzing feeds bogus predictors and residual samples to the
+ * decoder, having overflows in this section is unavoidable. Also,
+ * because the calculated values are audio path only, there is no
+ * potential for security problems */
+__attribute__((no_sanitize("signed-integer-overflow")))
+#endif
 void FLAC__lpc_restore_signal(const FLAC__int32 * flac_restrict residual, uint32_t data_len, const FLAC__int32 * flac_restrict qlp_coeff, uint32_t order, int lp_quantization, FLAC__int32 * flac_restrict data)
 #if defined(FLAC__OVERFLOW_DETECT) || !defined(FLAC__LPC_UNROLLED_FILTER_LOOPS)
 {
@@ -1248,7 +1283,7 @@ void FLAC__lpc_restore_signal_wide(const FLAC__int32 * flac_restrict residual, u
 				}
 				else { /* order == 1 */
 					for(i = 0; i < (int)data_len; i++)
-						data[i] = residual[i] + (FLAC__int32)((qlp_coeff[0] * (FLAC__int64)data[i-1]) >> lp_quantization);
+						data[i] = (FLAC__int32)(residual[i] + ((qlp_coeff[0] * (FLAC__int64)data[i-1]) >> lp_quantization));
 				}
 			}
 		}
