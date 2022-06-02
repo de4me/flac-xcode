@@ -2,19 +2,60 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define if building universal (internal helper macro) */
-/* #undef AC_APPLE_UNIVERSAL_BUILD */
+#define AC_APPLE_UNIVERSAL_BUILD 1
+
+#if defined(__BIG_ENDIAN__)
+ #define CPU_IS_BIG_ENDIAN 1
+ #define CPU_IS_LITTLE_ENDIAN 0
+#else
+ #define CPU_IS_LITTLE_ENDIAN 1
+ #define CPU_IS_BIG_ENDIAN 0
+#endif
 
 /* Target processor is big endian. */
-#define CPU_IS_BIG_ENDIAN 0
+/* #undef CPU_IS_BIG_ENDIAN */
 
 /* Target processor is little endian. */
-#define CPU_IS_LITTLE_ENDIAN 1
+/* #undef CPU_IS_LITTLE_ENDIAN */
 
 /* Set FLAC__BYTES_PER_WORD to 8 (4 is the default) */
-#define ENABLE_64_BIT_WORDS 0
+/* #undef ENABLE_64_BIT_WORDS */
 
 /* define to align allocated memory on 32-byte boundaries */
 /* #undef FLAC__ALIGN_MALLOC_DATA */
+
+#if defined(__aarch64__)
+ #define FLAC__CPU_ARM64 1
+ #define FLAC__HAS_NEONINTRIN 1
+ #define FLAC__HAS_A64NEONINTRIN 1
+ #define ENABLE_64_BIT_WORDS 1
+ #define HAVE_BSWAP16 1
+ #define HAVE_BSWAP32 1
+#elif defined(__x86_64__)
+ #define FLAC__CPU_X86_64 1
+ #define FLAC__HAS_X86INTRIN 1
+ #define WITH_AVX 1
+ #define ENABLE_64_BIT_WORDS 1
+ #define HAVE_BSWAP16 1
+ #define HAVE_BSWAP32 1
+#elif defined(__i386__)
+ #define FLAC__CPU_IA32 1
+ #define FLAC__HAS_X86INTRIN 1
+ #define WITH_AVX 1
+ #define HAVE_BSWAP16 1
+ #define HAVE_BSWAP32 1
+// #define FLAC__HAS_NASM 1
+#elif defined(__ppc__)
+// TODO: PPC
+// #define FLAC__CPU_PPC 1
+#elif defined(__ppc64__)
+// TODO: PPC64
+// #define FLAC__CPU_PPC64 1
+// #define FLAC__HAS_TARGET_POWER8 1
+// #define FLAC__HAS_TARGET_POWER9 1
+// #define FLAC__USE_VSX 1
+// #define ENABLE_64_BIT_WORDS 1
+#endif
 
 /* define if building for ia32/i386 */
 /* #undef FLAC__CPU_IA32 */
@@ -30,6 +71,9 @@
 
 /* define if building for x86_64 */
 /* #undef FLAC__CPU_X86_64 */
+
+/* define if building for arm64 */
+/* #undef FLAC__CPU_ARM64 */
 
 /* define if you have docbook-to-man or docbook2man */
 /* #undef FLAC__HAS_DOCBOOK_TO_MAN */
@@ -48,7 +92,7 @@
 /* #undef FLAC__HAS_TARGET_POWER9 */
 
 /* Set to 1 if <x86intrin.h> is available. */
-#define FLAC__HAS_X86INTRIN 0
+/* #undef FLAC__HAS_X86INTRIN */
 
 /* define to disable use of assembly code */
 /* #undef FLAC__NO_ASM */
@@ -60,20 +104,22 @@
 /* #undef FLAC__SYS_LINUX */
 
 /* define to enable use of Altivec instructions */
-#define FLAC__USE_ALTIVEC 1
+/* #undef FLAC__USE_ALTIVEC */
 
 /* define to enable use of AVX instructions */
-#define WITH_AVX 1
-#define FLAC__USE_AVX WITH_AVX
+/* #undef WITH_AVX */
+#ifdef WITH_AVX
+  #define FLAC__USE_AVX
+#endif
 
 /* define to enable use of VSX instructions */
-#define FLAC__USE_VSX 1
+/* #undef FLAC__USE_VSX */
 
 /* Compiler has the __builtin_bswap16 intrinsic */
-#define HAVE_BSWAP16 1
+/* #undef HAVE_BSWAP16 */
 
 /* Compiler has the __builtin_bswap32 intrinsic */
-#define HAVE_BSWAP32 1
+/* #undef HAVE_BSWAP32 */
 
 /* Define to 1 if you have the <byteswap.h> header file. */
 /* #undef HAVE_BYTESWAP_H */
