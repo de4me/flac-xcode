@@ -1005,6 +1005,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				NASM_OTHER_FLAGS = "\"-I$(SRCROOT)/../../src/libFLAC/ia32/\" \"-DOBJ_FORMAT_macho\"";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
@@ -1062,6 +1063,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				NASM_OTHER_FLAGS = "\"-I$(SRCROOT)/../../src/libFLAC/ia32/\" \"-DOBJ_FORMAT_macho\"";
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src/libFLAC/include\" \"$(SRCROOT)/../../include\"";
