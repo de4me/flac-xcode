@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -709,25 +709,28 @@
 		BD3C8DFA274435CB008DED93 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					BD077CC727443DD100C1E879 = {
 						CreatedOnToolsVersion = 13.1;
+						ProvisioningStyle = Automatic;
 					};
 					BD3C8E01274435CB008DED93 = {
 						CreatedOnToolsVersion = 13.1;
+						ProvisioningStyle = Automatic;
 					};
 					BD9EFBFE274455F100DC1510 = {
 						CreatedOnToolsVersion = 13.1;
+						ProvisioningStyle = Automatic;
 					};
 					BD9EFC1527445A9F00DC1510 = {
 						CreatedOnToolsVersion = 13.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = BD3C8DFD274435CB008DED93 /* Build configuration list for PBXProject "flac" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -770,11 +773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
@@ -787,11 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
@@ -919,11 +914,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
@@ -947,11 +938,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
@@ -966,9 +953,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1020,10 +1008,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
-				USER_HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../src/libFLAC/include\"",
-					"\"$(SRCROOT)/../../include\"",
-				);
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src/libFLAC/include\" \"$(SRCROOT)/../../include\"";
 			};
 			name = Debug;
 		};
@@ -1031,9 +1016,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1078,10 +1064,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
-				USER_HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../src/libFLAC/include\"",
-					"\"$(SRCROOT)/../../include\"",
-				);
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src/libFLAC/include\" \"$(SRCROOT)/../../include\"";
 			};
 			name = Release;
 		};
@@ -1120,11 +1103,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
@@ -1149,11 +1128,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.3.4;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
