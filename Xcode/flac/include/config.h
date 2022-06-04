@@ -206,7 +206,7 @@
 #define LT_OBJDIR ".libs/"
 
 /* Define if debugging is disabled */
-#define NDEBUG /**/
+/* #undef NDEBUG */
 
 /* Name of package */
 #define PACKAGE "flac"

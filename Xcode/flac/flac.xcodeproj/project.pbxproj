@@ -1010,6 +1010,7 @@
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src/libFLAC/include\" \"$(SRCROOT)/../../include\"";
+				USE_HEADERMAP = NO;
 			};
 			name = Debug;
 		};
@@ -1053,7 +1054,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_CONFIG_H=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NDEBUG=1",
+					"HAVE_CONFIG_H=1",
+				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1067,6 +1071,7 @@
 				SDKROOT = macosx;
 				SYSTEM_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/include\"";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src/libFLAC/include\" \"$(SRCROOT)/../../include\"";
+				USE_HEADERMAP = NO;
 			};
 			name = Release;
 		};
