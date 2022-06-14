@@ -31,6 +31,8 @@
  #define ENABLE_64_BIT_WORDS 1
  #define HAVE_BSWAP16 1
  #define HAVE_BSWAP32 1
+ #define SIZEOF_OFF_T 8
+ #define SIZEOF_VOIDP 8
 #elif defined(__x86_64__)
  #define FLAC__CPU_X86_64 1
  #define FLAC__HAS_X86INTRIN 1
@@ -38,12 +40,16 @@
  #define ENABLE_64_BIT_WORDS 1
  #define HAVE_BSWAP16 1
  #define HAVE_BSWAP32 1
+ #define SIZEOF_OFF_T 8
+ #define SIZEOF_VOIDP 8
 #elif defined(__i386__)
  #define FLAC__CPU_IA32 1
  #define FLAC__HAS_X86INTRIN 1
  #define WITH_AVX 1
  #define HAVE_BSWAP16 1
  #define HAVE_BSWAP32 1
+ #define SIZEOF_OFF_T 4
+ #define SIZEOF_VOIDP 4
 // #define FLAC__HAS_NASM 1
 #elif defined(__ppc__)
 // TODO: PPC
@@ -230,10 +236,10 @@
 #define PACKAGE_VERSION "1.3.4"
 
 /* The size of `off_t', as computed by sizeof. */
-#define SIZEOF_OFF_T 8
+/* #undef SIZEOF_OFF_T */
 
 /* The size of `void*', as computed by sizeof. */
-#define SIZEOF_VOIDP 8
+/* #undef SIZEOF_VOIDP */
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
