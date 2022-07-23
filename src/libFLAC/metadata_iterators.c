@@ -286,26 +286,29 @@ FLAC_API FLAC__bool FLAC__metadata_get_picture(const char *filename, FLAC__Strea
 	do {
 		if(FLAC__metadata_simple_iterator_get_block_type(it) == FLAC__METADATA_TYPE_PICTURE) {
 			FLAC__StreamMetadata *obj = FLAC__metadata_simple_iterator_get_block(it);
-			FLAC__uint64 area = (FLAC__uint64)obj->data.picture.width * (FLAC__uint64)obj->data.picture.height;
-			/* check constraints */
-			if(
-				(type == (FLAC__StreamMetadata_Picture_Type)(-1) || type == obj->data.picture.type) &&
-				(mime_type == 0 || !strcmp(mime_type, obj->data.picture.mime_type)) &&
-				(description == 0 || !strcmp((const char *)description, (const char *)obj->data.picture.description)) &&
-				obj->data.picture.width <= max_width &&
-				obj->data.picture.height <= max_height &&
-				obj->data.picture.depth <= max_depth &&
-				obj->data.picture.colors <= max_colors &&
-				(area > max_area_seen || (area == max_area_seen && obj->data.picture.depth > max_depth_seen))
-			) {
-				if(*picture)
-					FLAC__metadata_object_delete(*picture);
-				*picture = obj;
-				max_area_seen = area;
-				max_depth_seen = obj->data.picture.depth;
-			}
-			else {
-				FLAC__metadata_object_delete(obj);
+			if(0 != obj) {
+				FLAC__uint64 area = (FLAC__uint64)obj->data.picture.width * (FLAC__uint64)obj->data.picture.height;
+
+				/* check constraints */
+				if(
+					(type == (FLAC__StreamMetadata_Picture_Type)(-1) || type == obj->data.picture.type) &&
+					(mime_type == 0 || !strcmp(mime_type, obj->data.picture.mime_type)) &&
+					(description == 0 || !strcmp((const char *)description, (const char *)obj->data.picture.description)) &&
+					obj->data.picture.width <= max_width &&
+					obj->data.picture.height <= max_height &&
+					obj->data.picture.depth <= max_depth &&
+					obj->data.picture.colors <= max_colors &&
+					(area > max_area_seen || (area == max_area_seen && obj->data.picture.depth > max_depth_seen))
+				) {
+					if(*picture)
+						FLAC__metadata_object_delete(*picture);
+					*picture = obj;
+					max_area_seen = area;
+					max_depth_seen = obj->data.picture.depth;
+				}
+				else {
+					FLAC__metadata_object_delete(obj);
+				}
 			}
 		}
 	} while(FLAC__metadata_simple_iterator_next(it));
@@ -443,7 +446,15 @@ static FLAC__bool simple_iterator_prime_input_(FLAC__Metadata_SimpleIterator *it
 		case 0:
 			iterator->depth = 0;
 			iterator->first_offset = iterator->offset[iterator->depth] = ftello(iterator->file);
-			return read_metadata_block_header_(iterator);
+			ret = read_metadata_block_header_(iterator);
+			/* The first metadata block must be a streaminfo. If this is not the
+			 * case, the file is invalid and assumptions made elsewhere in the
+			 * code are invalid */
+			if(iterator->type != FLAC__METADATA_TYPE_STREAMINFO) {
+				iterator->status = FLAC__METADATA_SIMPLE_ITERATOR_STATUS_BAD_METADATA;
+				return false;
+			}
+			return ret;
 		case 1:
 			iterator->status = FLAC__METADATA_SIMPLE_ITERATOR_STATUS_READ_ERROR;
 			return false;
@@ -1356,6 +1367,12 @@ static FLAC__bool chain_read_ogg_cb_(FLAC__Metadata_Chain *chain, FLAC__IOHandle
 	chain->last_offset = 0; /*@@@ wrong; will need to be set correctly to implement metadata writing for Ogg FLAC */
 
 	chain->initial_length = chain_calculate_length_(chain);
+
+	if(chain->initial_length == 0) {
+		/* Ogg FLAC file must have at least streaminfo and vorbis comment */
+		chain->status = FLAC__METADATA_CHAIN_STATUS_BAD_METADATA;
+		return false;
+	}
 
 	return true;
 }
@@ -2344,6 +2361,11 @@ FLAC__Metadata_SimpleIteratorStatus read_metadata_block_data_vorbis_comment_cb_(
 	if(block->num_comments == 0) {
 		block->comments = 0;
 	}
+	else if(block->num_comments > (block_length >> 2)) { /* each comment needs at least 4 byte */
+		block->num_comments = 0;
+		status = FLAC__METADATA_SIMPLE_ITERATOR_STATUS_BAD_METADATA;
+		goto skip;
+	}
 	else if(0 == (block->comments = calloc(block->num_comments, sizeof(FLAC__StreamMetadata_VorbisComment_Entry)))) {
 		block->num_comments = 0;
 		return FLAC__METADATA_SIMPLE_ITERATOR_STATUS_MEMORY_ALLOCATION_ERROR;
@@ -2499,6 +2521,9 @@ static FLAC__Metadata_SimpleIteratorStatus read_metadata_block_data_picture_cstr
 	if(read_cb(buffer, 1, length_len, handle) != length_len)
 		return FLAC__METADATA_SIMPLE_ITERATOR_STATUS_READ_ERROR;
 	*length = unpack_uint32_(buffer, length_len);
+
+	if(*length > (1u << FLAC__STREAM_METADATA_LENGTH_LEN)) /* data cannot be larger than FLAC metadata block */
+		return FLAC__METADATA_SIMPLE_ITERATOR_STATUS_BAD_METADATA;
 
 	if(0 != *data)
 		free(*data);
