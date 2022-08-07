@@ -127,6 +127,8 @@
 		BD53FB52284B7CFC00B71F7E /* libFLAC++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD9EFC1627445A9F00DC1510 /* libFLAC++.a */; };
 		BD67C1F6284611BE003222A6 /* lpc_intrin_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */; };
 		BD67C1F7284611BE003222A6 /* lpc_intrin_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */; };
+		BD827A0F28A014000067633E /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
+		BD827A1028A014020067633E /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
 		BD9EFC092744562E00DC1510 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
 		BD9EFC0A2744563200DC1510 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
 		BD9EFC0B2744563700DC1510 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
@@ -467,6 +469,8 @@
 		BD53FB49284B7CB200B71F7E /* flacdiff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = flacdiff; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_neon.c; sourceTree = "<group>"; };
 		BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_neon.c; sourceTree = "<group>"; };
+		BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin.c; sourceTree = "<group>"; };
+		BD827A0E28A013E40067633E /* lpc_intrin_fma.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_fma.c; sourceTree = "<group>"; };
 		BD9EFBFF274455F100DC1510 /* FLAC++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "FLAC++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9EFC1627445A9F00DC1510 /* libFLAC++.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libFLAC++.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD642C32744E30900DC9529 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = config.h; path = include/config.h; sourceTree = "<group>"; };
@@ -661,8 +665,9 @@
 			isa = PBXGroup;
 			children = (
 				BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */,
-				BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */,
 				BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */,
+				BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */,
+				BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */,
 			);
 			path = deduplication;
 			sourceTree = "<group>";
@@ -728,6 +733,7 @@
 				BD3C8E4227443624008DED93 /* ia32 */,
 				BD3C8E1827443624008DED93 /* include */,
 				BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */,
+				BD827A0E28A013E40067633E /* lpc_intrin_fma.c */,
 				BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */,
 				BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */,
 				BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */,
@@ -1485,6 +1491,7 @@
 				BD077CE227443E2500C1E879 /* metadata_object.c in Sources */,
 				BD077CCF27443DE900C1E879 /* bitmath.c in Sources */,
 				BD077CE827443E3E00C1E879 /* stream_encoder_intrin_ssse3.c in Sources */,
+				BD827A1028A014020067633E /* lpc_intrin_fma.c in Sources */,
 				BD077CD327443DF400C1E879 /* crc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1519,6 +1526,7 @@
 				BD3C8E9A274437FD008DED93 /* metadata_object.c in Sources */,
 				BD3C8E8727443775008DED93 /* bitmath.c in Sources */,
 				BD3C8E9F2744382E008DED93 /* stream_encoder_intrin_ssse3.c in Sources */,
+				BD827A0F28A014000067633E /* lpc_intrin_fma.c in Sources */,
 				BD3C8E8B274437AB008DED93 /* crc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
