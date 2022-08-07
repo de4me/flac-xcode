@@ -1,6 +1,5 @@
-/* libFLAC - Free Lossless Audio Codec
- * Copyright (C) 2004-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+/* libFLAC - Free Lossless Audio Codec library
+ * Copyright (C) 2022 Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -34,15 +33,41 @@
 #  include <config.h>
 #endif
 
-#include "private/ogg_mapping.h"
+#include "private/cpu.h"
 
-const uint32_t FLAC__OGG_MAPPING_PACKET_TYPE_LEN = 8; /* bits */
+#ifndef FLAC__INTEGER_ONLY_LIBRARY
+#ifndef FLAC__NO_ASM
+#if defined FLAC__CPU_X86_64 && FLAC__HAS_X86INTRIN
+#include "private/lpc.h"
+#ifdef FLAC__FMA_SUPPORTED
 
-const FLAC__byte FLAC__OGG_MAPPING_FIRST_HEADER_PACKET_TYPE = 0x7f;
+#include "FLAC/assert.h"
 
-const FLAC__byte * const FLAC__OGG_MAPPING_MAGIC = (const FLAC__byte * const)"FLAC";
+FLAC__FAST_MATH_TARGET("fma")
+void FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(const FLAC__real data[], uint32_t data_len, uint32_t lag, double autoc[])
+{
+#undef MAX_LAG
+#define MAX_LAG 8
+#include "deduplication/lpc_compute_autocorrelation_intrin.c"
+}
 
-const uint32_t FLAC__OGG_MAPPING_VERSION_MAJOR_LEN = 8; /* bits */
-const uint32_t FLAC__OGG_MAPPING_VERSION_MINOR_LEN = 8; /* bits */
+FLAC__FAST_MATH_TARGET("fma")
+void FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(const FLAC__real data[], uint32_t data_len, uint32_t lag, double autoc[])
+{
+#undef MAX_LAG
+#define MAX_LAG 12
+#include "deduplication/lpc_compute_autocorrelation_intrin.c"
+}
+FLAC__FAST_MATH_TARGET("fma")
+void FLAC__lpc_compute_autocorrelation_intrin_fma_lag_16(const FLAC__real data[], uint32_t data_len, uint32_t lag, double autoc[])
+{
+#undef MAX_LAG
+#define MAX_LAG 16
+#include "deduplication/lpc_compute_autocorrelation_intrin.c"
 
-const uint32_t FLAC__OGG_MAPPING_NUM_HEADERS_LEN = 16; /* bits */
+}
+
+#endif /* FLAC__FMA_SUPPORTED */
+#endif /* FLAC__CPU_X86_64 && FLAC__HAS_X86INTRIN */
+#endif /* FLAC__NO_ASM */
+#endif /* FLAC__INTEGER_ONLY_LIBRARY */

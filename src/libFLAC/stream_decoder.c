@@ -1,6 +1,6 @@
 /* libFLAC - Free Lossless Audio Codec library
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2016  Xiph.Org Foundation
+ * Copyright (C) 2011-2022  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -2659,7 +2659,6 @@ FLAC__bool read_subframe_constant_(FLAC__StreamDecoder *decoder, uint32_t channe
 	FLAC__Subframe_Constant *subframe = &decoder->private_->frame.subframes[channel].data.constant;
 	FLAC__int64 x;
 	uint32_t i;
-	FLAC__int32 *output = decoder->private_->output[channel];
 
 	decoder->private_->frame.subframes[channel].type = FLAC__SUBFRAME_TYPE_CONSTANT;
 
@@ -2670,8 +2669,16 @@ FLAC__bool read_subframe_constant_(FLAC__StreamDecoder *decoder, uint32_t channe
 
 	/* decode the subframe */
 	if(do_full_decode) {
-		for(i = 0; i < decoder->private_->frame.header.blocksize; i++)
-			output[i] = x;
+		if(bps <= 32) {
+			FLAC__int32 *output = decoder->private_->output[channel];
+			for(i = 0; i < decoder->private_->frame.header.blocksize; i++)
+				output[i] = x;
+		} else {
+			FLAC__int64 *output = decoder->private_->side_subframe;
+			decoder->private_->side_subframe_in_use = true;
+			for(i = 0; i < decoder->private_->frame.header.blocksize; i++)
+				output[i] = x;
+		}
 	}
 
 	return true;
@@ -3645,7 +3652,13 @@ FLAC__StreamDecoderLengthStatus file_length_callback_(const FLAC__StreamDecoder 
 
 	if(decoder->private_->file == stdin)
 		return FLAC__STREAM_DECODER_LENGTH_STATUS_UNSUPPORTED;
-	else if(flac_fstat(fileno(decoder->private_->file), &filestats) != 0)
+
+#ifndef FLAC__USE_FILELENGTHI64
+	if(flac_fstat(fileno(decoder->private_->file), &filestats) != 0)
+#else
+	filestats.st_size = _filelengthi64(fileno(decoder->private_->file));
+	if(filestats.st_size < 0)
+#endif
 		return FLAC__STREAM_DECODER_LENGTH_STATUS_ERROR;
 	else {
 		*stream_length = (FLAC__uint64)filestats.st_size;

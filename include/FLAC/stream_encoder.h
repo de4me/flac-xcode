@@ -1,6 +1,6 @@
 /* libFLAC - Free Lossless Audio Codec library
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2016  Xiph.Org Foundation
+ * Copyright (C) 2011-2022  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1662,8 +1662,9 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_ogg_FILE(FLAC__
  *  and provide callbacks for the I/O.
  *
  *  On Windows, filename must be a UTF-8 encoded filename, which libFLAC
- *  internally translates to a appropriate representation to use with
- *  _wfopen
+ *  internally translates to an appropriate representation to use with
+ *  _wfopen. On all other systems, filename is passed to fopen without
+ *  any translation.
  *
  *  This function should be called after FLAC__stream_encoder_new() and
  *  FLAC__stream_encoder_set_*() but before FLAC__stream_encoder_process()
@@ -1697,8 +1698,9 @@ FLAC_API FLAC__StreamEncoderInitStatus FLAC__stream_encoder_init_file(FLAC__Stre
  *  and provide callbacks for the I/O.
  *
  *  On Windows, filename must be a UTF-8 encoded filename, which libFLAC
- *  internally translates to a appropriate representation to use with
- *  _wfopen
+ *  internally translates to an appropriate representation to use with
+ *  _wfopen. On all other systems, filename is passed to fopen without
+ *  any translation.
  *
  *  This function should be called after FLAC__stream_encoder_new() and
  *  FLAC__stream_encoder_set_*() but before FLAC__stream_encoder_process()
