@@ -118,9 +118,9 @@ static const  struct CompressionLevels {
 	{ false, false,  6, 0, false, false, false, 0, 4, 0, "tukey(5e-1)" },
 	{ true , true ,  8, 0, false, false, false, 0, 4, 0, "tukey(5e-1)" },
 	{ true , false,  8, 0, false, false, false, 0, 5, 0, "tukey(5e-1)" },
-	{ true , false,  8, 0, false, false, false, 0, 6, 0, "tukey(5e-1);partial_tukey(2)" },
-	{ true , false, 12, 0, false, false, false, 0, 6, 0, "tukey(5e-1);partial_tukey(2)" },
-	{ true , false, 12, 0, false, false, false, 0, 6, 0, "tukey(5e-1);partial_tukey(2);punchout_tukey(3)" }
+	{ true , false,  8, 0, false, false, false, 0, 6, 0, "subdivide_tukey(2)" },
+	{ true , false, 12, 0, false, false, false, 0, 6, 0, "subdivide_tukey(2)" },
+	{ true , false, 12, 0, false, false, false, 0, 6, 0, "subdivide_tukey(3)" }
 	/* here we use locale-independent 5e-1 instead of 0.5 or 0,5 */
 };
 
@@ -1744,7 +1744,7 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_apodization(FLAC__StreamEncoder *en
 				encoder->protected_->apodizations[encoder->protected_->num_apodizations++].type = FLAC__APODIZATION_TUKEY;
 			}
 		}
-		else if(n>15   && 0 == strncmp("partial_tukey("       , specification, 14)) {
+		else if(n>15   && 0 == strncmp("partial_tukey(", specification, 14)) {
 			FLAC__int32 tukey_parts = (FLAC__int32)strtod(specification+14, 0);
 			const char *si_1 = strchr(specification, '/');
 			FLAC__real overlap = si_1?flac_min((FLAC__real)strtod(si_1+1, 0),0.99f):0.1f;
@@ -1765,7 +1765,7 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_apodization(FLAC__StreamEncoder *en
 				}
 			}
 		}
-		else if(n>16   && 0 == strncmp("punchout_tukey("       , specification, 15)) {
+		else if(n>16   && 0 == strncmp("punchout_tukey(", specification, 15)) {
 			FLAC__int32 tukey_parts = (FLAC__int32)strtod(specification+15, 0);
 			const char *si_1 = strchr(specification, '/');
 			FLAC__real overlap = si_1?flac_min((FLAC__real)strtod(si_1+1, 0),0.99f):0.2f;
@@ -1784,6 +1784,20 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_apodization(FLAC__StreamEncoder *en
 					encoder->protected_->apodizations[encoder->protected_->num_apodizations].parameters.multiple_tukey.end = (m+1+overlap_units)/(tukey_parts+overlap_units);
 					encoder->protected_->apodizations[encoder->protected_->num_apodizations++].type = FLAC__APODIZATION_PUNCHOUT_TUKEY;
 				}
+			}
+		}
+		else if(n>17  && 0 == strncmp("subdivide_tukey(", specification, 16)){
+			FLAC__int32 parts = (FLAC__int32)strtod(specification+16, 0);
+			if(parts > 1){
+				const char *si_1 = strchr(specification, '/');
+				FLAC__real p = si_1?(FLAC__real)strtod(si_1+1, 0):5e-1;
+				if(p > 1)
+					p = 1;
+				else if(p < 0)
+					p = 0;
+				encoder->protected_->apodizations[encoder->protected_->num_apodizations].parameters.subdivide_tukey.parts = parts;
+				encoder->protected_->apodizations[encoder->protected_->num_apodizations].parameters.subdivide_tukey.p = p/parts;
+				encoder->protected_->apodizations[encoder->protected_->num_apodizations++].type = FLAC__APODIZATION_SUBDIVIDE_TUKEY;
 			}
 		}
 		else if(n==5  && 0 == strncmp("welch"        , specification, n))
@@ -2562,25 +2576,17 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, uint32_t new_blocksize)
 
 	for(i = 0; ok && i < encoder->protected_->channels; i++) {
 		ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize+4+OVERREAD_, &encoder->private_->integer_signal_unaligned[i], &encoder->private_->integer_signal[i]);
-		memset(encoder->private_->integer_signal[i], 0, sizeof(FLAC__int32)*4);
-		encoder->private_->integer_signal[i] += 4;
-#ifndef FLAC__INTEGER_ONLY_LIBRARY
-#if 0 /* @@@ currently unused */
-		if(encoder->protected_->max_lpc_order > 0)
-			ok = ok && FLAC__memory_alloc_aligned_real_array(new_blocksize+OVERREAD_, &encoder->private_->real_signal_unaligned[i], &encoder->private_->real_signal[i]);
-#endif
-#endif
+		if(ok) {
+			memset(encoder->private_->integer_signal[i], 0, sizeof(FLAC__int32)*4);
+			encoder->private_->integer_signal[i] += 4;
+		}
 	}
 	for(i = 0; ok && i < 2; i++) {
 		ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize+4+OVERREAD_, &encoder->private_->integer_signal_mid_side_unaligned[i], &encoder->private_->integer_signal_mid_side[i]);
-		memset(encoder->private_->integer_signal_mid_side[i], 0, sizeof(FLAC__int32)*4);
-		encoder->private_->integer_signal_mid_side[i] += 4;
-#ifndef FLAC__INTEGER_ONLY_LIBRARY
-#if 0 /* @@@ currently unused */
-		if(encoder->protected_->max_lpc_order > 0)
-			ok = ok && FLAC__memory_alloc_aligned_real_array(new_blocksize+OVERREAD_, &encoder->private_->real_signal_mid_side_unaligned[i], &encoder->private_->real_signal_mid_side[i]);
-#endif
-#endif
+		if(ok) {
+			memset(encoder->private_->integer_signal_mid_side[i], 0, sizeof(FLAC__int32)*4);
+			encoder->private_->integer_signal_mid_side[i] += 4;
+		}
 	}
 	ok = ok && FLAC__memory_alloc_aligned_int64_array(new_blocksize+4+OVERREAD_, &encoder->private_->integer_signal_33bit_side_unaligned, &encoder->private_->integer_signal_33bit_side);
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
@@ -2595,11 +2601,32 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, uint32_t new_blocksize)
 			ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize, &encoder->private_->residual_workspace_unaligned[channel][i], &encoder->private_->residual_workspace[channel][i]);
 		}
 	}
+
+
+	for(channel = 0; ok && channel < encoder->protected_->channels; channel++) {
+		for(i = 0; ok && i < 2; i++) {
+			ok = ok && FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(&encoder->private_->partitioned_rice_contents_workspace[channel][i], encoder->protected_->max_residual_partition_order);
+			ok = ok && FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(&encoder->private_->partitioned_rice_contents_workspace[channel][i], encoder->protected_->max_residual_partition_order);
+		}
+	}
+
 	for(channel = 0; ok && channel < 2; channel++) {
 		for(i = 0; ok && i < 2; i++) {
 			ok = ok && FLAC__memory_alloc_aligned_int32_array(new_blocksize, &encoder->private_->residual_workspace_mid_side_unaligned[channel][i], &encoder->private_->residual_workspace_mid_side[channel][i]);
 		}
 	}
+
+	for(channel = 0; ok && channel < 2; channel++) {
+		for(i = 0; ok && i < 2; i++) {
+			ok = ok && FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(&encoder->private_->partitioned_rice_contents_workspace_mid_side[channel][i], encoder->protected_->max_residual_partition_order);
+		}
+	}
+
+	for(i = 0; ok && i < 2; i++) {
+		ok = ok && FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(&encoder->private_->partitioned_rice_contents_extra[i], encoder->protected_->max_residual_partition_order);
+	}
+
+
 	/* the *2 is an approximation to the series 1 + 1/2 + 1/4 + ... that sums tree occupies in a flat array */
 	/*@@@ new_blocksize*2 is too pessimistic, but to fix, we need smarter logic because a smaller new_blocksize can actually increase the # of partitions; would require moving this out into a separate function, then checking its capacity against the need of the current blocksize&min/max_partition_order (and maybe predictor order) */
 	ok = ok && FLAC__memory_alloc_aligned_uint64_array(new_blocksize * 2, &encoder->private_->abs_residual_partition_sums_unaligned, &encoder->private_->abs_residual_partition_sums);
@@ -2658,6 +2685,9 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, uint32_t new_blocksize)
 					break;
 				case FLAC__APODIZATION_PUNCHOUT_TUKEY:
 					FLAC__window_punchout_tukey(encoder->private_->window[i], new_blocksize, encoder->protected_->apodizations[i].parameters.multiple_tukey.p, encoder->protected_->apodizations[i].parameters.multiple_tukey.start, encoder->protected_->apodizations[i].parameters.multiple_tukey.end);
+					break;
+				case FLAC__APODIZATION_SUBDIVIDE_TUKEY:
+					FLAC__window_tukey(encoder->private_->window[i], new_blocksize, encoder->protected_->apodizations[i].parameters.tukey.p);
 					break;
 				case FLAC__APODIZATION_WELCH:
 					FLAC__window_welch(encoder->private_->window[i], new_blocksize);
@@ -3499,6 +3529,31 @@ FLAC__bool process_subframes_(FLAC__StreamEncoder *encoder)
 	return true;
 }
 
+static inline void set_next_subdivide_tukey(FLAC__int32 parts, uint32_t * apodizations, uint32_t * current_depth, uint32_t * current_part){
+	// current_part is interleaved: even are partial, odd are punchout
+	if(*current_depth == 2){
+		// For depth 2, we only do partial, no punchout as that is almost redundant
+		if(*current_part == 0){
+			*current_part = 2;
+		}else{ /* *current_path == 2 */
+			*current_part = 0;
+			(*current_depth)++;
+		}
+	}else if((*current_part) < (2*(*current_depth)-1)){
+		(*current_part)++;
+	}else{ /* (*current_part) >= (2*(*current_depth)-1) */
+		*current_part = 0;
+		(*current_depth)++;
+	}
+
+	/* Now check if we are done with this SUBDIVIDE_TUKEY apodization */
+	if(*current_depth > (uint32_t) parts){
+		(*apodizations)++;
+		*current_depth = 1;
+		*current_part = 0;
+	}
+}
+
 FLAC__bool process_subframe_(
 	FLAC__StreamEncoder *encoder,
 	uint32_t min_partition_order,
@@ -3521,6 +3576,7 @@ FLAC__bool process_subframe_(
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 	double lpc_residual_bits_per_sample;
 	double autoc[FLAC__MAX_LPC_ORDER+1]; /* WATCHOUT: the size is important even though encoder->protected_->max_lpc_order might be less; some asm and x86 intrinsic routines need all the space */
+	double autoc_root[FLAC__MAX_LPC_ORDER+1]; /* This is for subdivide_tukey apodization */
 	double lpc_error[FLAC__MAX_LPC_ORDER];
 	uint32_t min_lpc_order, max_lpc_order, lpc_order;
 	uint32_t min_qlp_coeff_precision, max_qlp_coeff_precision, qlp_coeff_precision;
@@ -3658,16 +3714,55 @@ FLAC__bool process_subframe_(
 				else
 					max_lpc_order = encoder->protected_->max_lpc_order;
 				if(max_lpc_order > 0) {
-					uint32_t a;
-					for (a = 0; a < encoder->protected_->num_apodizations; a++) {
-						if(subframe_bps <= 32)
-							FLAC__lpc_window_data(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize);
-						else
-							FLAC__lpc_window_data_wide(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize);
-						encoder->private_->local_lpc_compute_autocorrelation(encoder->private_->windowed_signal, frame_header->blocksize, max_lpc_order+1, autoc);
+					uint32_t a, b = 1, c = 0;
+					for (a = 0; a < encoder->protected_->num_apodizations;) {
+						uint32_t max_lpc_order_this_apodization = max_lpc_order;
+						if(b == 1){
+							/* window full subblock */
+							if(subframe_bps <= 32)
+								FLAC__lpc_window_data(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize);
+							else
+								FLAC__lpc_window_data_wide(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize);
+							encoder->private_->local_lpc_compute_autocorrelation(encoder->private_->windowed_signal, frame_header->blocksize, max_lpc_order_this_apodization+1, autoc);
+							if(encoder->protected_->apodizations[a].type == FLAC__APODIZATION_SUBDIVIDE_TUKEY){
+								for(uint32_t i = 0; i < max_lpc_order_this_apodization; i++)
+									autoc_root[i] = autoc[i];
+								b++;
+							}else{
+								a++;
+							}
+						}
+						else {
+							/* window part of subblock */
+							if(max_lpc_order_this_apodization >= frame_header->blocksize/b) {
+								max_lpc_order_this_apodization = frame_header->blocksize/b - 1;
+								if(frame_header->blocksize/b > 0)
+									max_lpc_order_this_apodization = frame_header->blocksize/b - 1;
+								else {
+									set_next_subdivide_tukey(encoder->protected_->apodizations[a].parameters.subdivide_tukey.parts, &a, &b, &c);
+									continue;
+								}
+							}
+							if(!(c % 2)){
+								/* on even c, evaluate the (c/2)th partial window of size blocksize/b  */
+								if(subframe_bps <= 32)
+									FLAC__lpc_window_data_partial(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize, frame_header->blocksize/b/2, (c/2*frame_header->blocksize)/b);
+								else
+									FLAC__lpc_window_data_partial(integer_signal, encoder->private_->window[a], encoder->private_->windowed_signal, frame_header->blocksize, frame_header->blocksize/b/2, (c/2*frame_header->blocksize)/b);
+								encoder->private_->local_lpc_compute_autocorrelation(encoder->private_->windowed_signal, frame_header->blocksize/b, max_lpc_order_this_apodization+1, autoc);
+							}else{
+								/* on uneven c, evaluate the root window (over the whole block) minus the previous partial window
+								 * similar to tukey_punchout apodization but more efficient	*/
+								for(uint32_t i = 0; i < max_lpc_order_this_apodization; i++)
+									autoc[i] = autoc_root[i] - autoc[i];
+							}
+							/* Next function sets a, b and c appropriate for next iteration */
+							set_next_subdivide_tukey(encoder->protected_->apodizations[a].parameters.subdivide_tukey.parts, &a, &b, &c);
+						}
+
 						/* if autoc[0] == 0.0, the signal is constant and we usually won't get here, but it can happen */
 						if(autoc[0] != 0.0) {
-							FLAC__lpc_compute_lp_coefficients(autoc, &max_lpc_order, encoder->private_->lp_coeff, lpc_error);
+							FLAC__lpc_compute_lp_coefficients(autoc, &max_lpc_order_this_apodization, encoder->private_->lp_coeff, lpc_error);
 							if(encoder->protected_->do_exhaustive_model_search) {
 								min_lpc_order = 1;
 							}
@@ -3675,7 +3770,7 @@ FLAC__bool process_subframe_(
 								const uint32_t guess_lpc_order =
 									FLAC__lpc_compute_best_order(
 										lpc_error,
-										max_lpc_order,
+										max_lpc_order_this_apodization,
 										frame_header->blocksize,
 										subframe_bps + (
 											encoder->protected_->do_qlp_coeff_prec_search?
@@ -3683,11 +3778,11 @@ FLAC__bool process_subframe_(
 												encoder->protected_->qlp_coeff_precision
 										)
 									);
-								min_lpc_order = max_lpc_order = guess_lpc_order;
+								min_lpc_order = max_lpc_order_this_apodization = guess_lpc_order;
 							}
-							if(max_lpc_order >= frame_header->blocksize)
-								max_lpc_order = frame_header->blocksize - 1;
-							for(lpc_order = min_lpc_order; lpc_order <= max_lpc_order; lpc_order++) {
+							if(max_lpc_order_this_apodization >= frame_header->blocksize)
+								max_lpc_order_this_apodization = frame_header->blocksize - 1;
+							for(lpc_order = min_lpc_order; lpc_order <= max_lpc_order_this_apodization; lpc_order++) {
 								lpc_residual_bits_per_sample = FLAC__lpc_compute_expected_bits_per_residual_sample(lpc_error[lpc_order-1], frame_header->blocksize-lpc_order);
 								if(lpc_residual_bits_per_sample >= (double)subframe_bps)
 									continue; /* don't even try */
@@ -4130,7 +4225,6 @@ uint32_t find_best_partition_order_(
 		uint32_t partition;
 
 		/* save best parameters and raw_bits */
-		FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(prc, flac_max(6u, best_partition_order));
 		memcpy(prc->parameters, private_->partitioned_rice_contents_extra[best_parameters_index].parameters, (uint32_t)sizeof(uint32_t)*(1<<(best_partition_order)));
 		if(do_escape_coding)
 			memcpy(prc->raw_bits, private_->partitioned_rice_contents_extra[best_parameters_index].raw_bits, (uint32_t)sizeof(uint32_t)*(1<<(best_partition_order)));
@@ -4339,7 +4433,6 @@ FLAC__bool set_partitioned_rice_(
 
 	FLAC__ASSERT(rice_parameter_limit <= FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE2_ESCAPE_PARAMETER);
 
-	FLAC__format_entropy_coding_method_partitioned_rice_contents_ensure_size(partitioned_rice_contents, flac_max(6u, partition_order));
 	parameters = partitioned_rice_contents->parameters;
 	raw_bits = partitioned_rice_contents->raw_bits;
 

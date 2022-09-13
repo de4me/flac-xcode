@@ -1282,8 +1282,13 @@ FLAC__bool allocate_output_(FLAC__StreamDecoder *decoder, uint32_t size, uint32_
 		}
 	}
 
-	if(bps == 32)
+	if(bps == 32) {
 		decoder->private_->side_subframe = safe_malloc_mul_2op_p(sizeof(FLAC__int64), /*times (*/size);
+		if(decoder->private_->side_subframe == NULL) {
+			decoder->protected_->state = FLAC__STREAM_DECODER_MEMORY_ALLOCATION_ERROR;
+			return false;
+		}
+	}
 
 	decoder->private_->output_capacity = size;
 	decoder->private_->output_channels = channels;
@@ -1520,7 +1525,7 @@ FLAC__bool read_metadata_(FLAC__StreamDecoder *decoder)
 						free(block.data.vorbis_comment.comments);
 					break;
 				case FLAC__METADATA_TYPE_CUESHEET:
-					if(block.data.cue_sheet.num_tracks > 0)
+					if(block.data.cue_sheet.num_tracks > 0 && 0 != block.data.cue_sheet.tracks)
 						for(i = 0; i < block.data.cue_sheet.num_tracks; i++)
 							if(0 != block.data.cue_sheet.tracks[i].indices)
 								free(block.data.cue_sheet.tracks[i].indices);
@@ -3322,8 +3327,7 @@ FLAC__bool seek_to_absolute_sample_(FLAC__StreamDecoder *decoder, FLAC__uint64 s
 				seek_table->points[i].sample_number != FLAC__STREAM_METADATA_SEEKPOINT_PLACEHOLDER &&
 				seek_table->points[i].frame_samples > 0 && /* defense against bad seekpoints */
 				(total_samples <= 0 || seek_table->points[i].sample_number < total_samples) && /* defense against bad seekpoints */
-				seek_table->points[i].sample_number > target_sample &&
-				seek_table->points[i].stream_offset < (FLAC__uint64)INT64_MAX
+				seek_table->points[i].sample_number > target_sample
 			)
 				break;
 		}
@@ -3355,8 +3359,15 @@ FLAC__bool seek_to_absolute_sample_(FLAC__StreamDecoder *decoder, FLAC__uint64 s
 
 	decoder->private_->target_sample = target_sample;
 	while(1) {
+		/* check whether decoder is still valid so bad state isn't overwritten
+		 * with seek error */
+		if(decoder->protected_->state == FLAC__STREAM_DECODER_MEMORY_ALLOCATION_ERROR ||
+		   decoder->protected_->state == FLAC__STREAM_DECODER_ABORTED)
+			return false;
 		/* check if the bounds are still ok */
-		if (lower_bound_sample >= upper_bound_sample || lower_bound > upper_bound) {
+		if (lower_bound_sample >= upper_bound_sample ||
+		    lower_bound > upper_bound ||
+		    upper_bound >= INT64_MAX) {
 			decoder->protected_->state = FLAC__STREAM_DECODER_SEEK_ERROR;
 			return false;
 		}

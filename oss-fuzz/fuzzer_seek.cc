@@ -32,6 +32,9 @@
 #include <cstdlib>
 #include <cstring> /* for memcpy */
 #include "FLAC/stream_decoder.h"
+#include "fuzzer_common.h"
+
+int write_abort_check_counter = -1;
 
 #if 0 /* set to 1 to debug */
 #define FPRINTF_DEBUG_ONLY(...) fprintf(__VA_ARGS__)
@@ -39,11 +42,18 @@
 #define FPRINTF_DEBUG_ONLY(...)
 #endif
 
-#define CONFIG_LENGTH 1
+#define CONFIG_LENGTH 2
 
 static FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder, const FLAC__Frame *frame, const FLAC__int32 *const buffer[], void *client_data)
 {
         (void)decoder, (void)frame, (void)buffer, (void)client_data;
+	if(write_abort_check_counter > 0) {
+		write_abort_check_counter--;
+		if(write_abort_check_counter == 0)
+			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	} else if(write_abort_check_counter == 0)
+		/* This must not happen: write callback called after abort is returned */
+		abort();
         return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
 }
 
@@ -59,6 +69,14 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 	FLAC__StreamDecoder *decoder;
 	uint8_t command_length;
 	FLAC__bool init_bools[16], ogg;
+
+	if(size > 2 && data[1] < 128) /* Use MSB as on/off */
+		alloc_check_threshold = data[1];
+	else
+		alloc_check_threshold = INT32_MAX;
+	alloc_check_counter = 0;
+
+	write_abort_check_counter = -1;
 
 	/* allocate the decoder */
 	if((decoder = FLAC__stream_decoder_new()) == NULL) {
@@ -115,7 +133,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 		uint8_t shift = 1u << (command[0] >> 3);
 		FLAC__uint64 seekpos;
 
-		switch(command[0] & 7){
+		switch(command[0] & 15){
 			case 0:
 				FPRINTF_DEBUG_ONLY(stderr,"end_of_stream\n");
 				decoder_valid = FLAC__stream_decoder_process_until_end_of_stream(decoder);
@@ -141,6 +159,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 				decoder_valid = FLAC__stream_decoder_flush(decoder);
 				break;
 			case 6:
+			case 14:
 				shift = 1u << (command[0] >> 3);
 				FPRINTF_DEBUG_ONLY(stderr,"seek short %hhu\n",shift);
 				decoder_valid = FLAC__stream_decoder_seek_absolute(decoder,shift);
@@ -159,6 +178,10 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 				i+=8;
 				FPRINTF_DEBUG_ONLY(stderr,"seek long %lu\n",seekpos);
 				decoder_valid = FLAC__stream_decoder_seek_absolute(decoder,seekpos);
+				break;
+			case 8:
+				/* Set abort on write callback */
+				write_abort_check_counter = (command[0] >> 4) + 1;
 				break;
 		}
 	}

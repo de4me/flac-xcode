@@ -19,7 +19,7 @@
 # instead of FLAC__ since autoconf triggers off 'AC_' in strings
 
 AC_PREREQ(2.60)
-AC_INIT([flac],[1.3.4],[flac-dev@xiph.org],[flac],[https://www.xiph.org/flac/])
+AC_INIT([flac],[1.4.0],[flac-dev@xiph.org],[flac],[https://www.xiph.org/flac/])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/flac/main.c])
 AC_CONFIG_MACRO_DIR([m4])
@@ -452,6 +452,11 @@ AC_DEFINE_UNQUOTED([FLAC__HAS_OGG],$FLAC__HAS_OGG,[define if you have the ogg li
 AC_SUBST(FLAC__HAS_OGG)
 AC_SUBST(OGG_PACKAGE)
 
+dnl Build programs?
+AC_ARG_ENABLE([programs],
+	AS_HELP_STRING([--disable-programs], [Don't build and install flac and metaflac]))
+AM_CONDITIONAL(FLaC__WITH_PROGRAMS, [test "x$enable_programs" != "xno"])
+
 dnl Build examples?
 AC_ARG_ENABLE([examples],
 	AS_HELP_STRING([--disable-examples], [Don't build and install examples]))
@@ -467,11 +472,11 @@ dnl check for i18n(internationalization); these are from libiconv/gettext
 AM_ICONV
 AM_LANGINFO_CODESET
 
-AC_CHECK_PROGS(DOCBOOK_TO_MAN, docbook-to-man docbook2man)
-AM_CONDITIONAL(FLaC__HAS_DOCBOOK_TO_MAN, test -n "$DOCBOOK_TO_MAN")
-if test -n "$DOCBOOK_TO_MAN" ; then
-AC_DEFINE(FLAC__HAS_DOCBOOK_TO_MAN)
-AH_TEMPLATE(FLAC__HAS_DOCBOOK_TO_MAN, [define if you have docbook-to-man or docbook2man])
+AC_CHECK_PROGS(PANDOC, pandoc)
+AM_CONDITIONAL(FLaC__HAS_PANDOC, test -n "$PANDOC")
+if test -n "$PANDOC" ; then
+AC_DEFINE(FLAC__HAS_PANDOC)
+AH_TEMPLATE(FLAC__HAS_PANDOC, [define if you have pandoc])
 fi
 
 AC_CHECK_LIB(rt, clock_gettime,
@@ -654,8 +659,7 @@ AC_CONFIG_FILES([ \
 	include/test_libs_common/Makefile \
 	doc/Doxyfile \
 	doc/Makefile \
-	doc/html/Makefile \
-	doc/html/images/Makefile \
+	doc/images/Makefile \
 	m4/Makefile \
 	man/Makefile \
 	test/common.sh \

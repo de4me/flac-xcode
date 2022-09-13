@@ -51,10 +51,12 @@ EXTRA_DIST = \
 	cmake/CheckVSX.cmake \
 	cmake/FindOgg.cmake \
 	cmake/UseSystemExtensions.cmake \
+	CHANGELOG.md \
 	COPYING.FDL \
 	COPYING.GPL \
 	COPYING.LGPL \
 	COPYING.Xiph \
+	README.md \
 	autogen.sh \
 	config.rpath \
 	depcomp \

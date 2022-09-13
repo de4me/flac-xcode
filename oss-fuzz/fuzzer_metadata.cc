@@ -34,8 +34,9 @@
 #include <cstring> /* for memcpy */
 #include <unistd.h>
 #include "FLAC++/metadata.h"
+#include "fuzzer_common.h"
 
-#define CONFIG_LENGTH 1
+#define CONFIG_LENGTH 2
 
 #define min(x,y) (x<y?x:y)
 
@@ -59,6 +60,13 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 		init_bools[i] = data[i/8] & (1 << (i % 8));
 
 	command_length = data[0] >> 4;
+
+	if(0)//data[1] < 128) /* Use MSB as on/off */
+		alloc_check_threshold = data[1];
+	else
+		alloc_check_threshold = INT32_MAX;
+	alloc_check_counter = 0;
+
 
 	/* Leave at least one byte as input */
 	if(command_length >= size - 1 - CONFIG_LENGTH)
@@ -210,22 +218,37 @@ static void run_tests_with_level_2_interface(char filename[], bool ogg, bool use
 			case 5:
 				if(metadata_block_transfer != 0 && metadata_block_transfer->is_valid()) {
 					metadata_block_put = FLAC::Metadata::clone(metadata_block_transfer);
-					if(!iterator.insert_block_before(metadata_block_put))
-						delete metadata_block_put;
+					if(metadata_block_put != 0 && metadata_block_put->is_valid()) {
+						if(!iterator.insert_block_before(metadata_block_put))
+							delete metadata_block_put;
+					}
+					else
+						if(metadata_block_put != 0)
+							delete metadata_block_put;
 				}
 				break;
 			case 6:
 				if(metadata_block_transfer != 0 && metadata_block_transfer->is_valid()) {
 					metadata_block_put = FLAC::Metadata::clone(metadata_block_transfer);
-					if(!iterator.insert_block_after(metadata_block_put))
-						delete metadata_block_put;
+					if(metadata_block_put != 0 && metadata_block_put->is_valid()) {
+						if(!iterator.insert_block_after(metadata_block_put))
+							delete metadata_block_put;
+					}
+					else
+						if(metadata_block_put != 0)
+							delete metadata_block_put;
 				}
 				break;
 			case 7:
 				if(metadata_block_transfer != 0 && metadata_block_transfer->is_valid()) {
 					metadata_block_put = FLAC::Metadata::clone(metadata_block_transfer);
-					if(!iterator.set_block(metadata_block_put))
-						delete metadata_block_put;
+					if(metadata_block_put != 0 && metadata_block_put->is_valid()) {
+						if(!iterator.set_block(metadata_block_put))
+							delete metadata_block_put;
+					}
+					else
+						if(metadata_block_put != 0)
+							delete metadata_block_put;
 				}
 				break;
 			case 8: /* Examine block */
