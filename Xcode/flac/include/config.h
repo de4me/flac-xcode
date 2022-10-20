@@ -29,6 +29,7 @@
  #define FLAC__HAS_NEONINTRIN 1
  #define FLAC__HAS_A64NEONINTRIN 1
  #define ENABLE_64_BIT_WORDS 1
+ #define HAVE_ARM_NEON_H 1
  #define HAVE_BSWAP16 1
  #define HAVE_BSWAP32 1
  #define SIZEOF_OFF_T 8
@@ -91,6 +92,9 @@
 #define OGG_FOUND 0
 #define FLAC__HAS_OGG OGG_FOUND
 
+/* define if you have pandoc */
+/* #undef FLAC__HAS_PANDOC */
+
 /* define if compiler has __attribute__((target("cpu=power8"))) support */
 /* #undef FLAC__HAS_TARGET_POWER8 */
 
@@ -99,6 +103,12 @@
 
 /* Set to 1 if <x86intrin.h> is available. */
 /* #undef FLAC__HAS_X86INTRIN */
+
+/* Set to 1 if <arm_neon.h> is available. */
+/* #undef FLAC__HAS_NEONINTRIN */
+
+/* Set to 1 if <arm_neon.h> contains A64 intrinsics */
+/* #undef FLAC__HAS_A64NEONINTRIN */
 
 /* define to disable use of assembly code */
 /* #undef FLAC__NO_ASM */
@@ -121,6 +131,15 @@
 /* define to enable use of VSX instructions */
 /* #undef FLAC__USE_VSX */
 
+/* "Define to the commit date of the current git HEAD" */
+/* #undef GIT_COMMIT_DATE */
+
+/* "Define to the short hash of the current git HEAD" */
+/* #undef GIT_COMMIT_HASH */
+
+/* "Define to the tag of the current git HEAD" */
+/* #undef GIT_COMMIT_TAG */
+
 /* Compiler has the __builtin_bswap16 intrinsic */
 /* #undef HAVE_BSWAP16 */
 
@@ -136,17 +155,14 @@
 /* Define to 1 if you have the <cpuid.h> header file. */
 /* #undef HAVE_CPUID_H */
 
-/* Define to 1 if C++ supports variable-length arrays. */
-#define HAVE_CXX_VARARRAYS 1
-
-/* Define to 1 if C supports variable-length arrays. */
-#define HAVE_C_VARARRAYS 1
-
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 #define HAVE_FSEEKO 1
+
+/* Define to 1 if you have the `getauxval' function. */
+/* #undef HAVE_GETAUXVAL */
 
 /* Define to 1 if you have the `getopt_long' function. */
 #define HAVE_GETOPT_LONG 1
@@ -163,14 +179,17 @@
 /* lround support */
 #define HAVE_LROUND 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
+/* Define to 1 if you have the <minix/config.h> header file. */
+/* #undef HAVE_MINIX_CONFIG_H */
 
 /* Define to 1 if the system has the type `socklen_t'. */
 /* #undef HAVE_SOCKLEN_T */
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -180,6 +199,9 @@
 
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
+
+/* Define to 1 if you have the <sys/auxv.h> header file. */
+/* #undef HAVE_SYS_AUXV_H */
 
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
 #define HAVE_SYS_IOCTL_H 1
@@ -201,6 +223,9 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
+
+/* Define to 1 if you have the <wchar.h> header file. */
+#define HAVE_WCHAR_H 1
 
 /* Define to 1 if you have the <x86intrin.h> header file. */
 /* #undef HAVE_X86INTRIN_H */
@@ -224,7 +249,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.3.4"
+#define PACKAGE_STRING "flac 1.4.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
@@ -233,7 +258,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.3.4"
+#define PACKAGE_VERSION "1.4.1"
 
 /* The size of `off_t', as computed by sizeof. */
 /* #undef SIZEOF_OFF_T */
@@ -241,12 +266,22 @@
 /* The size of `void*', as computed by sizeof. */
 /* #undef SIZEOF_VOIDP */
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
 # define _ALL_SOURCE 1
+#endif
+/* Enable general extensions on macOS.  */
+#ifndef _DARWIN_C_SOURCE
+# define _DARWIN_C_SOURCE 1
+#endif
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# define __EXTENSIONS__ 1
 #endif
 /* Enable GNU extensions on systems that have them.  */
 #ifndef _GNU_SOURCE
@@ -267,7 +302,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.3.4"
+#define VERSION "1.4.1"
 
 /* Target processor is big endian. */
 #define WORDS_BIGENDIAN CPU_IS_BIG_ENDIAN
