@@ -381,10 +381,6 @@
 		BD3C8E3D27443624008DED93 /* metadata_iterators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metadata_iterators.c; sourceTree = "<group>"; };
 		BD3C8E3E27443624008DED93 /* bitreader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitreader.c; sourceTree = "<group>"; };
 		BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_sse2.c; sourceTree = "<group>"; };
-		BD3C8E4427443624008DED93 /* nasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nasm.h; sourceTree = "<group>"; };
-		BD3C8E4527443624008DED93 /* fixed_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = fixed_asm.nasm; sourceTree = "<group>"; };
-		BD3C8E4627443624008DED93 /* lpc_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = lpc_asm.nasm; sourceTree = "<group>"; };
-		BD3C8E4927443624008DED93 /* cpu_asm.nasm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.nasm; path = cpu_asm.nasm; sourceTree = "<group>"; };
 		BD3C8E4A27443624008DED93 /* fixed.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fixed.c; sourceTree = "<group>"; };
 		BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_vsx.c; sourceTree = "<group>"; };
 		BD3C8E4D27443624008DED93 /* stream_encoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
@@ -730,7 +726,6 @@
 				BD3C8E4A27443624008DED93 /* fixed.c */,
 				BD3C8E4E27443624008DED93 /* float.c */,
 				BD3C8E1427443624008DED93 /* format.c */,
-				BD3C8E4227443624008DED93 /* ia32 */,
 				BD3C8E1827443624008DED93 /* include */,
 				BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */,
 				BD827A0E28A013E40067633E /* lpc_intrin_fma.c */,
@@ -803,17 +798,6 @@
 				BD3C8E3527443624008DED93 /* stream_decoder.h */,
 			);
 			path = protected;
-			sourceTree = "<group>";
-		};
-		BD3C8E4227443624008DED93 /* ia32 */ = {
-			isa = PBXGroup;
-			children = (
-				BD3C8E4427443624008DED93 /* nasm.h */,
-				BD3C8E4527443624008DED93 /* fixed_asm.nasm */,
-				BD3C8E4627443624008DED93 /* lpc_asm.nasm */,
-				BD3C8E4927443624008DED93 /* cpu_asm.nasm */,
-			);
-			path = ia32;
 			sourceTree = "<group>";
 		};
 		BD3C8E5C27443624008DED93 /* flac */ = {
