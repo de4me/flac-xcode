@@ -1720,7 +1720,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1744,7 +1744,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -2052,7 +2052,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
@@ -2077,7 +2077,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
