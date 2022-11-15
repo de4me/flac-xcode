@@ -1063,6 +1063,25 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 			case FORMAT_AIFF_C:
 				/* truncation in the division removes any padding byte that was counted in encoder_session.fmt.iff.data_bytes */
 				total_samples_in_input = encoder_session.fmt.iff.data_bytes / encoder_session.info.bytes_per_wide_sample + *options.align_reservoir_samples;
+
+				/* check for chunks trailing the audio data */
+				if(!options.ignore_chunk_sizes && !options.format_options.iff.foreign_metadata
+				   && infilesize != (FLAC__off_t)(-1)) {
+					FLAC__off_t current_position = ftello(encoder_session.fin);
+					if(current_position > 0) {
+						FLAC__uint64 end_of_data_chunk = current_position + encoder_session.fmt.iff.data_bytes;
+						if(end_of_data_chunk < (FLAC__uint64)infilesize) {
+							flac__utils_printf(stderr, 1, "%s: WARNING: there is data trailing the audio data. Use --keep-foreign-metadata or --ignore-chunk-sizes to keep it\n", encoder_session.inbasefilename);
+							if(encoder_session.treat_warnings_as_errors)
+								return EncoderSession_finish_error(&encoder_session);
+						}
+						else if(end_of_data_chunk > (FLAC__uint64)infilesize) {
+							flac__utils_printf(stderr, 1, "%s: WARNING: the length of the data chunk overruns the end of the file. Please consult the manual on the --ignore-chunk-sizes option\n", encoder_session.inbasefilename);
+							if(encoder_session.treat_warnings_as_errors)
+								return EncoderSession_finish_error(&encoder_session);
+						}
+					}
+				}
 				break;
 			case FORMAT_FLAC:
 			case FORMAT_OGGFLAC:
@@ -1699,13 +1718,18 @@ int EncoderSession_finish_error(EncoderSession *e)
 	if(e->total_samples_to_encode > 0)
 		flac__utils_printf(stderr, 2, "\n");
 
-	if(FLAC__stream_encoder_get_state(e->encoder) == FLAC__STREAM_ENCODER_VERIFY_MISMATCH_IN_AUDIO_DATA)
+	if(FLAC__stream_encoder_get_state(e->encoder) == FLAC__STREAM_ENCODER_VERIFY_MISMATCH_IN_AUDIO_DATA) {
 		print_verify_error(e);
-	else if(e->outputfile_opened)
+		EncoderSession_destroy(e);
+	}
+	else if(e->outputfile_opened) {
 		/* only want to delete the file if we opened it; otherwise it could be an existing file and our overwrite failed */
+		/* Windows cannot unlink an open file, so close it first */
+		EncoderSession_destroy(e);
 		flac_unlink(e->outfilename);
-
-	EncoderSession_destroy(e);
+	}
+	else
+		EncoderSession_destroy(e);
 
 	return 1;
 }

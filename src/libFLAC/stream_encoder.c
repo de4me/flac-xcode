@@ -1049,7 +1049,7 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 #endif /* !FLAC__INTEGER_ONLY_LIBRARY */
 #if !defined FLAC__NO_ASM && FLAC__HAS_X86INTRIN
 	if(encoder->private_->cpuinfo.use_asm) {
-# if defined FLAC__CPU_IA32
+# if (defined FLAC__CPU_IA32 || defined FLAC__CPU_X86_64)
 #  ifdef FLAC__SSE2_SUPPORTED
 		if (encoder->private_->cpuinfo.x86.sse2)
 			encoder->private_->local_precompute_partition_info_sums = FLAC__precompute_partition_info_sums_intrin_sse2;
@@ -1060,18 +1060,6 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 #  endif
 #  ifdef FLAC__AVX2_SUPPORTED
 		if (encoder->private_->cpuinfo.x86.avx2)
-			encoder->private_->local_precompute_partition_info_sums = FLAC__precompute_partition_info_sums_intrin_avx2;
-#  endif
-# elif defined FLAC__CPU_X86_64
-#  ifdef FLAC__SSE2_SUPPORTED
-		encoder->private_->local_precompute_partition_info_sums = FLAC__precompute_partition_info_sums_intrin_sse2;
-#  endif
-#  ifdef FLAC__SSSE3_SUPPORTED
-		if(encoder->private_->cpuinfo.x86.ssse3)
-			encoder->private_->local_precompute_partition_info_sums = FLAC__precompute_partition_info_sums_intrin_ssse3;
-#  endif
-#  ifdef FLAC__AVX2_SUPPORTED
-		if(encoder->private_->cpuinfo.x86.avx2)
 			encoder->private_->local_precompute_partition_info_sums = FLAC__precompute_partition_info_sums_intrin_avx2;
 #  endif
 # endif /* FLAC__CPU_... */
@@ -2619,7 +2607,7 @@ FLAC__bool resize_buffers_(FLAC__StreamEncoder *encoder, uint32_t new_blocksize)
 		/*@@@ new_blocksize*2 is too pessimistic, but to fix, we need smarter logic because a smaller new_blocksize can actually increase the # of partitions; would require moving this out into a separate function, then checking its capacity against the need of the current blocksize&min/max_partition_order (and maybe predictor order) */
 		ok = ok && FLAC__memory_alloc_aligned_uint64_array(new_blocksize * 2, &encoder->private_->abs_residual_partition_sums_unaligned, &encoder->private_->abs_residual_partition_sums);
 		if(encoder->protected_->do_escape_coding)
-			ok = ok && FLAC__memory_alloc_aligned_unsigned_array(new_blocksize * 2, &encoder->private_->raw_bits_per_partition_unaligned, &encoder->private_->raw_bits_per_partition);
+			ok = ok && FLAC__memory_alloc_aligned_uint32_array(new_blocksize * 2, &encoder->private_->raw_bits_per_partition_unaligned, &encoder->private_->raw_bits_per_partition);
 }
 	if(ok)
 		encoder->private_->input_capacity = new_blocksize;
