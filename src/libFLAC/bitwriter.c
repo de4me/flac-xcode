@@ -198,30 +198,6 @@ void FLAC__bitwriter_clear(FLAC__BitWriter *bw)
 	bw->words = bw->bits = 0;
 }
 
-void FLAC__bitwriter_dump(const FLAC__BitWriter *bw, FILE *out)
-{
-	uint32_t i, j;
-	if(bw == 0) {
-		fprintf(out, "bitwriter is NULL\n");
-	}
-	else {
-		fprintf(out, "bitwriter: capacity=%u words=%u bits=%u total_bits=%u\n", bw->capacity, bw->words, bw->bits, FLAC__TOTAL_BITS(bw));
-
-		for(i = 0; i < bw->words; i++) {
-			fprintf(out, "%08X: ", i);
-			for(j = 0; j < FLAC__BITS_PER_WORD; j++)
-				fprintf(out, "%01d", bw->buffer[i] & ((bwword)1 << (FLAC__BITS_PER_WORD-j-1)) ? 1:0);
-			fprintf(out, "\n");
-		}
-		if(bw->bits > 0) {
-			fprintf(out, "%08X: ", i);
-			for(j = 0; j < bw->bits; j++)
-				fprintf(out, "%01d", bw->accum & ((bwword)1 << (bw->bits-j-1)) ? 1:0);
-			fprintf(out, "\n");
-		}
-	}
-}
-
 FLAC__bool FLAC__bitwriter_get_write_crc16(FLAC__BitWriter *bw, FLAC__uint16 *crc)
 {
 	const FLAC__byte *buffer;
@@ -451,6 +427,7 @@ FLAC__bool FLAC__bitwriter_write_unary_unsigned(FLAC__BitWriter *bw, uint32_t va
 			FLAC__bitwriter_write_raw_uint32_nocheck(bw, 1, 1);
 }
 
+#if 0 /* UNUSED */
 uint32_t FLAC__bitwriter_rice_bits(FLAC__int32 val, uint32_t parameter)
 {
 	FLAC__uint32 uval;
@@ -465,7 +442,6 @@ uint32_t FLAC__bitwriter_rice_bits(FLAC__int32 val, uint32_t parameter)
 	return 1 + parameter + (uval >> parameter);
 }
 
-#if 0 /* UNUSED */
 uint32_t FLAC__bitwriter_golomb_bits_signed(int val, uint32_t parameter)
 {
 	uint32_t bits, msbs, uval;
