@@ -108,3 +108,4 @@ _deps
 **/xcuserdata/
 
 !Xcode/flac/include/config.h
+Xcode/flac/Headers/
