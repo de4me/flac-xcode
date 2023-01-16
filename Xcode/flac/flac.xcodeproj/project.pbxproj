@@ -42,15 +42,20 @@
 		BD077CE827443E3E00C1E879 /* stream_encoder_intrin_ssse3.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4F27443624008DED93 /* stream_encoder_intrin_ssse3.c */; };
 		BD077CE927443E4100C1E879 /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4D27443624008DED93 /* stream_encoder.c */; };
 		BD077CEA27443E4500C1E879 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5A27443624008DED93 /* window.c */; };
-		BD077CEB27443EC600C1E879 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C8E27443B3D00C1E879 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CEC27443EC600C1E879 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9427443B3D00C1E879 /* format.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CED27443EC600C1E879 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9627443B3D00C1E879 /* assert.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CEE27443EC600C1E879 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9227443B3D00C1E879 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CEF27443EC600C1E879 /* stream_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9527443B3D00C1E879 /* stream_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CF027443EC600C1E879 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9727443B3D00C1E879 /* callback.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CF127443EC600C1E879 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9127443B3D00C1E879 /* ordinals.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CF227443EC600C1E879 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C8F27443B3D00C1E879 /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD077CF327443EC600C1E879 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9027443B3D00C1E879 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE02975525400234174 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD62975521A00234174 /* callback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE12975525500234174 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BCE2975521A00234174 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE22975525500234174 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD22975521A00234174 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE32975525500234174 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD32975521A00234174 /* format.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE42975525500234174 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD02975521A00234174 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE52975525500234174 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD12975521A00234174 /* ordinals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE62975525500234174 /* stream_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD42975521A00234174 /* stream_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE72975525500234174 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BCF2975521A00234174 /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BE82975525500234174 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD52975521A00234174 /* assert.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BF52975550E00234174 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEB297554D700234174 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BF62975550E00234174 /* decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BED297554D700234174 /* decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BF72975550E00234174 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEE297554D700234174 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BF82975550F00234174 /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEF297554D700234174 /* encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD228BF92975550F00234174 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEC297554D700234174 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD3C8E8727443775008DED93 /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3C27443624008DED93 /* bitmath.c */; };
 		BD3C8E882744379E008DED93 /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3E27443624008DED93 /* bitreader.c */; };
 		BD3C8E89274437A3008DED93 /* bitwriter.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5427443624008DED93 /* bitwriter.c */; };
@@ -132,11 +137,6 @@
 		BD9EFC092744562E00DC1510 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
 		BD9EFC0A2744563200DC1510 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
 		BD9EFC0B2744563700DC1510 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
-		BD9EFC0C2744565400DC1510 /* decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9B27443B3D00C1E879 /* decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD9EFC0D2744565400DC1510 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9C27443B3D00C1E879 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD9EFC0E2744565400DC1510 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9927443B3D00C1E879 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD9EFC0F2744565400DC1510 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9A27443B3D00C1E879 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BD9EFC102744565400DC1510 /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9E27443B3D00C1E879 /* encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD9EFC1A27445B2E00DC1510 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
 		BD9EFC1B27445B3300DC1510 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
 		BD9EFC1C27445B4700DC1510 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
@@ -341,6 +341,20 @@
 		BD077CC827443DD100C1E879 /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_vsx.c; sourceTree = "<group>"; };
 		BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_sse2.c; sourceTree = "<group>"; };
+		BD228BCE2975521A00234174 /* export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
+		BD228BCF2975521A00234174 /* stream_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
+		BD228BD02975521A00234174 /* all.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = all.h; sourceTree = "<group>"; };
+		BD228BD12975521A00234174 /* ordinals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ordinals.h; sourceTree = "<group>"; };
+		BD228BD22975521A00234174 /* metadata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = metadata.h; sourceTree = "<group>"; };
+		BD228BD32975521A00234174 /* format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = format.h; sourceTree = "<group>"; };
+		BD228BD42975521A00234174 /* stream_decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_decoder.h; sourceTree = "<group>"; };
+		BD228BD52975521A00234174 /* assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
+		BD228BD62975521A00234174 /* callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = callback.h; sourceTree = "<group>"; };
+		BD228BEB297554D700234174 /* export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
+		BD228BEC297554D700234174 /* all.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = all.h; sourceTree = "<group>"; };
+		BD228BED297554D700234174 /* decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decoder.h; sourceTree = "<group>"; };
+		BD228BEE297554D700234174 /* metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metadata.h; sourceTree = "<group>"; };
+		BD228BEF297554D700234174 /* encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encoder.h; sourceTree = "<group>"; };
 		BD3C8E02274435CB008DED93 /* libFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD3C8E0B27443624008DED93 /* stream_encoder_framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder_framing.c; sourceTree = "<group>"; };
 		BD3C8E0F27443624008DED93 /* metadata_object.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metadata_object.c; sourceTree = "<group>"; };
@@ -668,11 +682,49 @@
 			path = deduplication;
 			sourceTree = "<group>";
 		};
+		BD228BCC2975521A00234174 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				BD228BCD2975521A00234174 /* FLAC */,
+				BD228BEA297554D700234174 /* FLAC++ */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		BD228BCD2975521A00234174 /* FLAC */ = {
+			isa = PBXGroup;
+			children = (
+				BD228BD02975521A00234174 /* all.h */,
+				BD228BD52975521A00234174 /* assert.h */,
+				BD228BD62975521A00234174 /* callback.h */,
+				BD228BCE2975521A00234174 /* export.h */,
+				BD228BD32975521A00234174 /* format.h */,
+				BD228BD22975521A00234174 /* metadata.h */,
+				BD228BD12975521A00234174 /* ordinals.h */,
+				BD228BD42975521A00234174 /* stream_decoder.h */,
+				BD228BCF2975521A00234174 /* stream_encoder.h */,
+			);
+			path = FLAC;
+			sourceTree = "<group>";
+		};
+		BD228BEA297554D700234174 /* FLAC++ */ = {
+			isa = PBXGroup;
+			children = (
+				BD228BEC297554D700234174 /* all.h */,
+				BD228BED297554D700234174 /* decoder.h */,
+				BD228BEF297554D700234174 /* encoder.h */,
+				BD228BEB297554D700234174 /* export.h */,
+				BD228BEE297554D700234174 /* metadata.h */,
+			);
+			path = "FLAC++";
+			sourceTree = "<group>";
+		};
 		BD3C8DF9274435CB008DED93 = {
 			isa = PBXGroup;
 			children = (
 				BDD642C32744E30900DC9529 /* config.h */,
 				BD3C8E09274435F3008DED93 /* src */,
+				BD228BCC2975521A00234174 /* Headers */,
 				BD3C8E03274435CB008DED93 /* Products */,
 				BD9EFBF7274445FD00DC1510 /* Frameworks */,
 			);
@@ -980,15 +1032,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD077CF127443EC600C1E879 /* ordinals.h in Headers */,
-				BD077CF227443EC600C1E879 /* stream_encoder.h in Headers */,
-				BD077CEB27443EC600C1E879 /* export.h in Headers */,
-				BD077CF327443EC600C1E879 /* all.h in Headers */,
-				BD077CEF27443EC600C1E879 /* stream_decoder.h in Headers */,
-				BD077CEE27443EC600C1E879 /* metadata.h in Headers */,
-				BD077CED27443EC600C1E879 /* assert.h in Headers */,
-				BD077CEC27443EC600C1E879 /* format.h in Headers */,
-				BD077CF027443EC600C1E879 /* callback.h in Headers */,
+				BD228BE62975525500234174 /* stream_decoder.h in Headers */,
+				BD228BE72975525500234174 /* stream_encoder.h in Headers */,
+				BD228BE12975525500234174 /* export.h in Headers */,
+				BD228BE02975525400234174 /* callback.h in Headers */,
+				BD228BE42975525500234174 /* all.h in Headers */,
+				BD228BE22975525500234174 /* metadata.h in Headers */,
+				BD228BE52975525500234174 /* ordinals.h in Headers */,
+				BD228BE82975525500234174 /* assert.h in Headers */,
+				BD228BE32975525500234174 /* format.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,11 +1116,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD9EFC0E2744565400DC1510 /* export.h in Headers */,
-				BD9EFC0F2744565400DC1510 /* all.h in Headers */,
-				BD9EFC0C2744565400DC1510 /* decoder.h in Headers */,
-				BD9EFC0D2744565400DC1510 /* metadata.h in Headers */,
-				BD9EFC102744565400DC1510 /* encoder.h in Headers */,
+				BD228BF52975550E00234174 /* export.h in Headers */,
+				BD228BF62975550E00234174 /* decoder.h in Headers */,
+				BD228BF92975550F00234174 /* all.h in Headers */,
+				BD228BF72975550E00234174 /* metadata.h in Headers */,
+				BD228BF82975550F00234174 /* encoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,11 +1143,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD077CCC27443DD100C1E879 /* Build configuration list for PBXNativeTarget "FLAC" */;
 			buildPhases = (
+				BD228BCA2975482500234174 /* Run Sed Headers */,
 				BD077CC327443DD100C1E879 /* Headers */,
 				BD077CC427443DD100C1E879 /* Sources */,
 				BD077CC527443DD100C1E879 /* Frameworks */,
 				BD077CC627443DD100C1E879 /* Resources */,
-				BD077CF427443F9500C1E879 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1276,11 +1328,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD9EFC03274455F200DC1510 /* Build configuration list for PBXNativeTarget "FLAC++" */;
 			buildPhases = (
+				BD228BE92975533C00234174 /* Run Sed Headers */,
 				BD9EFBFA274455F100DC1510 /* Headers */,
 				BD9EFBFB274455F100DC1510 /* Sources */,
 				BD9EFBFC274455F100DC1510 /* Frameworks */,
 				BD9EFBFD274455F100DC1510 /* Resources */,
-				BD9EFC112744583200DC1510 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1416,31 +1468,69 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BD077CF427443F9500C1E879 /* ShellScript */ = {
+		BD228BCA2975482500234174 /* Run Sed Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"$(SRCROOT)/../../include/FLAC/all.h",
+				"$(SRCROOT)/../../include/FLAC/assert.h",
+				"$(SRCROOT)/../../include/FLAC/callback.h",
+				"$(SRCROOT)/../../include/FLAC/export.h",
+				"$(SRCROOT)/../../include/FLAC/format.h",
+				"$(SRCROOT)/../../include/FLAC/metadata.h",
+				"$(SRCROOT)/../../include/FLAC/ordinals.h",
+				"$(SRCROOT)/../../include/FLAC/stream_decoder.h",
+				"$(SRCROOT)/../../include/FLAC/stream_encoder.h",
+			);
+			name = "Run Sed Headers";
+			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(PROJECT_DIR)/Headers/FLAC/all.h",
+				"$(PROJECT_DIR)/Headers/FLAC/assert.h",
+				"$(PROJECT_DIR)/Headers/FLAC/callback.h",
+				"$(PROJECT_DIR)/Headers/FLAC/export.h",
+				"$(PROJECT_DIR)/Headers/FLAC/format.h",
+				"$(PROJECT_DIR)/Headers/FLAC/metadata.h",
+				"$(PROJECT_DIR)/Headers/FLAC/ordinals.h",
+				"$(PROJECT_DIR)/Headers/FLAC/stream_decoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC/stream_encoder.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nif ! command -v find &> /dev/null || ! command -v sed &> /dev/null\nthen\n    echo \"commands could not be found\"\n    exit\nfi\n\nHEADERS=\"\"\nFILES=()\nPATHS=(\"$BUILT_PRODUCTS_DIR/$PRIVATE_HEADERS_FOLDER_PATH\" \"$BUILT_PRODUCTS_DIR/$PUBLIC_HEADERS_FOLDER_PATH\")\n\nfor path in \"${PATHS[@]}\"; do\n    if [ -d \"$path\" ]; then\n        ARRAY=( $(ls \"$path\") )\n        for file in \"${ARRAY[@]}\"; do\n            FILES+=( \"$path/$file\" )\n            NAME=\"${file##*/}\"\n            HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_NAME\\/$NAME>/g;\"\n        done\n    fi\ndone\n\nfor file in \"${FILES[@]}\"; do\n    sed -i '' -e \"$HEADERS\" \"$file\"\ndone\n";
+			shellPath = /bin/bash;
+			shellScript = "\nHEADERS=\"\"\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  input_name=\"SCRIPT_INPUT_FILE_${i}\"\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  input_file=\"${!input_name}\"\n  output_file=\"${!output_name}\"\n  NAME=\"${input_file##*/}\"\n  HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_MODULE_NAME\\/$NAME>/g;\"\n  cp -f $input_file $output_file\ndone\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  output_file=\"${!output_name}\"\n  sed -i '' -e $HEADERS $output_file\ndone\n";
 		};
-		BD9EFC112744583200DC1510 /* ShellScript */ = {
+		BD228BE92975533C00234174 /* Run Sed Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
+				"$(SRCROOT)/../../include/FLAC++/all.h",
+				"$(SRCROOT)/../../include/FLAC++/decoder.h",
+				"$(SRCROOT)/../../include/FLAC++/encoder.h",
+				"$(SRCROOT)/../../include/FLAC++/export.h",
+				"$(SRCROOT)/../../include/FLAC++/metadata.h",
+			);
+			name = "Run Sed Headers";
+			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(PROJECT_DIR)/Headers/FLAC++/all.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/decoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/encoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/export.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/metadata.h",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nif ! command -v find &> /dev/null || ! command -v sed &> /dev/null\nthen\n    echo \"commands could not be found\"\n    exit\nfi\n\nHEADERS=\"s/\\\"FLAC\\/stream_decoder.h\\\"/<FLAC\\/stream_decoder.h>/g; s/\\\"FLAC\\/stream_encoder.h\\\"/<FLAC\\/stream_encoder.h>/g; s/\\\"FLAC\\/metadata.h\\\"/<FLAC\\/metadata.h>/g;\"\nFILES=()\nPATHS=(\"$BUILT_PRODUCTS_DIR/$PRIVATE_HEADERS_FOLDER_PATH\" \"$BUILT_PRODUCTS_DIR/$PUBLIC_HEADERS_FOLDER_PATH\")\n\nfor path in \"${PATHS[@]}\"; do\n    if [ -d \"$path\" ]; then\n        ARRAY=( $(ls \"$path\") )\n        for file in \"${ARRAY[@]}\"; do\n            FILES+=( \"$path/$file\" )\n            NAME=\"${file##*/}\"\n            HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_NAME\\/$NAME>/g;\"\n        done\n    fi\ndone\n\nfor file in \"${FILES[@]}\"; do\n    sed -i '' -e \"$HEADERS\" \"$file\"\ndone\n";
+			shellPath = /bin/bash;
+			shellScript = "\nHEADERS=\"s/\\\"FLAC\\/stream_decoder.h\\\"/<FLAC\\/stream_decoder.h>/g;s/\\\"FLAC\\/stream_encoder.h\\\"/<FLAC\\/stream_encoder.h>/g;s/\\\"FLAC\\/metadata.h\\\"/<FLAC\\/metadata.h>/g;\"\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  input_name=\"SCRIPT_INPUT_FILE_${i}\"\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  input_file=\"${!input_name}\"\n  output_file=\"${!output_name}\"\n  NAME=\"${input_file##*/}\"\n  HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_MODULE_NAME\\/$NAME>/g;\"\n  cp -f $input_file $output_file\ndone\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  output_file=\"${!output_name}\"\n  sed -i '' -e $HEADERS $output_file\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
