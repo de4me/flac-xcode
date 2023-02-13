@@ -29,7 +29,6 @@
 		BD077CD927443E0C00C1E879 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
 		BD077CDB27443E1100C1E879 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
 		BD077CDC27443E1400C1E879 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
-		BD077CDD27443E1700C1E879 /* lpc_intrin_vsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */; };
 		BD077CDE27443E1A00C1E879 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5527443624008DED93 /* lpc.c */; };
 		BD077CDF27443E1C00C1E879 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5027443624008DED93 /* md5.c */; };
 		BD077CE027443E1F00C1E879 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1027443624008DED93 /* memory.c */; };
@@ -69,7 +68,6 @@
 		BD3C8E91274437CD008DED93 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
 		BD3C8E93274437D7008DED93 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
 		BD3C8E94274437DC008DED93 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
-		BD3C8E95274437E0008DED93 /* lpc_intrin_vsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */; };
 		BD3C8E96274437E5008DED93 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5527443624008DED93 /* lpc.c */; };
 		BD3C8E97274437E9008DED93 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5027443624008DED93 /* md5.c */; };
 		BD3C8E98274437ED008DED93 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1027443624008DED93 /* memory.c */; };
@@ -339,7 +337,6 @@
 		BD077CB827443B3D00C1E879 /* alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alloc.h; sourceTree = "<group>"; };
 		BD077CB927443B3D00C1E879 /* utf8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
 		BD077CC827443DD100C1E879 /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_vsx.c; sourceTree = "<group>"; };
 		BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_sse2.c; sourceTree = "<group>"; };
 		BD228BCE2975521A00234174 /* export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
 		BD228BCF2975521A00234174 /* stream_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
@@ -396,7 +393,6 @@
 		BD3C8E3E27443624008DED93 /* bitreader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitreader.c; sourceTree = "<group>"; };
 		BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_sse2.c; sourceTree = "<group>"; };
 		BD3C8E4A27443624008DED93 /* fixed.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fixed.c; sourceTree = "<group>"; };
-		BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_vsx.c; sourceTree = "<group>"; };
 		BD3C8E4D27443624008DED93 /* stream_encoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
 		BD3C8E4E27443624008DED93 /* float.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = float.c; sourceTree = "<group>"; };
 		BD3C8E4F27443624008DED93 /* stream_encoder_intrin_ssse3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stream_encoder_intrin_ssse3.c; sourceTree = "<group>"; };
@@ -676,7 +672,6 @@
 			children = (
 				BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */,
 				BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */,
-				BD18A1412815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_vsx.c */,
 				BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */,
 			);
 			path = deduplication;
@@ -784,7 +779,6 @@
 				BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */,
 				BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */,
 				BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */,
-				BD3C8E4C27443624008DED93 /* lpc_intrin_vsx.c */,
 				BD3C8E5527443624008DED93 /* lpc.c */,
 				BD3C8E5027443624008DED93 /* md5.c */,
 				BD3C8E1027443624008DED93 /* memory.c */,
@@ -1554,7 +1548,6 @@
 				BD077CE627443E3700C1E879 /* stream_encoder_intrin_avx2.c in Sources */,
 				BD077CD027443DEC00C1E879 /* bitreader.c in Sources */,
 				BD077CDC27443E1400C1E879 /* lpc_intrin_sse41.c in Sources */,
-				BD077CDD27443E1700C1E879 /* lpc_intrin_vsx.c in Sources */,
 				BD077CE427443E3100C1E879 /* stream_decoder.c in Sources */,
 				BD077CD227443DF100C1E879 /* cpu.c in Sources */,
 				BD077CD427443DF700C1E879 /* fixed_intrin_sse2.c in Sources */,
@@ -1589,7 +1582,6 @@
 				BD3C8E9D27443826008DED93 /* stream_encoder_intrin_avx2.c in Sources */,
 				BD3C8E882744379E008DED93 /* bitreader.c in Sources */,
 				BD3C8E94274437DC008DED93 /* lpc_intrin_sse41.c in Sources */,
-				BD3C8E95274437E0008DED93 /* lpc_intrin_vsx.c in Sources */,
 				BD3C8E9B27443816008DED93 /* stream_decoder.c in Sources */,
 				BD3C8E8A274437A7008DED93 /* cpu.c in Sources */,
 				BD3C8E8C274437B2008DED93 /* fixed_intrin_sse2.c in Sources */,

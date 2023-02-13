@@ -52,16 +52,6 @@
  #define SIZEOF_OFF_T 4
  #define SIZEOF_VOIDP 4
 // #define FLAC__HAS_NASM 1
-#elif defined(__ppc__)
-// TODO: PPC
-// #define FLAC__CPU_PPC 1
-#elif defined(__ppc64__)
-// TODO: PPC64
-// #define FLAC__CPU_PPC64 1
-// #define FLAC__HAS_TARGET_POWER8 1
-// #define FLAC__HAS_TARGET_POWER9 1
-// #define FLAC__USE_VSX 1
-// #define ENABLE_64_BIT_WORDS 1
 #endif
 
 /* define if building for ia32/i386 */
