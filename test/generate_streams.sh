@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 #  FLAC - Free Lossless Audio Codec
 #  Copyright (C) 2001-2009  Josh Coalson
 #  Copyright (C) 2011-2022  Xiph.Org Foundation
@@ -16,46 +18,12 @@
 #  restrictive of those mentioned above.  See the file COPYING.Xiph in this
 #  distribution.
 
-#
-# automake provides the following useful targets:
-#
-# all: build all programs and libraries using the current
-# configuration (set by configure)
-#
-# check: build and run all self-tests
-#
-# clean: remove everything except what's required to build everything
-#
-# distclean: remove everything except what goes in the distribution
-#
+. ./common.sh
 
-ACLOCAL_AMFLAGS = -I m4
+PATH="$(pwd)/../src/test_streams:$PATH"
+PATH="$(pwd)/../objs/$BUILD/bin:$PATH"
 
-SUBDIRS = doc include m4 man src test microbench oss-fuzz
-
-if EXAMPLES
-SUBDIRS += examples
-endif
-
-EXTRA_DIST = \
-	CMakeLists.txt \
-	config.cmake.h.in \
-	flac-config.cmake.in \
-	cmake/CheckA64NEON.c.in \
-	cmake/CheckA64NEON.cmake \
-	cmake/CheckCPUArch.c.in \
-	cmake/CheckCPUArch.cmake \
-	cmake/FindOgg.cmake \
-	cmake/UseSystemExtensions.cmake \
-	CHANGELOG.md \
-	COPYING.FDL \
-	COPYING.GPL \
-	COPYING.LGPL \
-	COPYING.Xiph \
-	README.md \
-	autogen.sh \
-	config.rpath \
-	depcomp \
-	ltmain.sh
-
-CLEANFILES = *~
+echo "Generating streams..."
+if [ ! -f wacky1.wav ] ; then
+	test_streams || die "ERROR during test_streams"
+fi
