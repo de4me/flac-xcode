@@ -35,6 +35,7 @@
 #include "share/compat.h"
 #include "share/private.h"
 #include "share/safe_str.h"
+#include "share/endswap.h"
 #include "encode.h"
 
 #ifdef min
@@ -128,6 +129,8 @@ static union {
 	FLAC__uint8 u8[UBUFFER_INT8_SIZE];
 	FLAC__int16 s16[UBUFFER_INT8_SIZE/2];
 	FLAC__uint16 u16[UBUFFER_INT8_SIZE/2];
+	FLAC__int32 s32[UBUFFER_INT8_SIZE/4];
+	FLAC__uint32 u32[UBUFFER_INT8_SIZE/4];
 } ubuffer;
 
 
@@ -1490,6 +1493,7 @@ FLAC__bool EncoderSession_construct(EncoderSession *e, encode_options_t options,
 #else
 	e->old_clock_t = 0;
 #endif
+	e->compression_ratio = 0.0;
 
 	memset(&e->info, 0, sizeof(e->info));
 
@@ -2327,110 +2331,125 @@ FLAC__bool format_input(FLAC__int32 *dest[], uint32_t wide_samples, FLAC__bool i
 
 	if(bps == 8) {
 		if(is_unsigned_samples) {
-			for(sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++)
+			for(channel = 0; channel < channels; channel++)
+				for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
 					out[channel][wide_sample] = (FLAC__int32)ubuffer.u8[sample] - 0x80;
 		}
 		else {
-			for(sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++)
+			for(channel = 0; channel < channels; channel++)
+				for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
 					out[channel][wide_sample] = (FLAC__int32)ubuffer.s8[sample];
 		}
 	}
 	else if(bps == 16) {
-		if(is_big_endian != is_big_endian_host_) {
-			uint8_t tmp;
-			const uint32_t bytes = wide_samples * channels * (bps >> 3);
-			uint32_t b;
-			for(b = 0; b < bytes; b += 2) {
-				tmp = ubuffer.u8[b];
-				ubuffer.u8[b] = ubuffer.u8[b+1];
-				ubuffer.u8[b+1] = tmp;
+		if(is_unsigned_samples) {
+			if(is_big_endian != is_big_endian_host_) {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = (FLAC__int32)(ENDSWAP_16(ubuffer.u16[sample])) - 0x8000;
+			}
+			else {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = (FLAC__int32)ubuffer.u16[sample] - 0x8000;
 			}
 		}
-		if(is_unsigned_samples) {
-			for(sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++)
-					out[channel][wide_sample] = ubuffer.u16[sample] - 0x8000;
-		}
 		else {
-			for(sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++)
-					out[channel][wide_sample] = ubuffer.s16[sample];
+			if(is_big_endian != is_big_endian_host_) {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = (int16_t)(ENDSWAP_16(ubuffer.s16[sample]));
+
+			}
+			else {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = ubuffer.s16[sample];
+			}
 		}
 	}
 	else if(bps == 24) {
 		if(!is_big_endian) {
-			uint8_t tmp;
-			const uint32_t bytes = wide_samples * channels * (bps >> 3);
-			uint32_t b;
-			for(b = 0; b < bytes; b += 3) {
-				tmp = ubuffer.u8[b];
-				ubuffer.u8[b] = ubuffer.u8[b+2];
-				ubuffer.u8[b+2] = tmp;
+			if(is_unsigned_samples) {
+				for(channel = 0; channel < channels; channel++) {
+					uint32_t b = 3*channel;
+					for(wide_sample = 0; wide_sample < wide_samples; wide_sample++) {
+						uint32_t t;
+						t  = ubuffer.u8[b];
+						t |= (uint32_t)(ubuffer.u8[b+1]) << 8;
+						t |= (uint32_t)(ubuffer.u8[b+2]) << 16;
+						out[channel][wide_sample] = (FLAC__int32)t - 0x800000;
+						b += 3*channels;
+					}
+				}
+			}
+			else {
+				for(channel = 0; channel < channels; channel++) {
+					uint32_t b = 3*channel;
+					for(wide_sample = 0; wide_sample < wide_samples; wide_sample++) {
+						uint32_t t;
+						t  = ubuffer.u8[b];
+						t |= (uint32_t)(ubuffer.u8[b+1]) << 8;
+						t |= (int32_t)(ubuffer.s8[b+2]) << 16;
+						out[channel][wide_sample] = t;
+						b += 3*channels;
+					}
+				}
 			}
 		}
-		if(is_unsigned_samples) {
-			uint32_t b;
-			for(b = sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++) {
-					uint32_t t;
-					t  = ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++];
-					out[channel][wide_sample] = (FLAC__int32)t - 0x800000;
-				}
-		}
 		else {
-			uint32_t b;
-			for(b = sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++) {
-					uint32_t t;
-					t  = ubuffer.s8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++];
-					out[channel][wide_sample] = t;
+			if(is_unsigned_samples) {
+				for(channel = 0; channel < channels; channel++) {
+					uint32_t b = 3*channel;
+					for(wide_sample = 0; wide_sample < wide_samples; wide_sample++) {
+						uint32_t t;
+						t  = ubuffer.u8[b]; t <<= 8;
+						t |= ubuffer.u8[b+1]; t <<= 8;
+						t |= ubuffer.u8[b+2];
+						out[channel][wide_sample] = (FLAC__int32)t - 0x800000;
+						b += 3*channels;
+					}
 				}
+			}
+			else {
+				for(channel = 0; channel < channels; channel++) {
+					uint32_t b = 3*channel;
+					for(wide_sample = 0; wide_sample < wide_samples; wide_sample++) {
+						uint32_t t;
+						t  = ubuffer.s8[b]; t <<= 8;
+						t |= ubuffer.u8[b+1]; t <<= 8;
+						t |= ubuffer.u8[b+2];
+						out[channel][wide_sample] = t;
+						b += 3*channels;
+					}
+				}
+			}
 		}
 	}
 	else if(bps == 32) {
-		if(!is_big_endian) {
-			uint8_t tmp;
-			const uint32_t bytes = wide_samples * channels * (bps >> 3);
-			uint32_t b;
-			for(b = 0; b < bytes; b += 4) {
-				tmp = ubuffer.u8[b];
-				ubuffer.u8[b] = ubuffer.u8[b+3];
-				ubuffer.u8[b+3] = tmp;
-
-				tmp = ubuffer.u8[b+1];
-				ubuffer.u8[b+1] = ubuffer.u8[b+2];
-				ubuffer.u8[b+2] = tmp;
+		if(is_unsigned_samples) {
+			if(is_big_endian != is_big_endian_host_) {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = ENDSWAP_32(ubuffer.u32[sample]) - 0x80000000;
+			}
+			else {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = ubuffer.u32[sample] - 0x80000000;
 			}
 		}
-		if(is_unsigned_samples) {
-			uint32_t b;
-			for(b = sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++) {
-					uint32_t t;
-					t  = ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++];
-					out[channel][wide_sample] = (FLAC__int32)t - 0x80000000;
-				}
-		}
 		else {
-			uint32_t b;
-			for(b = sample = wide_sample = 0; wide_sample < wide_samples; wide_sample++)
-				for(channel = 0; channel < channels; channel++, sample++) {
-					uint32_t t;
-					t  = ubuffer.s8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++]; t <<= 8;
-					t |= ubuffer.u8[b++];
-					out[channel][wide_sample] = t;
-				}
+			if(is_big_endian != is_big_endian_host_) {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = ENDSWAP_32(ubuffer.s32[sample]);
+			}
+			else {
+				for(channel = 0; channel < channels; channel++)
+					for(sample = channel, wide_sample = 0; wide_sample < wide_samples; wide_sample++, sample+=channels)
+						out[channel][wide_sample] = ubuffer.s32[sample];
+			}
 		}
 	}
 	else {
@@ -2566,6 +2585,18 @@ FLAC__StreamDecoderWriteStatus flac_decoder_write_callback(const FLAC__StreamDec
 	FLACDecoderData *data = &e->fmt.flac.client_data;
 	FLAC__uint64 n = min(data->samples_left_to_process, frame->header.blocksize);
 	(void)decoder;
+
+	/* Do some checks */
+	if(frame->header.channels != e->info.channels) {
+		print_error_with_state(e, "ERROR: number of channels of input changed mid-stream");
+		data->fatal_error = true;
+		return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
+	if(frame->header.bits_per_sample > e->info.bits_per_sample) {
+		print_error_with_state(e, "ERROR: bits-per-sample of input changed mid-stream");
+		data->fatal_error = true;
+		return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
 
 	if(!EncoderSession_process(e, buffer, (uint32_t)n)) {
 		print_error_with_state(e, "ERROR during encoding");
@@ -2886,3 +2917,4 @@ uint32_t count_channel_mask_bits(FLAC__uint32 mask)
 	}
 	return count;
 }
+

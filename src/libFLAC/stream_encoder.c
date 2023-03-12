@@ -375,9 +375,11 @@ typedef struct FLAC__StreamEncoderPrivate {
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 	uint32_t (*local_fixed_compute_best_predictor)(const FLAC__int32 data[], uint32_t data_len, float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
 	uint32_t (*local_fixed_compute_best_predictor_wide)(const FLAC__int32 data[], uint32_t data_len, float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
+	uint32_t (*local_fixed_compute_best_predictor_limit_residual)(const FLAC__int32 data[], uint32_t data_len, float residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
 #else
 	uint32_t (*local_fixed_compute_best_predictor)(const FLAC__int32 data[], uint32_t data_len, FLAC__fixedpoint residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
 	uint32_t (*local_fixed_compute_best_predictor_wide)(const FLAC__int32 data[], uint32_t data_len, FLAC__fixedpoint residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
+	uint32_t (*local_fixed_compute_best_predictor_limit_residual)(const FLAC__int32 data[], uint32_t data_len, FLAC__fixedpoint residual_bits_per_sample[FLAC__MAX_FIXED_ORDER+1]);
 #endif
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 	void (*local_lpc_compute_autocorrelation)(const FLAC__real data[], uint32_t data_len, uint32_t lag, double autoc[]);
@@ -389,6 +391,7 @@ typedef struct FLAC__StreamEncoderPrivate {
 	FLAC__bool disable_sse2;
 	FLAC__bool disable_ssse3;
 	FLAC__bool disable_sse41;
+	FLAC__bool disable_sse42;
 	FLAC__bool disable_avx2;
 	FLAC__bool disable_fma;
 	FLAC__bool disable_constant_subframes;
@@ -918,6 +921,8 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 		encoder->private_->cpuinfo.x86.ssse3 = false;
 	if(encoder->private_->disable_sse41)
 		encoder->private_->cpuinfo.x86.sse41 = false;
+	if(encoder->private_->disable_sse42)
+		encoder->private_->cpuinfo.x86.sse42 = false;
 	if(encoder->private_->disable_avx2)
 		encoder->private_->cpuinfo.x86.avx2 = false;
 	if(encoder->private_->disable_fma)
@@ -929,6 +934,7 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 	encoder->private_->local_precompute_partition_info_sums = precompute_partition_info_sums_;
 	encoder->private_->local_fixed_compute_best_predictor = FLAC__fixed_compute_best_predictor;
 	encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide;
+	encoder->private_->local_fixed_compute_best_predictor_limit_residual = FLAC__fixed_compute_best_predictor_limit_residual;
 #ifndef FLAC__INTEGER_ONLY_LIBRARY
 	encoder->private_->local_lpc_compute_residual_from_qlp_coefficients = FLAC__lpc_compute_residual_from_qlp_coefficients;
 	encoder->private_->local_lpc_compute_residual_from_qlp_coefficients_64bit = FLAC__lpc_compute_residual_from_qlp_coefficients_wide;
@@ -987,13 +993,22 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 #    ifdef FLAC__SSE2_SUPPORTED
 		if (encoder->private_->cpuinfo.x86.sse2) {
 			encoder->private_->local_fixed_compute_best_predictor      = FLAC__fixed_compute_best_predictor_intrin_sse2;
-			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_sse2;
 		}
 #    endif
 #    ifdef FLAC__SSSE3_SUPPORTED
 		if (encoder->private_->cpuinfo.x86.ssse3) {
 			encoder->private_->local_fixed_compute_best_predictor      = FLAC__fixed_compute_best_predictor_intrin_ssse3;
-			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_ssse3;
+		}
+#    endif
+#    ifdef FLAC__SSE4_2_SUPPORTED
+		if (encoder->private_->cpuinfo.x86.sse42) {
+			encoder->private_->local_fixed_compute_best_predictor_limit_residual = FLAC__fixed_compute_best_predictor_limit_residual_intrin_sse42;
+		}
+#    endif
+#    ifdef FLAC__AVX2_SUPPORTED
+		if (encoder->private_->cpuinfo.x86.avx2) {
+			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_avx2;
+			encoder->private_->local_fixed_compute_best_predictor_limit_residual = FLAC__fixed_compute_best_predictor_limit_residual_intrin_avx2;
 		}
 #    endif
 #   endif /* FLAC__HAS_X86INTRIN */
@@ -1039,13 +1054,23 @@ static FLAC__StreamEncoderInitStatus init_stream_internal_(
 #    ifdef FLAC__SSE2_SUPPORTED
 		if(encoder->private_->cpuinfo.x86.sse2) { /* For fuzzing */
 			encoder->private_->local_fixed_compute_best_predictor      = FLAC__fixed_compute_best_predictor_intrin_sse2;
-			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_sse2;
 		}
 #    endif
 #    ifdef FLAC__SSSE3_SUPPORTED
 		if (encoder->private_->cpuinfo.x86.ssse3) {
 			encoder->private_->local_fixed_compute_best_predictor      = FLAC__fixed_compute_best_predictor_intrin_ssse3;
-			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_ssse3;
+		}
+#    endif
+#    ifdef FLAC__SSE4_2_SUPPORTED
+		if (encoder->private_->cpuinfo.x86.sse42) {
+			encoder->private_->local_fixed_compute_best_predictor_limit_residual = FLAC__fixed_compute_best_predictor_limit_residual_intrin_sse42;
+
+		}
+#    endif
+#    ifdef FLAC__AVX2_SUPPORTED
+		if (encoder->private_->cpuinfo.x86.avx2) {
+			encoder->private_->local_fixed_compute_best_predictor_wide = FLAC__fixed_compute_best_predictor_wide_intrin_avx2;
+			encoder->private_->local_fixed_compute_best_predictor_limit_residual = FLAC__fixed_compute_best_predictor_limit_residual_intrin_avx2;
 		}
 #    endif
 #   endif /* FLAC__HAS_X86INTRIN */
@@ -1565,6 +1590,14 @@ FLAC_API FLAC__bool FLAC__stream_encoder_set_streamable_subset(FLAC__StreamEncod
 	return true;
 }
 
+/*
+ * The following routine was intended as debug routine and is not in the
+ * public headers, but SHOULD NOT CHANGE! It is known is is used in
+ * some non-audio projects needing every last bit of performance.
+ * See https://github.com/xiph/flac/issues/547 for details. These projects
+ * provide their own prototype, so changing the signature of this function
+ * would break building.
+ */
 FLAC_API FLAC__bool FLAC__stream_encoder_set_do_md5(FLAC__StreamEncoder *encoder, FLAC__bool value)
 {
 	FLAC__ASSERT(0 != encoder);
@@ -1975,6 +2008,7 @@ FLAC_API FLAC__bool FLAC__stream_encoder_disable_instruction_set(FLAC__StreamEnc
 	encoder->private_->disable_sse41 = value & 8;
 	encoder->private_->disable_avx2 = value & 16;
 	encoder->private_->disable_fma = value & 32;
+	encoder->private_->disable_sse42 = value & 64;
 	return true;
 }
 
@@ -2233,14 +2267,14 @@ FLAC_API FLAC__bool FLAC__stream_encoder_process(FLAC__StreamEncoder *encoder, c
 			append_to_verify_fifo_(&encoder->private_->verify.input_fifo, buffer, j, channels, n);
 
 		for(channel = 0; channel < channels; channel++) {
+			if (buffer[channel] == NULL) {
+				return false;
+			}
 			for(i = encoder->private_->current_sample_number, k = j; i <= blocksize && k < samples; i++, k++) {
 				if(buffer[channel][k] < sample_min || buffer[channel][k] > sample_max){
 					encoder->protected_->state = FLAC__STREAM_ENCODER_CLIENT_ERROR;
 					return false;
 				}
-			}
-			if (buffer[channel] == NULL) {
-				return false;
 			}
 			memcpy(&encoder->private_->integer_signal[channel][encoder->private_->current_sample_number], &buffer[channel][j], sizeof(buffer[channel][0]) * n);
 		}
@@ -2433,6 +2467,7 @@ void set_defaults_(FLAC__StreamEncoder *encoder)
 	encoder->private_->disable_sse2 = false;
 	encoder->private_->disable_ssse3 = false;
 	encoder->private_->disable_sse41 = false;
+	encoder->private_->disable_sse42 = false;
 	encoder->private_->disable_avx2 = false;
 	encoder->private_->disable_constant_subframes = false;
 	encoder->private_->disable_fixed_subframes = false;
@@ -3523,9 +3558,9 @@ FLAC__bool process_subframe_(
 		}
 		else
 			if(subframe_bps <= 32)
-				guess_fixed_order = FLAC__fixed_compute_best_predictor_limit_residual(((FLAC__int32 *)integer_signal),frame_header->blocksize, fixed_residual_bits_per_sample);
+				guess_fixed_order = encoder->private_->local_fixed_compute_best_predictor_limit_residual(((FLAC__int32 *)integer_signal+FLAC__MAX_FIXED_ORDER),frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
 			else
-				guess_fixed_order = FLAC__fixed_compute_best_predictor_limit_residual_33bit(((FLAC__int64 *)integer_signal),frame_header->blocksize, fixed_residual_bits_per_sample);
+				guess_fixed_order = FLAC__fixed_compute_best_predictor_limit_residual_33bit(((FLAC__int64 *)integer_signal+FLAC__MAX_FIXED_ORDER),frame_header->blocksize-FLAC__MAX_FIXED_ORDER, fixed_residual_bits_per_sample);
 
 		/* check for constant subframe */
 		if(
@@ -4383,9 +4418,10 @@ FLAC__bool set_partitioned_rice_(
 	uint32_t bits_ = FLAC__ENTROPY_CODING_METHOD_TYPE_LEN + FLAC__ENTROPY_CODING_METHOD_PARTITIONED_RICE_ORDER_LEN;
 	uint32_t *parameters, *raw_bits;
 	uint32_t partition, residual_sample;
-	uint32_t partition_samples;
+	uint32_t partition_samples, partition_samples_base;
+	uint32_t partition_samples_fixed_point_divisor, partition_samples_fixed_point_divisor_base;
 	const uint32_t partitions = 1u << partition_order;
-	FLAC__uint64 mean, k;
+	FLAC__uint64 mean;
 #ifdef ENABLE_RICE_PARAMETER_SEARCH
 	uint32_t min_rice_parameter, max_rice_parameter;
 #else
@@ -4397,52 +4433,38 @@ FLAC__bool set_partitioned_rice_(
 	parameters = partitioned_rice_contents->parameters;
 	raw_bits = partitioned_rice_contents->raw_bits;
 
+	partition_samples_base = (residual_samples+predictor_order) >> partition_order;
+
+	/* Integer division is slow. To speed up things, precalculate a fixed point
+	 * divisor, as all partitions except the first are the same size. 18 bits
+	 * are taken because maximum block size is 65535, max partition size for
+	 * partitions other than 0 is 32767 (15 bit), max abs residual is 2^31,
+	 * which leaves 18 bit */
+	partition_samples_fixed_point_divisor_base = 0x40000 / partition_samples_base;
+
 	for(partition = residual_sample = 0; partition < partitions; partition++) {
-		partition_samples = (residual_samples+predictor_order) >> partition_order;
-		if(partition == 0) {
+		partition_samples = partition_samples_base;
+		if(partition > 0) {
+			partition_samples_fixed_point_divisor = partition_samples_fixed_point_divisor_base;
+		}
+		else {
 			if(partition_samples <= predictor_order)
 				return false;
 			else
 				partition_samples -= predictor_order;
+			partition_samples_fixed_point_divisor = 0x40000 / partition_samples;
 		}
 		mean = abs_residual_partition_sums[partition];
-		/* we are basically calculating the size in bits of the
-		 * average residual magnitude in the partition:
-		 *   rice_parameter = floor(log2(mean/partition_samples))
-		 * 'mean' is not a good name for the variable, it is
+		/* 'mean' is not a good name for the variable, it is
 		 * actually the sum of magnitudes of all residual values
 		 * in the partition, so the actual mean is
 		 * mean/partition_samples
 		 */
-#if 0 /* old simple code */
-		for(rice_parameter = 0, k = partition_samples; k < mean; rice_parameter++, k <<= 1)
-			;
-#else
-#if defined FLAC__CPU_X86_64 /* and other 64-bit arch, too */
-		if(mean <= 0x80000000/512) { /* 512: more or less optimal for both 16- and 24-bit input */
-#else
-		if(mean <= 0x80000000/8) { /* 32-bit arch: use 32-bit math if possible */
-#endif
-			FLAC__uint32 k2, mean2 = (FLAC__uint32) mean;
-			rice_parameter = 0; k2 = partition_samples;
-			while(k2*8 < mean2) { /* requires: mean <= (2^31)/8 */
-				rice_parameter += 4; k2 <<= 4; /* tuned for 16-bit input */
-			}
-			while(k2 < mean2) { /* requires: mean <= 2^31 */
-				rice_parameter++; k2 <<= 1;
-			}
-		}
-		else {
-			rice_parameter = 0; k = partition_samples;
-			if(mean <= FLAC__U64L(0x8000000000000000)/128) /* usually mean is _much_ smaller than this value */
-				while(k*128 < mean) { /* requires: mean <= (2^63)/128 */
-					rice_parameter += 8; k <<= 8; /* tuned for 24-bit input */
-				}
-			while(k < mean) { /* requires: mean <= 2^63 */
-				rice_parameter++; k <<= 1;
-			}
-		}
-#endif
+		if(mean < 2 || (((mean - 1)*partition_samples_fixed_point_divisor)>>18) == 0)
+			rice_parameter = 0;
+		else
+			rice_parameter = FLAC__bitmath_ilog2_wide(((mean - 1)*partition_samples_fixed_point_divisor)>>18) + 1;
+
 		if(rice_parameter >= rice_parameter_limit) {
 #ifndef NDEBUG
 			fprintf(stderr, "clipping rice_parameter (%u -> %u) @6\n", rice_parameter, rice_parameter_limit - 1);

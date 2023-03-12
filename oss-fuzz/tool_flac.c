@@ -1,5 +1,5 @@
-/* libFLAC - Free Lossless Audio Codec library
- * Copyright (C) 2013-2022  Xiph.Org Foundation
+/* fuzzer_tool_flac
+ * Copyright (C) 2023  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,26 +29,62 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef FLAC__SHARE__PRIVATE_H
-#define FLAC__SHARE__PRIVATE_H
+#include <stdlib.h>
+#include <string.h> /* for memcpy */
+#define FUZZ_TOOL_FLAC
+#define fprintf(...)
+#define printf(...)
+#include "../src/flac/main.c"
+#include "common.h"
 
-/*
- * Unpublished debug routines from libFLAC. This should not be used from any
- * client code other than code shipped with the FLAC sources.
- */
-FLAC_API FLAC__bool FLAC__stream_encoder_disable_instruction_set(FLAC__StreamEncoder *encoder, FLAC__bool value);
-FLAC_API FLAC__bool FLAC__stream_encoder_disable_constant_subframes(FLAC__StreamEncoder *encoder, FLAC__bool value);
-FLAC_API FLAC__bool FLAC__stream_encoder_disable_fixed_subframes(FLAC__StreamEncoder *encoder, FLAC__bool value);
-FLAC_API FLAC__bool FLAC__stream_encoder_disable_verbatim_subframes(FLAC__StreamEncoder *encoder, FLAC__bool value);
-/*
- * The following two routines were intended as debug routines and are not
- * in the public headers, but SHOULD NOT CHANGE! It is known they are used
- * in some non-audio projects needing every last bit of performance.
- * See https://github.com/xiph/flac/issues/547 for details. These projects
- * provide their own prototypes, so changing the signature of these
- * functions would break building.
- */
-FLAC_API FLAC__bool FLAC__stream_encoder_set_do_md5(FLAC__StreamEncoder *encoder, FLAC__bool value);
-FLAC_API FLAC__bool FLAC__stream_encoder_get_do_md5(const FLAC__StreamEncoder *encoder);
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
 
-#endif /* FLAC__SHARE__PRIVATE_H */
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+{
+	size_t size_left = size;
+	size_t arglen;
+	char * argv[67];
+	char exename[] = "flac";
+	char filename[] = "/tmp/fuzzXXXXXX";
+	int numarg = 0, maxarg, pad;
+	int file_to_fuzz;
+
+	flac__utils_verbosity_ = 0;
+	share__opterr = 0;
+	share__optind = 0;
+
+
+	if(size < 2)
+		return 0;
+
+	maxarg = data[0] & 63;
+	pad = data[0] & 64;
+	size_left--;
+
+	argv[0] = exename;
+	numarg++;
+
+	/* Check whether input is zero delimited */
+	while((arglen = strnlen((char *)data+(size-size_left),size_left)) < size_left && numarg < maxarg) {
+		argv[numarg++] = (char *)data+(size-size_left);
+		size_left -= arglen + 1;
+	}
+
+	file_to_fuzz = mkstemp(filename);
+
+	if (file_to_fuzz < 0)
+		abort();
+	write(file_to_fuzz,data+(size-size_left),size_left);
+	if(pad)
+		write(file_to_fuzz,"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",12);
+	close(file_to_fuzz);
+
+	argv[numarg++] = filename;
+
+	main_to_fuzz(numarg,argv);
+
+	unlink(filename);
+
+	return 0;
+}
+

@@ -262,7 +262,8 @@ the HTML documentation.
 	metadata when writing the decoded file. Foreign metadata cannot be
 	transcoded, e.g. WAVE chunks saved in a FLAC file cannot be restored
 	when decoding to AIFF. Input and output must be regular files (not
-	stdin or stdout).
+	stdin or stdout). With this option, FLAC will pick the right output
+	format on decoding.
 
 **\--keep-foreign-metadata-if-present**
 :	Like \--keep-foreign-metadata, but without throwing an error if
@@ -544,22 +545,29 @@ the HTML documentation.
 :	Force input (when encoding) or output (when decoding) to be treated
 	as raw samples (even if filename ends in *.wav*).
 
-**\--force-aiff-format**
-:	Force the decoder to output AIFF format. This option is not needed if
-	the output filename (as set by -o) ends with *.aif* or *.aiff*. Also,
-	this option has no effect when encoding since input AIFF is
-	auto-detected.
-
-**\--force-rf64-format**
-:	Force the decoder to output RF64 format. This option is not needed if
-	the output filename (as set by -o) ends with *.rf64*. Also, this
-	option has no effect when encoding since input RF64 is auto-detected.
-
+**\--force-aiff-format**  
+**\--force-rf64-format**  
 **\--force-wave64-format**
-:	Force the decoder to output Wave64 format. This option is not needed
-	if the output filename (as set by -o) ends with *.w64*. Also, this
-	option has no effect when encoding since input Wave64 is
-	auto-detected.
+:	Force the decoder to output AIFF/RF64/WAVE64 format respectively.
+	This option is not needed if the output filename (as set by -o) 
+	ends with *.aif* or *.aiff*, *.rf64* and *.w64* respectively. Also,
+	this option has no effect when encoding since input is
+	auto-detected. When none of these options nor 
+	--keep-foreign-metadata are given and no output filename is set,
+	the output format is WAV by default.
+
+**\--force-legacy-wave-format**  
+**\--force-extensible-wave-format**
+:	Instruct the decoder to output a WAVE file with WAVE_FORMAT_PCM and
+	WAVE_FORMAT_EXTENSIBLE respectively. If none of these options nor
+	--keep-foreign-metadata are given, FLAC outputs WAVE_FORMAT_PCM
+	for mono or stereo with a bit depth of 8 or 16 bits, and
+	WAVE_FORMAT_EXTENSIBLE for all other audio formats.
+
+**\--force-aiff-c-none-format**  
+**\--force-aiff-c-sowt-format**
+:	Instruct the decoder to output an AIFF-C file with format NONE and
+	sowt respectively.
 
 ## NEGATIVE OPTIONS
 
