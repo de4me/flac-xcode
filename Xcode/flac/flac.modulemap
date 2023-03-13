@@ -1,5 +1,5 @@
 
-framework module SDL_Sound [extern_c] [system] {
+framework module FLAC [extern_c] [system] {
   umbrella header "all.h"
 
   export *
