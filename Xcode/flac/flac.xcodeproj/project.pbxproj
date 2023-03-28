@@ -562,6 +562,7 @@
 		BD53FB3E284B7C5F00B71F7E /* loudness.sci */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loudness.sci; sourceTree = "<group>"; };
 		BD53FB42284B7C5F00B71F7E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		BD53FB49284B7CB200B71F7E /* flacdiff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = flacdiff; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD679A2929D314C100E5D9F7 /* bitreader_read_rice_signed_block.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitreader_read_rice_signed_block.c; sourceTree = "<group>"; };
 		BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_neon.c; sourceTree = "<group>"; };
 		BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_neon.c; sourceTree = "<group>"; };
 		BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin.c; sourceTree = "<group>"; };
@@ -761,6 +762,7 @@
 		BD18A1402815FA5E0058D668 /* deduplication */ = {
 			isa = PBXGroup;
 			children = (
+				BD679A2929D314C100E5D9F7 /* bitreader_read_rice_signed_block.c */,
 				BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */,
 				BD18A1422815FA5E0058D668 /* lpc_compute_autocorrelation_intrin_sse2.c */,
 				BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */,
