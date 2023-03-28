@@ -76,12 +76,18 @@ void local_strcat(char **dest, const char *source)
 	*dest = safe_realloc_add_3op_(*dest, ndest, /*+*/nsource, /*+*/1);
 	if(*dest == NULL)
 		die("out of memory growing string");
+	/* If ndest == 0, strlen in safe_strncat reads
+	 * uninitialized data. To prevent that, set first character
+	 * to zero */
+	if(ndest == 0)
+		*dest[0] = 0;
 	safe_strncat(*dest, source, outlen);
 }
 
 static inline int local_isprint(int c)
 {
 	if (c < 32) return 0;
+	if (c > 127) return 0;
 	return isprint(c);
 }
 

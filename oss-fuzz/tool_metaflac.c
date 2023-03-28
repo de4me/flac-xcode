@@ -29,12 +29,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h> /* for memcpy */
-#define FUZZ_TOOL_FLAC
+#define FUZZ_TOOL_METAFLAC
 #define fprintf(...)
 #define printf(...)
-#include "../src/flac/main.c"
+#include "../src/metaflac/main.c"
 #include "common.h"
 
 int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
@@ -43,26 +44,25 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
 	size_t size_left = size;
 	size_t arglen;
-	char * argv[67];
-	char exename[] = "flac";
+	char * argv[64];
+	char exename[] = "metaflac";
 	char filename[] = "/tmp/fuzzXXXXXX";
+	char filename_stdin[] = "/tmp/fuzzXXXXXX";
 	int numarg = 0, maxarg;
 	int file_to_fuzz;
 	int tmp_stdout, tmp_stdin;
 	fpos_t pos_stdout;
 	bool use_stdin = false;
 
-	/* reset global vars */
-	flac__utils_verbosity_ = 0;
 	share__opterr = 0;
 	share__optind = 0;
-	align_reservoir_samples = 0;
+
 
 	if(size < 2)
 		return 0;
 
-	maxarg = data[0] & 63;
-	use_stdin = data[0] & 64;
+	maxarg = data[0] & 15;
+	use_stdin = data[0] & 16;
 	size_left--;
 
 	argv[0] = exename;
@@ -74,12 +74,28 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 		size_left -= arglen + 1;
 	}
 
+	/* Create file to feed directly */
 	file_to_fuzz = mkstemp(filename);
-
 	if (file_to_fuzz < 0)
 		abort();
-	write(file_to_fuzz,data+(size-size_left),size_left);
+	if(use_stdin) {
+		write(file_to_fuzz,data+(size-size_left),size_left/2);
+		size_left -= size_left/2;
+	}
+	else
+		write(file_to_fuzz,data+(size-size_left),size_left);
 	close(file_to_fuzz);
+
+	argv[numarg++] = filename;
+
+	/* Create file to feed to stdin */
+	if(use_stdin) {
+		file_to_fuzz = mkstemp(filename_stdin);
+		if (file_to_fuzz < 0)
+			abort();
+		write(file_to_fuzz,data+(size-size_left),size_left);
+		close(file_to_fuzz);
+	}
 
 	/* redirect stdout */
 	fflush(stdout);
@@ -89,9 +105,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 
 	/* redirect stdin */
 	tmp_stdin = dup(fileno(stdin));
-
 	if(use_stdin)
-		freopen(filename,"r",stdin);
+		freopen(filename_stdin,"r",stdin);
 	else {
 		freopen("/dev/null","r",stdin);
 		argv[numarg++] = filename;
@@ -112,6 +127,9 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 	clearerr(stdin);
 
 	unlink(filename);
+
+	if(use_stdin)
+		unlink(filename_stdin);
 
 	return 0;
 }
