@@ -6,6 +6,28 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		BD679A1329D312E700E5D9F7 /* ALL */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = BD679A1429D312E700E5D9F7 /* Build configuration list for PBXAggregateTarget "ALL" */;
+			buildPhases = (
+			);
+			dependencies = (
+				BD679A2029D313B100E5D9F7 /* PBXTargetDependency */,
+				BD679A2229D313B100E5D9F7 /* PBXTargetDependency */,
+				BD679A2429D313B100E5D9F7 /* PBXTargetDependency */,
+				BD679A2629D313B100E5D9F7 /* PBXTargetDependency */,
+				BD679A2829D313B100E5D9F7 /* PBXTargetDependency */,
+				BD679A1829D3132600E5D9F7 /* PBXTargetDependency */,
+				BD679A1A29D3132600E5D9F7 /* PBXTargetDependency */,
+				BD679A1C29D3132600E5D9F7 /* PBXTargetDependency */,
+				BD679A1E29D3132600E5D9F7 /* PBXTargetDependency */,
+			);
+			name = ALL;
+			productName = ALL;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		BD077CBA27443BA900C1E879 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C8F27443B3D00C1E879 /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD077CBB27443BA900C1E879 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9027443B3D00C1E879 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -169,6 +191,69 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BD679A1729D3132600E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD077CC727443DD100C1E879;
+			remoteInfo = FLAC;
+		};
+		BD679A1929D3132600E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD9EFBFE274455F100DC1510;
+			remoteInfo = "FLAC++";
+		};
+		BD679A1B29D3132600E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD3C8E01274435CB008DED93;
+			remoteInfo = libFLAC;
+		};
+		BD679A1D29D3132600E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD9EFC1527445A9F00DC1510;
+			remoteInfo = "libFLAC++";
+		};
+		BD679A1F29D313B100E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAA4284B6A7100B71F7E;
+			remoteInfo = libgetopt;
+		};
+		BD679A2129D313B100E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAC3284B6D5900B71F7E;
+			remoteInfo = libgrabbag;
+		};
+		BD679A2329D313B100E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAD3284B6E8400B71F7E;
+			remoteInfo = libreplaygain_analysis;
+		};
+		BD679A2529D313B100E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAAF284B6BF400B71F7E;
+			remoteInfo = libreplaygain_synthesis;
+		};
+		BD679A2729D313B100E5D9F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAB8284B6C5000B71F7E;
+			remoteInfo = libutf8;
+		};
 		BD7C135127463B240073ED0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
@@ -1413,6 +1498,10 @@
 						CreatedOnToolsVersion = 13.4;
 						ProvisioningStyle = Automatic;
 					};
+					BD679A1329D312E700E5D9F7 = {
+						CreatedOnToolsVersion = 14.2;
+						ProvisioningStyle = Automatic;
+					};
 					BD9EFBFE274455F100DC1510 = {
 						CreatedOnToolsVersion = 13.1;
 						ProvisioningStyle = Automatic;
@@ -1448,6 +1537,7 @@
 				BD53FA60284B666600B71F7E /* flac */,
 				BD53FB1F284B77DF00B71F7E /* metaflac */,
 				BD53FB48284B7CB200B71F7E /* flacdiff */,
+				BD679A1329D312E700E5D9F7 /* ALL */,
 			);
 		};
 /* End PBXProject section */
@@ -1722,6 +1812,51 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BD679A1829D3132600E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD077CC727443DD100C1E879 /* FLAC */;
+			targetProxy = BD679A1729D3132600E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A1A29D3132600E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD9EFBFE274455F100DC1510 /* FLAC++ */;
+			targetProxy = BD679A1929D3132600E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A1C29D3132600E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD3C8E01274435CB008DED93 /* libFLAC */;
+			targetProxy = BD679A1B29D3132600E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A1E29D3132600E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD9EFC1527445A9F00DC1510 /* libFLAC++ */;
+			targetProxy = BD679A1D29D3132600E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A2029D313B100E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAA4284B6A7100B71F7E /* libgetopt */;
+			targetProxy = BD679A1F29D313B100E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A2229D313B100E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAC3284B6D5900B71F7E /* libgrabbag */;
+			targetProxy = BD679A2129D313B100E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A2429D313B100E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAD3284B6E8400B71F7E /* libreplaygain_analysis */;
+			targetProxy = BD679A2329D313B100E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A2629D313B100E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAAF284B6BF400B71F7E /* libreplaygain_synthesis */;
+			targetProxy = BD679A2529D313B100E5D9F7 /* PBXContainerItemProxy */;
+		};
+		BD679A2829D313B100E5D9F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAB8284B6C5000B71F7E /* libutf8 */;
+			targetProxy = BD679A2729D313B100E5D9F7 /* PBXContainerItemProxy */;
+		};
 		BD7C135227463B240073ED0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BD3C8E01274435CB008DED93 /* libFLAC */;
@@ -2134,6 +2269,22 @@
 			};
 			name = Release;
 		};
+		BD679A1529D312E700E5D9F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BD679A1629D312E700E5D9F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		BD9EFC04274455F200DC1510 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2306,6 +2457,15 @@
 			buildConfigurations = (
 				BD53FB4E284B7CB200B71F7E /* Debug */,
 				BD53FB4F284B7CB200B71F7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD679A1429D312E700E5D9F7 /* Build configuration list for PBXAggregateTarget "ALL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD679A1529D312E700E5D9F7 /* Debug */,
+				BD679A1629D312E700E5D9F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
