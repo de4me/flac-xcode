@@ -297,7 +297,11 @@ void DecoderSession_destroy(DecoderSession *d, FLAC__bool error_occurred)
 		}
 #endif
 		fclose(d->fout);
+
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	/* Always delete output file when fuzzing */
 		if(error_occurred)
+#endif
 			flac_unlink(d->outfilename);
 	}
 }
@@ -1140,6 +1144,10 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 	else {
 		/* must not have gotten STREAMINFO, save the bps from the frame header */
 		FLAC__ASSERT(!decoder_session->got_stream_info);
+		if(decoder_session->format == FORMAT_RAW && ((decoder_session->bps % 8) != 0  || decoder_session->bps < 4)) {
+			flac__utils_printf(stderr, 1, "%s: ERROR: bits per sample is %u, must be 8/16/24/32 for raw format output\n", decoder_session->inbasefilename, decoder_session->bps);
+			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+		}
 		decoder_session->bps = bps;
 	}
 
@@ -1178,9 +1186,8 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 	/*
 	 * limit the number of samples to accept based on --until
 	 */
-	FLAC__ASSERT(!decoder_session->skip_specification->is_relative);
 	/* if we never got the total_samples from the metadata, the skip and until specs would never have been canonicalized, so protect against that: */
-	if(decoder_session->skip_specification->is_relative) {
+	if(decoder_session->skip_specification->is_relative || !decoder_session->got_stream_info) {
 		if(decoder_session->skip_specification->value.samples == 0) /* special case for when no --skip was given */
 			decoder_session->skip_specification->is_relative = false; /* convert to our meaning of beginning-of-stream */
 		else {
@@ -1188,7 +1195,7 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
 		}
 	}
-	if(decoder_session->until_specification->is_relative) {
+	if(decoder_session->until_specification->is_relative || !decoder_session->got_stream_info) {
 		if(decoder_session->until_specification->value.samples == 0) /* special case for when no --until was given */
 			decoder_session->until_specification->is_relative = false; /* convert to our meaning of end-of-stream */
 		else {

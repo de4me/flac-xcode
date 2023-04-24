@@ -1626,6 +1626,11 @@ int EncoderSession_finish_ok(EncoderSession *e, int info_align_carry, int info_a
 		ret = 1;
 	}
 
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+        /* Always delete output file when fuzzing */
+	flac_unlink(e->outfilename);
+#endif
+
 	EncoderSession_destroy(e);
 
 	return ret;
@@ -1951,8 +1956,12 @@ FLAC__bool EncoderSession_init_encoder(EncoderSession *e, encode_options_t optio
 			flac_decoder_data->num_metadata_blocks = j;
 			if(options.padding > 0)
 				p = options.padding;
-			if(p < 0)
-				p = e->total_samples_to_encode / sample_rate < 20*60? FLAC_ENCODE__DEFAULT_PADDING : FLAC_ENCODE__DEFAULT_PADDING*8;
+			if(p < 0) {
+				if(sample_rate == 0)
+					p = FLAC_ENCODE__DEFAULT_PADDING;
+				else
+					p = e->total_samples_to_encode / sample_rate < 20*60? FLAC_ENCODE__DEFAULT_PADDING : FLAC_ENCODE__DEFAULT_PADDING*8;
+			}
 			if(p > 0)
 				p += (e->replay_gain ? GRABBAG__REPLAYGAIN_MAX_TAG_SPACE_REQUIRED : 0);
 			p = min(p, (int)((1u << FLAC__STREAM_METADATA_LENGTH_LEN) - 1));
@@ -2015,7 +2024,10 @@ FLAC__bool EncoderSession_init_encoder(EncoderSession *e, encode_options_t optio
 		if(options.padding != 0) {
 			padding.is_last = false; /* the encoder will set this for us */
 			padding.type = FLAC__METADATA_TYPE_PADDING;
-			padding.length = (uint32_t)(options.padding>0? options.padding : (e->total_samples_to_encode / sample_rate < 20*60? FLAC_ENCODE__DEFAULT_PADDING : FLAC_ENCODE__DEFAULT_PADDING*8)) + (e->replay_gain ? GRABBAG__REPLAYGAIN_MAX_TAG_SPACE_REQUIRED : 0);
+			if(sample_rate == 0)
+				padding.length = (uint32_t)(options.padding>0? options.padding : FLAC_ENCODE__DEFAULT_PADDING) + (e->replay_gain ? GRABBAG__REPLAYGAIN_MAX_TAG_SPACE_REQUIRED : 0);
+			else
+				padding.length = (uint32_t)(options.padding>0? options.padding : (e->total_samples_to_encode / sample_rate < 20*60? FLAC_ENCODE__DEFAULT_PADDING : FLAC_ENCODE__DEFAULT_PADDING*8)) + (e->replay_gain ? GRABBAG__REPLAYGAIN_MAX_TAG_SPACE_REQUIRED : 0);
 			padding.length = min(padding.length, (1u << FLAC__STREAM_METADATA_LENGTH_LEN) - 1);
 			static_metadata_append(&static_metadata, &padding, /*needs_delete=*/false);
 		}
@@ -2065,19 +2077,25 @@ FLAC__bool EncoderSession_init_encoder(EncoderSession *e, encode_options_t optio
 				}
 				break;
 			case CST_MAX_LPC_ORDER:
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 				FLAC__stream_encoder_set_max_lpc_order(e->encoder, options.compression_settings[ic].value.t_unsigned);
+#endif
 				break;
 			case CST_QLP_COEFF_PRECISION:
 				FLAC__stream_encoder_set_qlp_coeff_precision(e->encoder, options.compression_settings[ic].value.t_unsigned);
 				break;
 			case CST_DO_QLP_COEFF_PREC_SEARCH:
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 				FLAC__stream_encoder_set_do_qlp_coeff_prec_search(e->encoder, options.compression_settings[ic].value.t_bool);
+#endif
 				break;
 			case CST_DO_ESCAPE_CODING:
 				FLAC__stream_encoder_set_do_escape_coding(e->encoder, options.compression_settings[ic].value.t_bool);
 				break;
 			case CST_DO_EXHAUSTIVE_MODEL_SEARCH:
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 				FLAC__stream_encoder_set_do_exhaustive_model_search(e->encoder, options.compression_settings[ic].value.t_bool);
+#endif
 				break;
 			case CST_MIN_RESIDUAL_PARTITION_ORDER:
 				FLAC__stream_encoder_set_min_residual_partition_order(e->encoder, options.compression_settings[ic].value.t_unsigned);
@@ -2090,8 +2108,10 @@ FLAC__bool EncoderSession_init_encoder(EncoderSession *e, encode_options_t optio
 				break;
 		}
 	}
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 	if(*apodizations)
 		FLAC__stream_encoder_set_apodization(e->encoder, apodizations);
+#endif
 	FLAC__stream_encoder_set_total_samples_estimate(e->encoder, e->total_samples_to_encode);
 	FLAC__stream_encoder_set_metadata(e->encoder, (num_metadata > 0)? metadata : 0, num_metadata);
 	FLAC__stream_encoder_set_limit_min_bitrate(e->encoder, options.limit_min_bitrate);
@@ -2180,14 +2200,13 @@ FLAC__bool convert_to_seek_table_template(const char *requested_seek_points, int
 	if(num_requested_seek_points == 0 && 0 == cuesheet)
 		return true;
 
-	if(num_requested_seek_points < 0) {
 #if FLAC__HAS_OGG
-		/*@@@@@@ workaround ogg bug: too many seekpoints makes table not fit in one page */
-		if(e->use_ogg && e->total_samples_to_encode > 0 && e->total_samples_to_encode / e->info.sample_rate / 10 > 230)
-			requested_seek_points = "230x;";
-		else
+	if(e->use_ogg)
+		return true;
 #endif
-			requested_seek_points = "10s;";
+
+	if(num_requested_seek_points < 0) {
+		requested_seek_points = "10s;";
 		num_requested_seek_points = 1;
 	}
 
