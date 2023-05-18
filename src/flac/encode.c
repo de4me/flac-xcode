@@ -1016,7 +1016,10 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 		 * now that we know the sample rate, canonicalize the
 		 * --skip string to an absolute sample number:
 		 */
-		flac__utils_canonicalize_skip_until_specification(&options.skip_specification, encoder_session.info.sample_rate);
+		if(!flac__utils_canonicalize_skip_until_specification(&options.skip_specification, encoder_session.info.sample_rate)) {
+			flac__utils_printf(stderr, 1, "%s: ERROR: value of --skip is too large\n", encoder_session.inbasefilename, encoder_session.info.bits_per_sample-encoder_session.info.shift);
+			return EncoderSession_finish_error(&encoder_session);
+		}
 		FLAC__ASSERT(options.skip_specification.value.samples >= 0);
 		skip = (FLAC__uint64)options.skip_specification.value.samples;
 		FLAC__ASSERT(!options.sector_align || (options.format != FORMAT_FLAC && options.format != FORMAT_OGGFLAC && skip == 0));
@@ -1035,6 +1038,11 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 		/* adjust encoding parameters based on skip and until values */
 		switch(options.format) {
 			case FORMAT_RAW:
+				FLAC__ASSERT(sizeof(FLAC__off_t) == 8);
+				if(skip >= INT64_MAX / encoder_session.info.bytes_per_wide_sample) {
+					flac__utils_printf(stderr, 1, "%s: ERROR: value of --skip is too large\n", encoder_session.inbasefilename, encoder_session.info.bits_per_sample-encoder_session.info.shift);
+					return EncoderSession_finish_error(&encoder_session);
+				}
 				infilesize -= (FLAC__off_t)skip * encoder_session.info.bytes_per_wide_sample;
 				encoder_session.total_samples_to_encode = total_samples_in_input - skip;
 				break;
@@ -1043,6 +1051,11 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 			case FORMAT_RF64:
 			case FORMAT_AIFF:
 			case FORMAT_AIFF_C:
+				FLAC__ASSERT(sizeof(FLAC__off_t) == 8);
+				if(skip >= INT64_MAX / encoder_session.info.bytes_per_wide_sample) {
+					flac__utils_printf(stderr, 1, "%s: ERROR: value of --skip is too large\n", encoder_session.inbasefilename, encoder_session.info.bits_per_sample-encoder_session.info.shift);
+					return EncoderSession_finish_error(&encoder_session);
+				}
 				encoder_session.fmt.iff.data_bytes -= skip * encoder_session.info.bytes_per_wide_sample;
 				if(options.ignore_chunk_sizes) {
 					encoder_session.total_samples_to_encode = 0;
@@ -1265,10 +1278,18 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 							wanted = (size_t) min((FLAC__uint64)wanted, max_input_bytes - total_input_bytes_read);
 
 							if(lookahead_length > 0) {
-								FLAC__ASSERT(lookahead_length <= wanted);
-								memcpy(ubuffer.u8, lookahead, lookahead_length);
-								wanted -= lookahead_length;
-								bytes_read = lookahead_length;
+								if(lookahead_length <= wanted) {
+									memcpy(ubuffer.u8, lookahead, lookahead_length);
+									wanted -= lookahead_length;
+									bytes_read = lookahead_length;
+								}
+								else {
+									/* This happens when --until is used on a very short file */
+									FLAC__ASSERT(lookahead_length < CHUNK_OF_SAMPLES * encoder_session.info.bytes_per_wide_sample);
+									memcpy(ubuffer.u8, lookahead, wanted);
+									wanted = 0;
+									bytes_read = wanted;
+								}
 								if(wanted > 0) {
 									bytes_read += fread(ubuffer.u8+lookahead_length, sizeof(uint8_t), wanted, infile);
 									if(ferror(infile)) {
@@ -2247,7 +2268,10 @@ FLAC__bool convert_to_seek_table_template(const char *requested_seek_points, int
 FLAC__bool canonicalize_until_specification(utils__SkipUntilSpecification *spec, const char *inbasefilename, uint32_t sample_rate, FLAC__uint64 skip, FLAC__uint64 total_samples_in_input)
 {
 	/* convert from mm:ss.sss to sample number if necessary */
-	flac__utils_canonicalize_skip_until_specification(spec, sample_rate);
+	if(!flac__utils_canonicalize_skip_until_specification(spec, sample_rate)) {
+		flac__utils_printf(stderr, 1, "%s: ERROR, value of --until is too large\n", inbasefilename);
+		return false;
+	}
 
 	/* special case: if "--until=-0", use the special value '0' to mean "end-of-stream" */
 	if(spec->is_relative && spec->value.samples == 0) {
@@ -2411,7 +2435,7 @@ FLAC__bool format_input(FLAC__int32 *dest[], uint32_t wide_samples, FLAC__bool i
 						uint32_t t;
 						t  = ubuffer.u8[b];
 						t |= (uint32_t)(ubuffer.u8[b+1]) << 8;
-						t |= (int32_t)(ubuffer.s8[b+2]) << 16;
+						t |= (uint32_t)((int32_t)(ubuffer.s8[b+2])) << 16;
 						out[channel][wide_sample] = t;
 						b += 3*channels;
 					}
@@ -2897,7 +2921,7 @@ FLAC__bool read_sane_extended(FILE *f, FLAC__uint32 *val, const char *fn)
 		return false;
 	e = ((FLAC__uint16)(buf[0])<<8 | (FLAC__uint16)(buf[1]))-0x3FFF;
 	shift = 63-e;
-	if((buf[0]>>7)==1U || e<0 || e>63) {
+	if((buf[0]>>7)==1U || e<0 || e>=63) {
 		flac__utils_printf(stderr, 1, "%s: ERROR: invalid floating-point value\n", fn);
 		return false;
 	}

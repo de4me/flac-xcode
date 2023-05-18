@@ -136,6 +136,8 @@ FLAC__bool import_pic_from(const char *filename, FLAC__StreamMetadata **picture,
 
 	if(!FLAC__format_picture_is_legal(&(*picture)->data.picture, &error_message)) {
 		flac_fprintf(stderr, "%s: ERROR: new PICTURE block for \"%s\" is illegal: %s\n", filename, specification, error_message);
+		FLAC__metadata_object_delete(*picture);
+		*picture = 0;
 		return false;
 	}
 
@@ -171,6 +173,12 @@ FLAC__bool export_pic_to(const char *filename, const FLAC__StreamMetadata *pictu
 
 	if(f != stdout)
 		fclose(f);
+
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	/* Delete output file when fuzzing */
+	if(f != stdout)
+		flac_unlink(pic_filename);
+#endif
 
 	return true;
 }

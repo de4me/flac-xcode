@@ -347,11 +347,9 @@ FLAC__bool import_vc_from(const char *filename, FLAC__StreamMetadata *block, con
 		flac_fprintf(stderr, "%s: ERROR: empty import file name\n", filename);
 		return false;
 	}
-#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 	if(0 == strcmp(vc_filename->value, "-"))
 		f = stdin;
 	else
-#endif
 		f = flac_fopen(vc_filename->value, "r");
 
 	if(0 == f) {
@@ -421,5 +419,12 @@ FLAC__bool export_vc_to(const char *filename, FLAC__StreamMetadata *block, const
 
 	if(f != stdout)
 		fclose(f);
+
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	/* Delete output file when fuzzing */
+	if(f != stdout)
+		flac_unlink(vc_filename->value);
+#endif
+
 	return ret;
 }
