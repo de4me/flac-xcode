@@ -327,7 +327,7 @@ static FLAC__bool get_sample_info_wave(EncoderSession *e, encode_options_t optio
 				}
 				data_bytes -= (16+8);
 			}
-			if(data_bytes < 16) {
+			if(data_bytes < 16 || data_bytes > (UINT32_MAX-8)) {
 				flac__utils_printf(stderr, 1, "%s: ERROR: non-standard 'fmt ' chunk has length = %u\n", e->inbasefilename, (uint32_t)data_bytes);
 				return false;
 			}
@@ -1403,7 +1403,7 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 						break;
 					}
 
-					if(!FLAC__stream_decoder_process_single(encoder_session.fmt.flac.decoder)) {
+					if(decoder_state == FLAC__STREAM_DECODER_ABORTED || !FLAC__stream_decoder_process_single(encoder_session.fmt.flac.decoder)) {
 						flac__utils_printf(stderr, 1, "%s: ERROR: while decoding FLAC input, state = %s\n", encoder_session.inbasefilename, FLAC__stream_decoder_get_resolved_state_string(encoder_session.fmt.flac.decoder));
 						return EncoderSession_finish_error(&encoder_session);
 					}
