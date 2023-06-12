@@ -1,6 +1,6 @@
 /* libFLAC - Free Lossless Audio Codec library
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1415,12 +1415,14 @@ FLAC__bool read_metadata_(FLAC__StreamDecoder *decoder)
 		/* just in case we already have a seek table, and reading the next one fails: */
 		decoder->private_->has_seek_table = false;
 
-		if(!read_metadata_seektable_(decoder, is_last, length))
-			return false;
+		if(length > 0) {
+			if(!read_metadata_seektable_(decoder, is_last, length))
+				return false;
 
-		decoder->private_->has_seek_table = true;
-		if(!decoder->private_->is_seeking && decoder->private_->metadata_filter[FLAC__METADATA_TYPE_SEEKTABLE] && decoder->private_->metadata_callback)
-			decoder->private_->metadata_callback(decoder, &decoder->private_->seek_table, decoder->private_->client_data);
+			decoder->private_->has_seek_table = true;
+			if(!decoder->private_->is_seeking && decoder->private_->metadata_filter[FLAC__METADATA_TYPE_SEEKTABLE] && decoder->private_->metadata_callback)
+				decoder->private_->metadata_callback(decoder, &decoder->private_->seek_table, decoder->private_->client_data);
+		}
 	}
 	else {
 		FLAC__bool skip_it = !decoder->private_->metadata_filter[type];
