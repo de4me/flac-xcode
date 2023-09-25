@@ -355,6 +355,15 @@ the HTML documentation.
 	option in combination with custom encoding options meant for
 	archival.
 
+**-j** *\#***, \--threads=***\#*  
+:	Try to set a maximum number of threads to use for encoding. If
+	multithreading was not enabled on compilation or when setting a
+	number of threads that is too high, this fails with a warning. The
+	value of 0 is currently equal to 1 thread (i.e. no multithreading)
+	but may mean something else in the future. Currently the maximum
+	supported number of threads is 128. Using a value higher than the
+	number of available CPU threads harms performance.
+
 **\--replay-gain**
 :	Calculate ReplayGain values and store them as FLAC tags, similar to
 	vorbisgain. Title gains/peaks will be computed for each input file,
@@ -715,7 +724,7 @@ yield sane results. If necessary, an overlap can be specified, as can be
 the taper parameter, for example partial_tukey(2/0.2) or
 partial_tukey(2/0.2/0.5). ov should be smaller than 1 and can be
 negative. The use of this is that different parts of a block are ignored
-as the might contain transients which are hard to predict anyway. The
+as they might contain transients which are hard to predict anyway. The
 encoder will try each different added apodization (each covering a
 different part of the block) to see which resulting predictor results in
 the smallest representation.

@@ -1276,6 +1276,20 @@ fi
 echo OK
 
 ############################################################################
+# test threads
+############################################################################
+
+
+for J in 1 2 3 4 5 6 7 8 15 16 32 63 64; do
+	echo $ECHO_N "Testing --threads $J... " $ECHO_C
+	run_flac -f -V -o out.flac --threads $J "noisy-sine.wav" || die "ERROR on encoding"
+	run_flac -f -d out.flac || die "ERROR on decoding"
+	echo OK
+done
+
+rm -f out.wav
+
+############################################################################
 # test overflow of total samples field in STREAMINFO
 ############################################################################
 
