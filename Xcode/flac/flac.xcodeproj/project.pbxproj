@@ -77,6 +77,11 @@
 		BD228BF72975550E00234174 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEE297554D700234174 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD228BF82975550F00234174 /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEF297554D700234174 /* encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BD228BF92975550F00234174 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEC297554D700234174 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD2F079B2AC1F46D00AB5CE3 /* libgetopt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD53FAA5284B6A7100B71F7E /* libgetopt.a */; };
+		BD2F079C2AC1F46D00AB5CE3 /* libgrabbag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD53FAC4284B6D5900B71F7E /* libgrabbag.a */; };
+		BD2F079D2AC1F46D00AB5CE3 /* libreplaygain_analysis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD53FAD4284B6E8400B71F7E /* libreplaygain_analysis.a */; };
+		BD2F079E2AC1F46D00AB5CE3 /* libreplaygain_synthesis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD53FAB0284B6BF400B71F7E /* libreplaygain_synthesis.a */; };
+		BD2F079F2AC1F46D00AB5CE3 /* libutf8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD53FAB9284B6C5000B71F7E /* libutf8.a */; };
 		BD3C8E8727443775008DED93 /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3C27443624008DED93 /* bitmath.c */; };
 		BD3C8E882744379E008DED93 /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3E27443624008DED93 /* bitreader.c */; };
 		BD3C8E89274437A3008DED93 /* bitwriter.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5427443624008DED93 /* bitwriter.c */; };
@@ -191,6 +196,76 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BD2F07A02AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAA4284B6A7100B71F7E;
+			remoteInfo = libgetopt;
+		};
+		BD2F07A22AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAC3284B6D5900B71F7E;
+			remoteInfo = libgrabbag;
+		};
+		BD2F07A42AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAD3284B6E8400B71F7E;
+			remoteInfo = libreplaygain_analysis;
+		};
+		BD2F07A62AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAAF284B6BF400B71F7E;
+			remoteInfo = libreplaygain_synthesis;
+		};
+		BD2F07A82AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAB8284B6C5000B71F7E;
+			remoteInfo = libutf8;
+		};
+		BD2F07AA2AC1F4B100AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAA4284B6A7100B71F7E;
+			remoteInfo = libgetopt;
+		};
+		BD2F07AC2AC1F4B100AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAC3284B6D5900B71F7E;
+			remoteInfo = libgrabbag;
+		};
+		BD2F07AE2AC1F4B100AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAD3284B6E8400B71F7E;
+			remoteInfo = libreplaygain_analysis;
+		};
+		BD2F07B02AC1F4B100AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAAF284B6BF400B71F7E;
+			remoteInfo = libreplaygain_synthesis;
+		};
+		BD2F07B22AC1F4B100AB5CE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAB8284B6C5000B71F7E;
+			remoteInfo = libutf8;
+		};
 		BD679A1729D3132600E5D9F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
@@ -579,6 +654,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD2F079B2AC1F46D00AB5CE3 /* libgetopt.a in Frameworks */,
+				BD2F079C2AC1F46D00AB5CE3 /* libgrabbag.a in Frameworks */,
+				BD2F079D2AC1F46D00AB5CE3 /* libreplaygain_analysis.a in Frameworks */,
+				BD2F079E2AC1F46D00AB5CE3 /* libreplaygain_synthesis.a in Frameworks */,
+				BD2F079F2AC1F46D00AB5CE3 /* libutf8.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1241,6 +1321,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				BD2F07A12AC1F49E00AB5CE3 /* PBXTargetDependency */,
+				BD2F07A32AC1F49E00AB5CE3 /* PBXTargetDependency */,
+				BD2F07A52AC1F49E00AB5CE3 /* PBXTargetDependency */,
+				BD2F07A72AC1F49E00AB5CE3 /* PBXTargetDependency */,
+				BD2F07A92AC1F49E00AB5CE3 /* PBXTargetDependency */,
 			);
 			name = FLAC;
 			productName = FLAC;
@@ -1258,6 +1343,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				BD2F07AB2AC1F4B100AB5CE3 /* PBXTargetDependency */,
+				BD2F07AD2AC1F4B100AB5CE3 /* PBXTargetDependency */,
+				BD2F07AF2AC1F4B100AB5CE3 /* PBXTargetDependency */,
+				BD2F07B12AC1F4B100AB5CE3 /* PBXTargetDependency */,
+				BD2F07B32AC1F4B100AB5CE3 /* PBXTargetDependency */,
 			);
 			name = libFLAC;
 			productName = flac;
@@ -1457,7 +1547,7 @@
 		BD3C8DFA274435CB008DED93 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					BD077CC727443DD100C1E879 = {
 						CreatedOnToolsVersion = 13.1;
@@ -1814,6 +1904,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BD2F07A12AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAA4284B6A7100B71F7E /* libgetopt */;
+			targetProxy = BD2F07A02AC1F49E00AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07A32AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAC3284B6D5900B71F7E /* libgrabbag */;
+			targetProxy = BD2F07A22AC1F49E00AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07A52AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAD3284B6E8400B71F7E /* libreplaygain_analysis */;
+			targetProxy = BD2F07A42AC1F49E00AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07A72AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAAF284B6BF400B71F7E /* libreplaygain_synthesis */;
+			targetProxy = BD2F07A62AC1F49E00AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07A92AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAB8284B6C5000B71F7E /* libutf8 */;
+			targetProxy = BD2F07A82AC1F49E00AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07AB2AC1F4B100AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAA4284B6A7100B71F7E /* libgetopt */;
+			targetProxy = BD2F07AA2AC1F4B100AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07AD2AC1F4B100AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAC3284B6D5900B71F7E /* libgrabbag */;
+			targetProxy = BD2F07AC2AC1F4B100AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07AF2AC1F4B100AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAD3284B6E8400B71F7E /* libreplaygain_analysis */;
+			targetProxy = BD2F07AE2AC1F4B100AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07B12AC1F4B100AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAAF284B6BF400B71F7E /* libreplaygain_synthesis */;
+			targetProxy = BD2F07B02AC1F4B100AB5CE3 /* PBXContainerItemProxy */;
+		};
+		BD2F07B32AC1F4B100AB5CE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAB8284B6C5000B71F7E /* libutf8 */;
+			targetProxy = BD2F07B22AC1F4B100AB5CE3 /* PBXContainerItemProxy */;
+		};
 		BD679A1829D3132600E5D9F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BD077CC727443DD100C1E879 /* FLAC */;
