@@ -109,5 +109,5 @@ _deps
 .DS_Store
 **/xcuserdata/
 
-!Xcode/flac/include/config.h
+!Xcode/flac/flac/config.h
 Xcode/flac/Headers/
