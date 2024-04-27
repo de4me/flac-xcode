@@ -159,6 +159,141 @@
 		BD67C1F7284611BE003222A6 /* lpc_intrin_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */; };
 		BD827A0F28A014000067633E /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
 		BD827A1028A014020067633E /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
+		BD858DA62AC9AA9C0084BA79 /* cuesheet.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB327443B3D00C1E879 /* cuesheet.h */; };
+		BD858DA72AC9AA9C0084BA79 /* replaygain_synthesis.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CA727443B3D00C1E879 /* replaygain_synthesis.h */; };
+		BD858DA82AC9AA9C0084BA79 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB927443B3D00C1E879 /* utf8.h */; };
+		BD858DA92AC9AA9C0084BA79 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB027443B3D00C1E879 /* file.h */; };
+		BD858DAA2AC9AA9C0084BA79 /* compat.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB427443B3D00C1E879 /* compat.h */; };
+		BD858DAB2AC9AA9C0084BA79 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9127443B3D00C1E879 /* ordinals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DAC2AC9AA9C0084BA79 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9027443B3D00C1E879 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DAD2AC9AA9C0084BA79 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C8E27443B3D00C1E879 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DAE2AC9AA9C0084BA79 /* replaygain.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CAF27443B3D00C1E879 /* replaygain.h */; };
+		BD858DAF2AC9AA9C0084BA79 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C8F27443B3D00C1E879 /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DB02AC9AA9C0084BA79 /* win_utf8_io.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CA627443B3D00C1E879 /* win_utf8_io.h */; };
+		BD858DB12AC9AA9C0084BA79 /* endswap.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB527443B3D00C1E879 /* endswap.h */; };
+		BD858DB22AC9AA9C0084BA79 /* getopt.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CA927443B3D00C1E879 /* getopt.h */; };
+		BD858DB32AC9AA9C0084BA79 /* replaygain_analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB727443B3D00C1E879 /* replaygain_analysis.h */; };
+		BD858DB42AC9AA9C0084BA79 /* seektable.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB227443B3D00C1E879 /* seektable.h */; };
+		BD858DB52AC9AA9C0084BA79 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9727443B3D00C1E879 /* callback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DB62AC9AA9C0084BA79 /* grabbag.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB627443B3D00C1E879 /* grabbag.h */; };
+		BD858DB72AC9AA9C0084BA79 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9427443B3D00C1E879 /* format.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DB82AC9AA9C0084BA79 /* picture.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CAE27443B3D00C1E879 /* picture.h */; };
+		BD858DB92AC9AA9C0084BA79 /* macros.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CAC27443B3D00C1E879 /* macros.h */; };
+		BD858DBA2AC9AA9C0084BA79 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9227443B3D00C1E879 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DBB2AC9AA9C0084BA79 /* safe_str.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CA427443B3D00C1E879 /* safe_str.h */; };
+		BD858DBC2AC9AA9C0084BA79 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9627443B3D00C1E879 /* assert.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DBD2AC9AA9C0084BA79 /* alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CB827443B3D00C1E879 /* alloc.h */; };
+		BD858DBE2AC9AA9C0084BA79 /* private.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077CA827443B3D00C1E879 /* private.h */; };
+		BD858DBF2AC9AA9C0084BA79 /* stream_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9527443B3D00C1E879 /* stream_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DC12AC9AA9C0084BA79 /* format.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1427443624008DED93 /* format.c */; };
+		BD858DC22AC9AA9C0084BA79 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4E27443624008DED93 /* float.c */; };
+		BD858DC32AC9AA9C0084BA79 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
+		BD858DC42AC9AA9C0084BA79 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1027443624008DED93 /* memory.c */; };
+		BD858DC52AC9AA9C0084BA79 /* fixed.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4A27443624008DED93 /* fixed.c */; };
+		BD858DC62AC9AA9C0084BA79 /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4D27443624008DED93 /* stream_encoder.c */; };
+		BD858DC72AC9AA9C0084BA79 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5527443624008DED93 /* lpc.c */; };
+		BD858DC82AC9AA9C0084BA79 /* stream_encoder_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1227443624008DED93 /* stream_encoder_intrin_sse2.c */; };
+		BD858DC92AC9AA9C0084BA79 /* stream_encoder_framing.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E0B27443624008DED93 /* stream_encoder_framing.c */; };
+		BD858DCA2AC9AA9C0084BA79 /* metadata_iterators.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3D27443624008DED93 /* metadata_iterators.c */; };
+		BD858DCB2AC9AA9C0084BA79 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
+		BD858DCC2AC9AA9C0084BA79 /* bitwriter.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5427443624008DED93 /* bitwriter.c */; };
+		BD858DCD2AC9AA9C0084BA79 /* fixed_intrin_sse42.c in Sources */ = {isa = PBXBuildFile; fileRef = BDCCC2EE29BE6C8700DF273D /* fixed_intrin_sse42.c */; };
+		BD858DCE2AC9AA9C0084BA79 /* stream_encoder_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3727443624008DED93 /* stream_encoder_intrin_avx2.c */; };
+		BD858DCF2AC9AA9C0084BA79 /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3E27443624008DED93 /* bitreader.c */; };
+		BD858DD02AC9AA9C0084BA79 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
+		BD858DD12AC9AA9C0084BA79 /* stream_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1627443624008DED93 /* stream_decoder.c */; };
+		BD858DD22AC9AA9C0084BA79 /* cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1327443624008DED93 /* cpu.c */; };
+		BD858DD32AC9AA9C0084BA79 /* fixed_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5127443624008DED93 /* fixed_intrin_sse2.c */; };
+		BD858DD42AC9AA9C0084BA79 /* fixed_intrin_ssse3.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5327443624008DED93 /* fixed_intrin_ssse3.c */; };
+		BD858DD52AC9AA9C0084BA79 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5A27443624008DED93 /* window.c */; };
+		BD858DD62AC9AA9C0084BA79 /* lpc_intrin_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */; };
+		BD858DD72AC9AA9C0084BA79 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5027443624008DED93 /* md5.c */; };
+		BD858DD82AC9AA9C0084BA79 /* metadata_object.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E0F27443624008DED93 /* metadata_object.c */; };
+		BD858DD92AC9AA9C0084BA79 /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3C27443624008DED93 /* bitmath.c */; };
+		BD858DDA2AC9AA9C0084BA79 /* stream_encoder_intrin_ssse3.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4F27443624008DED93 /* stream_encoder_intrin_ssse3.c */; };
+		BD858DDB2AC9AA9C0084BA79 /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
+		BD858DDC2AC9AA9C0084BA79 /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5227443624008DED93 /* crc.c */; };
+		BD858DDD2AC9AA9C0084BA79 /* fixed_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDCCC2EF29BE6C8700DF273D /* fixed_intrin_avx2.c */; };
+		BD858DE72AC9AAA80084BA79 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9C27443B3D00C1E879 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DE82AC9AAA80084BA79 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9927443B3D00C1E879 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DE92AC9AAA80084BA79 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9A27443B3D00C1E879 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DEA2AC9AAA80084BA79 /* decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9B27443B3D00C1E879 /* decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DEB2AC9AAA80084BA79 /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD077C9E27443B3D00C1E879 /* encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858DED2AC9AAA80084BA79 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
+		BD858DEE2AC9AAA80084BA79 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
+		BD858DEF2AC9AAA80084BA79 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
+		BD858E022AC9AAB60084BA79 /* stream_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD42975521A00234174 /* stream_decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E032AC9AAB60084BA79 /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BCF2975521A00234174 /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E042AC9AAB60084BA79 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BCE2975521A00234174 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E052AC9AAB60084BA79 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD62975521A00234174 /* callback.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E062AC9AAB60084BA79 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD02975521A00234174 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E072AC9AAB60084BA79 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD22975521A00234174 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E082AC9AAB60084BA79 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD12975521A00234174 /* ordinals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E092AC9AAB60084BA79 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD52975521A00234174 /* assert.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E0A2AC9AAB60084BA79 /* format.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BD32975521A00234174 /* format.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E0C2AC9AAB60084BA79 /* format.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1427443624008DED93 /* format.c */; };
+		BD858E0D2AC9AAB60084BA79 /* float.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4E27443624008DED93 /* float.c */; };
+		BD858E0E2AC9AAB60084BA79 /* lpc_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4127443624008DED93 /* lpc_intrin_sse2.c */; };
+		BD858E0F2AC9AAB60084BA79 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1027443624008DED93 /* memory.c */; };
+		BD858E102AC9AAB60084BA79 /* fixed.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4A27443624008DED93 /* fixed.c */; };
+		BD858E112AC9AAB60084BA79 /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4D27443624008DED93 /* stream_encoder.c */; };
+		BD858E122AC9AAB60084BA79 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5527443624008DED93 /* lpc.c */; };
+		BD858E132AC9AAB60084BA79 /* stream_encoder_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1227443624008DED93 /* stream_encoder_intrin_sse2.c */; };
+		BD858E142AC9AAB60084BA79 /* stream_encoder_framing.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E0B27443624008DED93 /* stream_encoder_framing.c */; };
+		BD858E152AC9AAB60084BA79 /* metadata_iterators.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3D27443624008DED93 /* metadata_iterators.c */; };
+		BD858E162AC9AAB60084BA79 /* lpc_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5927443624008DED93 /* lpc_intrin_avx2.c */; };
+		BD858E172AC9AAB60084BA79 /* bitwriter.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5427443624008DED93 /* bitwriter.c */; };
+		BD858E182AC9AAB60084BA79 /* fixed_intrin_sse42.c in Sources */ = {isa = PBXBuildFile; fileRef = BDCCC2EE29BE6C8700DF273D /* fixed_intrin_sse42.c */; };
+		BD858E192AC9AAB60084BA79 /* stream_encoder_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3727443624008DED93 /* stream_encoder_intrin_avx2.c */; };
+		BD858E1A2AC9AAB60084BA79 /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3E27443624008DED93 /* bitreader.c */; };
+		BD858E1B2AC9AAB60084BA79 /* lpc_intrin_sse41.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1527443624008DED93 /* lpc_intrin_sse41.c */; };
+		BD858E1C2AC9AAB60084BA79 /* stream_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1627443624008DED93 /* stream_decoder.c */; };
+		BD858E1D2AC9AAB60084BA79 /* cpu.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E1327443624008DED93 /* cpu.c */; };
+		BD858E1E2AC9AAB60084BA79 /* fixed_intrin_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5127443624008DED93 /* fixed_intrin_sse2.c */; };
+		BD858E1F2AC9AAB60084BA79 /* fixed_intrin_ssse3.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5327443624008DED93 /* fixed_intrin_ssse3.c */; };
+		BD858E202AC9AAB60084BA79 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5A27443624008DED93 /* window.c */; };
+		BD858E212AC9AAB60084BA79 /* lpc_intrin_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = BD67C1F5284611BE003222A6 /* lpc_intrin_neon.c */; };
+		BD858E222AC9AAB60084BA79 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5027443624008DED93 /* md5.c */; };
+		BD858E232AC9AAB60084BA79 /* metadata_object.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E0F27443624008DED93 /* metadata_object.c */; };
+		BD858E242AC9AAB60084BA79 /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E3C27443624008DED93 /* bitmath.c */; };
+		BD858E252AC9AAB60084BA79 /* stream_encoder_intrin_ssse3.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E4F27443624008DED93 /* stream_encoder_intrin_ssse3.c */; };
+		BD858E262AC9AAB60084BA79 /* lpc_intrin_fma.c in Sources */ = {isa = PBXBuildFile; fileRef = BD827A0E28A013E40067633E /* lpc_intrin_fma.c */; };
+		BD858E272AC9AAB60084BA79 /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E5227443624008DED93 /* crc.c */; };
+		BD858E282AC9AAB60084BA79 /* fixed_intrin_avx2.c in Sources */ = {isa = PBXBuildFile; fileRef = BDCCC2EF29BE6C8700DF273D /* fixed_intrin_avx2.c */; };
+		BD858E392AC9AABF0084BA79 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEB297554D700234174 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E3A2AC9AABF0084BA79 /* decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BED297554D700234174 /* decoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E3B2AC9AABF0084BA79 /* all.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEC297554D700234174 /* all.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E3C2AC9AABF0084BA79 /* metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEE297554D700234174 /* metadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E3D2AC9AABF0084BA79 /* encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = BD228BEF297554D700234174 /* encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD858E3F2AC9AABF0084BA79 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
+		BD858E402AC9AABF0084BA79 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
+		BD858E412AC9AABF0084BA79 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
+		BD858E4C2AC9AAC80084BA79 /* getopt1.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA82284B687100B71F7E /* getopt1.c */; };
+		BD858E4D2AC9AAC80084BA79 /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA84284B687100B71F7E /* getopt.c */; };
+		BD858E562AC9AAE00084BA79 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA7C284B687100B71F7E /* utf8.c */; };
+		BD858E572AC9AAE00084BA79 /* charset.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA7F284B687100B71F7E /* charset.c */; };
+		BD858E582AC9AAE00084BA79 /* iconvert.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA7B284B687100B71F7E /* iconvert.c */; };
+		BD858E612AC9AAEB0084BA79 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA8E284B687100B71F7E /* alloc.c */; };
+		BD858E622AC9AAEB0084BA79 /* snprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA90284B687100B71F7E /* snprintf.c */; };
+		BD858E632AC9AAEB0084BA79 /* cuesheet.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA8C284B687100B71F7E /* cuesheet.c */; };
+		BD858E642AC9AAEB0084BA79 /* replaygain.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA8F284B687100B71F7E /* replaygain.c */; };
+		BD858E652AC9AAEB0084BA79 /* picture.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA91284B687100B71F7E /* picture.c */; };
+		BD858E662AC9AAEB0084BA79 /* seektable.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA8D284B687100B71F7E /* seektable.c */; };
+		BD858E672AC9AAEB0084BA79 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA92284B687100B71F7E /* file.c */; };
+		BD858E702AC9AAF50084BA79 /* replaygain_analysis.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA95284B687100B71F7E /* replaygain_analysis.c */; };
+		BD858E792AC9AAFE0084BA79 /* replaygain_synthesis.c in Sources */ = {isa = PBXBuildFile; fileRef = BD53FA87284B687100B71F7E /* replaygain_synthesis.c */; };
+		BD858E7F2AC9ABD90084BA79 /* libgetopt-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E522AC9AAC80084BA79 /* libgetopt-iOS.a */; };
+		BD858E802AC9ABD90084BA79 /* libgrabbag-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E6C2AC9AAEB0084BA79 /* libgrabbag-iOS.a */; };
+		BD858E812AC9ABD90084BA79 /* libreplaygain_analysis-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E752AC9AAF50084BA79 /* libreplaygain_analysis-iOS.a */; };
+		BD858E822AC9ABD90084BA79 /* libreplaygain_synthesis-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E7E2AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS.a */; };
+		BD858E832AC9ABD90084BA79 /* libutf8-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E5D2AC9AAE00084BA79 /* libutf8-iOS.a */; };
+		BD858E842AC9ABEC0084BA79 /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E332AC9AAB60084BA79 /* FLAC.framework */; };
+		BD858E852AC9AC090084BA79 /* libgetopt-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E522AC9AAC80084BA79 /* libgetopt-iOS.a */; };
+		BD858E862AC9AC090084BA79 /* libgrabbag-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E6C2AC9AAEB0084BA79 /* libgrabbag-iOS.a */; };
+		BD858E872AC9AC090084BA79 /* libreplaygain_analysis-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E752AC9AAF50084BA79 /* libreplaygain_analysis-iOS.a */; };
+		BD858E882AC9AC090084BA79 /* libreplaygain_synthesis-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E7E2AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS.a */; };
+		BD858E892AC9AC090084BA79 /* libutf8-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858E5D2AC9AAE00084BA79 /* libutf8-iOS.a */; };
+		BD858E8C2AC9B8310084BA79 /* libFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD858DE22AC9AA9C0084BA79 /* libFLAC.a */; };
 		BD9EFC092744562E00DC1510 /* stream_encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E7F27443624008DED93 /* stream_encoder.cpp */; };
 		BD9EFC0A2744563200DC1510 /* metadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8027443624008DED93 /* metadata.cpp */; };
 		BD9EFC0B2744563700DC1510 /* stream_decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD3C8E8427443624008DED93 /* stream_decoder.cpp */; };
@@ -335,6 +470,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = BD3C8E01274435CB008DED93;
 			remoteInfo = libFLAC;
+		};
+		BD858DF72AC9AAB60084BA79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAA4284B6A7100B71F7E;
+			remoteInfo = libgetopt;
+		};
+		BD858DF92AC9AAB60084BA79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAC3284B6D5900B71F7E;
+			remoteInfo = libgrabbag;
+		};
+		BD858DFB2AC9AAB60084BA79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAD3284B6E8400B71F7E;
+			remoteInfo = libreplaygain_analysis;
+		};
+		BD858DFD2AC9AAB60084BA79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAAF284B6BF400B71F7E;
+			remoteInfo = libreplaygain_synthesis;
+		};
+		BD858DFF2AC9AAB60084BA79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD53FAB8284B6C5000B71F7E;
+			remoteInfo = libutf8;
 		};
 		BD9EFC2E2744622400DC1510 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -642,6 +812,15 @@
 		BD67C1F8284611E1003222A6 /* lpc_compute_autocorrelation_intrin_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin_neon.c; sourceTree = "<group>"; };
 		BD827A0D28A012F10067633E /* lpc_compute_autocorrelation_intrin.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_compute_autocorrelation_intrin.c; sourceTree = "<group>"; };
 		BD827A0E28A013E40067633E /* lpc_intrin_fma.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lpc_intrin_fma.c; sourceTree = "<group>"; };
+		BD858DE22AC9AA9C0084BA79 /* libFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858DF42AC9AAA80084BA79 /* libFLAC++.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libFLAC++.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E332AC9AAB60084BA79 /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E482AC9AABF0084BA79 /* FLAC++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "FLAC++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E522AC9AAC80084BA79 /* libgetopt-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgetopt-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E5D2AC9AAE00084BA79 /* libutf8-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libutf8-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E6C2AC9AAEB0084BA79 /* libgrabbag-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libgrabbag-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E752AC9AAF50084BA79 /* libreplaygain_analysis-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libreplaygain_analysis-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD858E7E2AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libreplaygain_synthesis-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9EFBFF274455F100DC1510 /* FLAC++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "FLAC++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD9EFC1627445A9F00DC1510 /* libFLAC++.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libFLAC++.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCCC2EE29BE6C8700DF273D /* fixed_intrin_sse42.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fixed_intrin_sse42.c; sourceTree = "<group>"; };
@@ -737,6 +916,81 @@
 			files = (
 				BD53FB51284B7CFC00B71F7E /* libFLAC.a in Frameworks */,
 				BD53FB52284B7CFC00B71F7E /* libFLAC++.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858DDE2AC9AA9C0084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E852AC9AC090084BA79 /* libgetopt-iOS.a in Frameworks */,
+				BD858E862AC9AC090084BA79 /* libgrabbag-iOS.a in Frameworks */,
+				BD858E872AC9AC090084BA79 /* libreplaygain_analysis-iOS.a in Frameworks */,
+				BD858E882AC9AC090084BA79 /* libreplaygain_synthesis-iOS.a in Frameworks */,
+				BD858E892AC9AC090084BA79 /* libutf8-iOS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858DF02AC9AAA80084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E8C2AC9B8310084BA79 /* libFLAC.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E292AC9AAB60084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E7F2AC9ABD90084BA79 /* libgetopt-iOS.a in Frameworks */,
+				BD858E802AC9ABD90084BA79 /* libgrabbag-iOS.a in Frameworks */,
+				BD858E812AC9ABD90084BA79 /* libreplaygain_analysis-iOS.a in Frameworks */,
+				BD858E822AC9ABD90084BA79 /* libreplaygain_synthesis-iOS.a in Frameworks */,
+				BD858E832AC9ABD90084BA79 /* libutf8-iOS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E422AC9AABF0084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E842AC9ABEC0084BA79 /* FLAC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E4E2AC9AAC80084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E592AC9AAE00084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E682AC9AAEB0084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E712AC9AAF50084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E7A2AC9AAFE0084BA79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -913,6 +1167,15 @@
 				BD53FAD4284B6E8400B71F7E /* libreplaygain_analysis.a */,
 				BD53FB20284B77DF00B71F7E /* metaflac */,
 				BD53FB49284B7CB200B71F7E /* flacdiff */,
+				BD858DE22AC9AA9C0084BA79 /* libFLAC.a */,
+				BD858DF42AC9AAA80084BA79 /* libFLAC++.a */,
+				BD858E332AC9AAB60084BA79 /* FLAC.framework */,
+				BD858E482AC9AABF0084BA79 /* FLAC++.framework */,
+				BD858E522AC9AAC80084BA79 /* libgetopt-iOS.a */,
+				BD858E5D2AC9AAE00084BA79 /* libutf8-iOS.a */,
+				BD858E6C2AC9AAEB0084BA79 /* libgrabbag-iOS.a */,
+				BD858E752AC9AAF50084BA79 /* libreplaygain_analysis-iOS.a */,
+				BD858E7E2AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1281,6 +1544,114 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD858DA52AC9AA9C0084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858DA62AC9AA9C0084BA79 /* cuesheet.h in Headers */,
+				BD858DA72AC9AA9C0084BA79 /* replaygain_synthesis.h in Headers */,
+				BD858DA82AC9AA9C0084BA79 /* utf8.h in Headers */,
+				BD858DA92AC9AA9C0084BA79 /* file.h in Headers */,
+				BD858DAA2AC9AA9C0084BA79 /* compat.h in Headers */,
+				BD858DAB2AC9AA9C0084BA79 /* ordinals.h in Headers */,
+				BD858DAC2AC9AA9C0084BA79 /* all.h in Headers */,
+				BD858DAD2AC9AA9C0084BA79 /* export.h in Headers */,
+				BD858DAE2AC9AA9C0084BA79 /* replaygain.h in Headers */,
+				BD858DAF2AC9AA9C0084BA79 /* stream_encoder.h in Headers */,
+				BD858DB02AC9AA9C0084BA79 /* win_utf8_io.h in Headers */,
+				BD858DB12AC9AA9C0084BA79 /* endswap.h in Headers */,
+				BD858DB22AC9AA9C0084BA79 /* getopt.h in Headers */,
+				BD858DB32AC9AA9C0084BA79 /* replaygain_analysis.h in Headers */,
+				BD858DB42AC9AA9C0084BA79 /* seektable.h in Headers */,
+				BD858DB52AC9AA9C0084BA79 /* callback.h in Headers */,
+				BD858DB62AC9AA9C0084BA79 /* grabbag.h in Headers */,
+				BD858DB72AC9AA9C0084BA79 /* format.h in Headers */,
+				BD858DB82AC9AA9C0084BA79 /* picture.h in Headers */,
+				BD858DB92AC9AA9C0084BA79 /* macros.h in Headers */,
+				BD858DBA2AC9AA9C0084BA79 /* metadata.h in Headers */,
+				BD858DBB2AC9AA9C0084BA79 /* safe_str.h in Headers */,
+				BD858DBC2AC9AA9C0084BA79 /* assert.h in Headers */,
+				BD858DBD2AC9AA9C0084BA79 /* alloc.h in Headers */,
+				BD858DBE2AC9AA9C0084BA79 /* private.h in Headers */,
+				BD858DBF2AC9AA9C0084BA79 /* stream_decoder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858DE62AC9AAA80084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858DE72AC9AAA80084BA79 /* metadata.h in Headers */,
+				BD858DE82AC9AAA80084BA79 /* export.h in Headers */,
+				BD858DE92AC9AAA80084BA79 /* all.h in Headers */,
+				BD858DEA2AC9AAA80084BA79 /* decoder.h in Headers */,
+				BD858DEB2AC9AAA80084BA79 /* encoder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E012AC9AAB60084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E022AC9AAB60084BA79 /* stream_decoder.h in Headers */,
+				BD858E032AC9AAB60084BA79 /* stream_encoder.h in Headers */,
+				BD858E042AC9AAB60084BA79 /* export.h in Headers */,
+				BD858E052AC9AAB60084BA79 /* callback.h in Headers */,
+				BD858E062AC9AAB60084BA79 /* all.h in Headers */,
+				BD858E072AC9AAB60084BA79 /* metadata.h in Headers */,
+				BD858E082AC9AAB60084BA79 /* ordinals.h in Headers */,
+				BD858E092AC9AAB60084BA79 /* assert.h in Headers */,
+				BD858E0A2AC9AAB60084BA79 /* format.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E382AC9AABF0084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E392AC9AABF0084BA79 /* export.h in Headers */,
+				BD858E3A2AC9AABF0084BA79 /* decoder.h in Headers */,
+				BD858E3B2AC9AABF0084BA79 /* all.h in Headers */,
+				BD858E3C2AC9AABF0084BA79 /* metadata.h in Headers */,
+				BD858E3D2AC9AABF0084BA79 /* encoder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E4A2AC9AAC80084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E542AC9AAE00084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E5F2AC9AAEB0084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E6E2AC9AAF50084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E772AC9AAFE0084BA79 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BD9EFBFA274455F100DC1510 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1503,6 +1874,168 @@
 			productReference = BD53FB49284B7CB200B71F7E /* flacdiff */;
 			productType = "com.apple.product-type.tool";
 		};
+		BD858D9A2AC9AA9C0084BA79 /* libFLAC-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858DDF2AC9AA9C0084BA79 /* Build configuration list for PBXNativeTarget "libFLAC-iOS" */;
+			buildPhases = (
+				BD858DA52AC9AA9C0084BA79 /* Headers */,
+				BD858DC02AC9AA9C0084BA79 /* Sources */,
+				BD858DDE2AC9AA9C0084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libFLAC-iOS";
+			productName = flac;
+			productReference = BD858DE22AC9AA9C0084BA79 /* libFLAC.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858DE32AC9AAA80084BA79 /* libFLAC++-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858DF12AC9AAA80084BA79 /* Build configuration list for PBXNativeTarget "libFLAC++-iOS" */;
+			buildPhases = (
+				BD858DE62AC9AAA80084BA79 /* Headers */,
+				BD858DEC2AC9AAA80084BA79 /* Sources */,
+				BD858DF02AC9AAA80084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libFLAC++-iOS";
+			productName = "libFLAC++";
+			productReference = BD858DF42AC9AAA80084BA79 /* libFLAC++.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858DF52AC9AAB60084BA79 /* FLAC-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E302AC9AAB60084BA79 /* Build configuration list for PBXNativeTarget "FLAC-iOS" */;
+			buildPhases = (
+				BD858E002AC9AAB60084BA79 /* Run Sed Headers */,
+				BD858E012AC9AAB60084BA79 /* Headers */,
+				BD858E0B2AC9AAB60084BA79 /* Sources */,
+				BD858E292AC9AAB60084BA79 /* Frameworks */,
+				BD858E2F2AC9AAB60084BA79 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BD858DF62AC9AAB60084BA79 /* PBXTargetDependency */,
+				BD858DF82AC9AAB60084BA79 /* PBXTargetDependency */,
+				BD858DFA2AC9AAB60084BA79 /* PBXTargetDependency */,
+				BD858DFC2AC9AAB60084BA79 /* PBXTargetDependency */,
+				BD858DFE2AC9AAB60084BA79 /* PBXTargetDependency */,
+			);
+			name = "FLAC-iOS";
+			productName = FLAC;
+			productReference = BD858E332AC9AAB60084BA79 /* FLAC.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BD858E342AC9AABF0084BA79 /* FLAC++-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E452AC9AABF0084BA79 /* Build configuration list for PBXNativeTarget "FLAC++-iOS" */;
+			buildPhases = (
+				BD858E372AC9AABF0084BA79 /* Run Sed Headers */,
+				BD858E382AC9AABF0084BA79 /* Headers */,
+				BD858E3E2AC9AABF0084BA79 /* Sources */,
+				BD858E422AC9AABF0084BA79 /* Frameworks */,
+				BD858E442AC9AABF0084BA79 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FLAC++-iOS";
+			productName = "FLAC++";
+			productReference = BD858E482AC9AABF0084BA79 /* FLAC++.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BD858E492AC9AAC80084BA79 /* libgetopt-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E4F2AC9AAC80084BA79 /* Build configuration list for PBXNativeTarget "libgetopt-iOS" */;
+			buildPhases = (
+				BD858E4A2AC9AAC80084BA79 /* Headers */,
+				BD858E4B2AC9AAC80084BA79 /* Sources */,
+				BD858E4E2AC9AAC80084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libgetopt-iOS";
+			productName = libgetopt;
+			productReference = BD858E522AC9AAC80084BA79 /* libgetopt-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858E532AC9AAE00084BA79 /* libutf8-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E5A2AC9AAE00084BA79 /* Build configuration list for PBXNativeTarget "libutf8-iOS" */;
+			buildPhases = (
+				BD858E542AC9AAE00084BA79 /* Headers */,
+				BD858E552AC9AAE00084BA79 /* Sources */,
+				BD858E592AC9AAE00084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libutf8-iOS";
+			productName = libutf8;
+			productReference = BD858E5D2AC9AAE00084BA79 /* libutf8-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858E5E2AC9AAEB0084BA79 /* libgrabbag-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E692AC9AAEB0084BA79 /* Build configuration list for PBXNativeTarget "libgrabbag-iOS" */;
+			buildPhases = (
+				BD858E5F2AC9AAEB0084BA79 /* Headers */,
+				BD858E602AC9AAEB0084BA79 /* Sources */,
+				BD858E682AC9AAEB0084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libgrabbag-iOS";
+			productName = libgrabbag;
+			productReference = BD858E6C2AC9AAEB0084BA79 /* libgrabbag-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858E6D2AC9AAF50084BA79 /* libreplaygain_analysis-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E722AC9AAF50084BA79 /* Build configuration list for PBXNativeTarget "libreplaygain_analysis-iOS" */;
+			buildPhases = (
+				BD858E6E2AC9AAF50084BA79 /* Headers */,
+				BD858E6F2AC9AAF50084BA79 /* Sources */,
+				BD858E712AC9AAF50084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libreplaygain_analysis-iOS";
+			productName = libreplaygain_analysis;
+			productReference = BD858E752AC9AAF50084BA79 /* libreplaygain_analysis-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		BD858E762AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD858E7B2AC9AAFE0084BA79 /* Build configuration list for PBXNativeTarget "libreplaygain_synthesis-iOS" */;
+			buildPhases = (
+				BD858E772AC9AAFE0084BA79 /* Headers */,
+				BD858E782AC9AAFE0084BA79 /* Sources */,
+				BD858E7A2AC9AAFE0084BA79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libreplaygain_synthesis-iOS";
+			productName = libreplaygain_synthesis;
+			productReference = BD858E7E2AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		BD9EFBFE274455F100DC1510 /* FLAC++ */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD9EFC03274455F200DC1510 /* Build configuration list for PBXNativeTarget "FLAC++" */;
@@ -1594,6 +2127,33 @@
 						CreatedOnToolsVersion = 14.2;
 						ProvisioningStyle = Automatic;
 					};
+					BD858D9A2AC9AA9C0084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858DE32AC9AAA80084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858DF52AC9AAB60084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E342AC9AABF0084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E492AC9AAC80084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E532AC9AAE00084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E5E2AC9AAEB0084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E6D2AC9AAF50084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
+					BD858E762AC9AAFE0084BA79 = {
+						ProvisioningStyle = Automatic;
+					};
 					BD9EFBFE274455F100DC1510 = {
 						CreatedOnToolsVersion = 13.1;
 						ProvisioningStyle = Automatic;
@@ -1630,12 +2190,35 @@
 				BD53FB1F284B77DF00B71F7E /* metaflac */,
 				BD53FB48284B7CB200B71F7E /* flacdiff */,
 				BD679A1329D312E700E5D9F7 /* ALL */,
+				BD858D9A2AC9AA9C0084BA79 /* libFLAC-iOS */,
+				BD858DE32AC9AAA80084BA79 /* libFLAC++-iOS */,
+				BD858DF52AC9AAB60084BA79 /* FLAC-iOS */,
+				BD858E342AC9AABF0084BA79 /* FLAC++-iOS */,
+				BD858E492AC9AAC80084BA79 /* libgetopt-iOS */,
+				BD858E532AC9AAE00084BA79 /* libutf8-iOS */,
+				BD858E5E2AC9AAEB0084BA79 /* libgrabbag-iOS */,
+				BD858E6D2AC9AAF50084BA79 /* libreplaygain_analysis-iOS */,
+				BD858E762AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BD077CC627443DD100C1E879 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E2F2AC9AAB60084BA79 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E442AC9AABF0084BA79 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1689,6 +2272,70 @@
 			shellScript = "\nHEADERS=\"\"\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  input_name=\"SCRIPT_INPUT_FILE_${i}\"\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  input_file=\"${!input_name}\"\n  output_file=\"${!output_name}\"\n  NAME=\"${input_file##*/}\"\n  HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_MODULE_NAME\\/$NAME>/g;\"\n  cp -f $input_file $output_file\ndone\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  output_file=\"${!output_name}\"\n  sed -i '' -e $HEADERS $output_file\ndone\n";
 		};
 		BD228BE92975533C00234174 /* Run Sed Headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../../include/FLAC++/all.h",
+				"$(SRCROOT)/../../include/FLAC++/decoder.h",
+				"$(SRCROOT)/../../include/FLAC++/encoder.h",
+				"$(SRCROOT)/../../include/FLAC++/export.h",
+				"$(SRCROOT)/../../include/FLAC++/metadata.h",
+			);
+			name = "Run Sed Headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/Headers/FLAC++/all.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/decoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/encoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/export.h",
+				"$(PROJECT_DIR)/Headers/FLAC++/metadata.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\nHEADERS=\"s/\\\"FLAC\\/stream_decoder.h\\\"/<FLAC\\/stream_decoder.h>/g;s/\\\"FLAC\\/stream_encoder.h\\\"/<FLAC\\/stream_encoder.h>/g;s/\\\"FLAC\\/metadata.h\\\"/<FLAC\\/metadata.h>/g;\"\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  input_name=\"SCRIPT_INPUT_FILE_${i}\"\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  input_file=\"${!input_name}\"\n  output_file=\"${!output_name}\"\n  NAME=\"${input_file##*/}\"\n  HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_MODULE_NAME\\/$NAME>/g;\"\n  cp -f $input_file $output_file\ndone\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  output_file=\"${!output_name}\"\n  sed -i '' -e $HEADERS $output_file\ndone\n";
+		};
+		BD858E002AC9AAB60084BA79 /* Run Sed Headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../../include/FLAC/all.h",
+				"$(SRCROOT)/../../include/FLAC/assert.h",
+				"$(SRCROOT)/../../include/FLAC/callback.h",
+				"$(SRCROOT)/../../include/FLAC/export.h",
+				"$(SRCROOT)/../../include/FLAC/format.h",
+				"$(SRCROOT)/../../include/FLAC/metadata.h",
+				"$(SRCROOT)/../../include/FLAC/ordinals.h",
+				"$(SRCROOT)/../../include/FLAC/stream_decoder.h",
+				"$(SRCROOT)/../../include/FLAC/stream_encoder.h",
+			);
+			name = "Run Sed Headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/Headers/FLAC/all.h",
+				"$(PROJECT_DIR)/Headers/FLAC/assert.h",
+				"$(PROJECT_DIR)/Headers/FLAC/callback.h",
+				"$(PROJECT_DIR)/Headers/FLAC/export.h",
+				"$(PROJECT_DIR)/Headers/FLAC/format.h",
+				"$(PROJECT_DIR)/Headers/FLAC/metadata.h",
+				"$(PROJECT_DIR)/Headers/FLAC/ordinals.h",
+				"$(PROJECT_DIR)/Headers/FLAC/stream_decoder.h",
+				"$(PROJECT_DIR)/Headers/FLAC/stream_encoder.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\nHEADERS=\"\"\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  input_name=\"SCRIPT_INPUT_FILE_${i}\"\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  input_file=\"${!input_name}\"\n  output_file=\"${!output_name}\"\n  NAME=\"${input_file##*/}\"\n  HEADERS+=\"s/\\\"$NAME\\\"/<$PRODUCT_MODULE_NAME\\/$NAME>/g;\"\n  cp -f $input_file $output_file\ndone\n\nfor (( i=0; i<$SCRIPT_INPUT_FILE_COUNT; i++ ))\ndo\n  output_name=\"SCRIPT_OUTPUT_FILE_${i}\"\n  output_file=\"${!output_name}\"\n  sed -i '' -e $HEADERS $output_file\ndone\n";
+		};
+		BD858E372AC9AABF0084BA79 /* Run Sed Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1881,6 +2528,147 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD858DC02AC9AA9C0084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858DC12AC9AA9C0084BA79 /* format.c in Sources */,
+				BD858DC22AC9AA9C0084BA79 /* float.c in Sources */,
+				BD858DC32AC9AA9C0084BA79 /* lpc_intrin_sse2.c in Sources */,
+				BD858DC42AC9AA9C0084BA79 /* memory.c in Sources */,
+				BD858DC52AC9AA9C0084BA79 /* fixed.c in Sources */,
+				BD858DC62AC9AA9C0084BA79 /* stream_encoder.c in Sources */,
+				BD858DC72AC9AA9C0084BA79 /* lpc.c in Sources */,
+				BD858DC82AC9AA9C0084BA79 /* stream_encoder_intrin_sse2.c in Sources */,
+				BD858DC92AC9AA9C0084BA79 /* stream_encoder_framing.c in Sources */,
+				BD858DCA2AC9AA9C0084BA79 /* metadata_iterators.c in Sources */,
+				BD858DCB2AC9AA9C0084BA79 /* lpc_intrin_avx2.c in Sources */,
+				BD858DCC2AC9AA9C0084BA79 /* bitwriter.c in Sources */,
+				BD858DCD2AC9AA9C0084BA79 /* fixed_intrin_sse42.c in Sources */,
+				BD858DCE2AC9AA9C0084BA79 /* stream_encoder_intrin_avx2.c in Sources */,
+				BD858DCF2AC9AA9C0084BA79 /* bitreader.c in Sources */,
+				BD858DD02AC9AA9C0084BA79 /* lpc_intrin_sse41.c in Sources */,
+				BD858DD12AC9AA9C0084BA79 /* stream_decoder.c in Sources */,
+				BD858DD22AC9AA9C0084BA79 /* cpu.c in Sources */,
+				BD858DD32AC9AA9C0084BA79 /* fixed_intrin_sse2.c in Sources */,
+				BD858DD42AC9AA9C0084BA79 /* fixed_intrin_ssse3.c in Sources */,
+				BD858DD52AC9AA9C0084BA79 /* window.c in Sources */,
+				BD858DD62AC9AA9C0084BA79 /* lpc_intrin_neon.c in Sources */,
+				BD858DD72AC9AA9C0084BA79 /* md5.c in Sources */,
+				BD858DD82AC9AA9C0084BA79 /* metadata_object.c in Sources */,
+				BD858DD92AC9AA9C0084BA79 /* bitmath.c in Sources */,
+				BD858DDA2AC9AA9C0084BA79 /* stream_encoder_intrin_ssse3.c in Sources */,
+				BD858DDB2AC9AA9C0084BA79 /* lpc_intrin_fma.c in Sources */,
+				BD858DDC2AC9AA9C0084BA79 /* crc.c in Sources */,
+				BD858DDD2AC9AA9C0084BA79 /* fixed_intrin_avx2.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858DEC2AC9AAA80084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858DED2AC9AAA80084BA79 /* metadata.cpp in Sources */,
+				BD858DEE2AC9AAA80084BA79 /* stream_decoder.cpp in Sources */,
+				BD858DEF2AC9AAA80084BA79 /* stream_encoder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E0B2AC9AAB60084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E0C2AC9AAB60084BA79 /* format.c in Sources */,
+				BD858E0D2AC9AAB60084BA79 /* float.c in Sources */,
+				BD858E0E2AC9AAB60084BA79 /* lpc_intrin_sse2.c in Sources */,
+				BD858E0F2AC9AAB60084BA79 /* memory.c in Sources */,
+				BD858E102AC9AAB60084BA79 /* fixed.c in Sources */,
+				BD858E112AC9AAB60084BA79 /* stream_encoder.c in Sources */,
+				BD858E122AC9AAB60084BA79 /* lpc.c in Sources */,
+				BD858E132AC9AAB60084BA79 /* stream_encoder_intrin_sse2.c in Sources */,
+				BD858E142AC9AAB60084BA79 /* stream_encoder_framing.c in Sources */,
+				BD858E152AC9AAB60084BA79 /* metadata_iterators.c in Sources */,
+				BD858E162AC9AAB60084BA79 /* lpc_intrin_avx2.c in Sources */,
+				BD858E172AC9AAB60084BA79 /* bitwriter.c in Sources */,
+				BD858E182AC9AAB60084BA79 /* fixed_intrin_sse42.c in Sources */,
+				BD858E192AC9AAB60084BA79 /* stream_encoder_intrin_avx2.c in Sources */,
+				BD858E1A2AC9AAB60084BA79 /* bitreader.c in Sources */,
+				BD858E1B2AC9AAB60084BA79 /* lpc_intrin_sse41.c in Sources */,
+				BD858E1C2AC9AAB60084BA79 /* stream_decoder.c in Sources */,
+				BD858E1D2AC9AAB60084BA79 /* cpu.c in Sources */,
+				BD858E1E2AC9AAB60084BA79 /* fixed_intrin_sse2.c in Sources */,
+				BD858E1F2AC9AAB60084BA79 /* fixed_intrin_ssse3.c in Sources */,
+				BD858E202AC9AAB60084BA79 /* window.c in Sources */,
+				BD858E212AC9AAB60084BA79 /* lpc_intrin_neon.c in Sources */,
+				BD858E222AC9AAB60084BA79 /* md5.c in Sources */,
+				BD858E232AC9AAB60084BA79 /* metadata_object.c in Sources */,
+				BD858E242AC9AAB60084BA79 /* bitmath.c in Sources */,
+				BD858E252AC9AAB60084BA79 /* stream_encoder_intrin_ssse3.c in Sources */,
+				BD858E262AC9AAB60084BA79 /* lpc_intrin_fma.c in Sources */,
+				BD858E272AC9AAB60084BA79 /* crc.c in Sources */,
+				BD858E282AC9AAB60084BA79 /* fixed_intrin_avx2.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E3E2AC9AABF0084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E3F2AC9AABF0084BA79 /* metadata.cpp in Sources */,
+				BD858E402AC9AABF0084BA79 /* stream_decoder.cpp in Sources */,
+				BD858E412AC9AABF0084BA79 /* stream_encoder.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E4B2AC9AAC80084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E4C2AC9AAC80084BA79 /* getopt1.c in Sources */,
+				BD858E4D2AC9AAC80084BA79 /* getopt.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E552AC9AAE00084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E562AC9AAE00084BA79 /* utf8.c in Sources */,
+				BD858E572AC9AAE00084BA79 /* charset.c in Sources */,
+				BD858E582AC9AAE00084BA79 /* iconvert.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E602AC9AAEB0084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E612AC9AAEB0084BA79 /* alloc.c in Sources */,
+				BD858E622AC9AAEB0084BA79 /* snprintf.c in Sources */,
+				BD858E632AC9AAEB0084BA79 /* cuesheet.c in Sources */,
+				BD858E642AC9AAEB0084BA79 /* replaygain.c in Sources */,
+				BD858E652AC9AAEB0084BA79 /* picture.c in Sources */,
+				BD858E662AC9AAEB0084BA79 /* seektable.c in Sources */,
+				BD858E672AC9AAEB0084BA79 /* file.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E6F2AC9AAF50084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E702AC9AAF50084BA79 /* replaygain_analysis.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD858E782AC9AAFE0084BA79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD858E792AC9AAFE0084BA79 /* replaygain_synthesis.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BD9EFBFB274455F100DC1510 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2003,6 +2791,31 @@
 			isa = PBXTargetDependency;
 			target = BD3C8E01274435CB008DED93 /* libFLAC */;
 			targetProxy = BD7C135127463B240073ED0E /* PBXContainerItemProxy */;
+		};
+		BD858DF62AC9AAB60084BA79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAA4284B6A7100B71F7E /* libgetopt */;
+			targetProxy = BD858DF72AC9AAB60084BA79 /* PBXContainerItemProxy */;
+		};
+		BD858DF82AC9AAB60084BA79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAC3284B6D5900B71F7E /* libgrabbag */;
+			targetProxy = BD858DF92AC9AAB60084BA79 /* PBXContainerItemProxy */;
+		};
+		BD858DFA2AC9AAB60084BA79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAD3284B6E8400B71F7E /* libreplaygain_analysis */;
+			targetProxy = BD858DFB2AC9AAB60084BA79 /* PBXContainerItemProxy */;
+		};
+		BD858DFC2AC9AAB60084BA79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAAF284B6BF400B71F7E /* libreplaygain_synthesis */;
+			targetProxy = BD858DFD2AC9AAB60084BA79 /* PBXContainerItemProxy */;
+		};
+		BD858DFE2AC9AAB60084BA79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD53FAB8284B6C5000B71F7E /* libutf8 */;
+			targetProxy = BD858DFF2AC9AAB60084BA79 /* PBXContainerItemProxy */;
 		};
 		BD9EFC2F2744622400DC1510 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2178,6 +2991,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2240,6 +3054,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -2427,6 +3242,266 @@
 			};
 			name = Release;
 		};
+		BD858DE02AC9AA9C0084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
+				PRODUCT_NAME = libFLAC;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BD858DE12AC9AA9C0084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
+				PRODUCT_NAME = libFLAC;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/FLAC;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		BD858DF22AC9AAA80084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_NAME = "libFLAC++";
+				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BD858DF32AC9AAA80084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_NAME = "libFLAC++";
+				PUBLIC_HEADERS_FOLDER_PATH = "/usr/local/include/FLAC++";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		BD858E312AC9AAB60084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.4.3;
+				MODULEMAP_FILE = flac/flac.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
+				PRODUCT_NAME = FLAC;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BD858E322AC9AAB60084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.4.3;
+				MODULEMAP_FILE = flac/flac.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLAC;
+				PRODUCT_NAME = FLAC;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BD858E462AC9AABF0084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.4.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_NAME = "FLAC++";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BD858E472AC9AABF0084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.4.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.FLACPP;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
+				PRODUCT_NAME = "FLAC++";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BD858E502AC9AAC80084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BD858E512AC9AAC80084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BD858E5B2AC9AAE00084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BD858E5C2AC9AAE00084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BD858E6A2AC9AAEB0084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BD858E6B2AC9AAEB0084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BD858E732AC9AAF50084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BD858E742AC9AAF50084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		BD858E7C2AC9AAFE0084BA79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BD858E7D2AC9AAFE0084BA79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		BD9EFC04274455F200DC1510 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2606,6 +3681,87 @@
 			buildConfigurations = (
 				BD679A1529D312E700E5D9F7 /* Debug */,
 				BD679A1629D312E700E5D9F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858DDF2AC9AA9C0084BA79 /* Build configuration list for PBXNativeTarget "libFLAC-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858DE02AC9AA9C0084BA79 /* Debug */,
+				BD858DE12AC9AA9C0084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858DF12AC9AAA80084BA79 /* Build configuration list for PBXNativeTarget "libFLAC++-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858DF22AC9AAA80084BA79 /* Debug */,
+				BD858DF32AC9AAA80084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E302AC9AAB60084BA79 /* Build configuration list for PBXNativeTarget "FLAC-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E312AC9AAB60084BA79 /* Debug */,
+				BD858E322AC9AAB60084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E452AC9AABF0084BA79 /* Build configuration list for PBXNativeTarget "FLAC++-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E462AC9AABF0084BA79 /* Debug */,
+				BD858E472AC9AABF0084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E4F2AC9AAC80084BA79 /* Build configuration list for PBXNativeTarget "libgetopt-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E502AC9AAC80084BA79 /* Debug */,
+				BD858E512AC9AAC80084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E5A2AC9AAE00084BA79 /* Build configuration list for PBXNativeTarget "libutf8-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E5B2AC9AAE00084BA79 /* Debug */,
+				BD858E5C2AC9AAE00084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E692AC9AAEB0084BA79 /* Build configuration list for PBXNativeTarget "libgrabbag-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E6A2AC9AAEB0084BA79 /* Debug */,
+				BD858E6B2AC9AAEB0084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E722AC9AAF50084BA79 /* Build configuration list for PBXNativeTarget "libreplaygain_analysis-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E732AC9AAF50084BA79 /* Debug */,
+				BD858E742AC9AAF50084BA79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD858E7B2AC9AAFE0084BA79 /* Build configuration list for PBXNativeTarget "libreplaygain_synthesis-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD858E7C2AC9AAFE0084BA79 /* Debug */,
+				BD858E7D2AC9AAFE0084BA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
