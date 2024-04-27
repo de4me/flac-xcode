@@ -1283,7 +1283,8 @@ void show_help(void)
 	printf("  -h, --help                   Show this screen\n");
 	printf("  -H, --explain                Show detailed explanation of usage and options\n");
 	printf("  -d, --decode                 Decode (the default behavior is to encode)\n");
-	printf("  -t, --test                   Same as -d except no decoded file is written\n");
+	printf("  -t, --test                   Same as -d except no decoded file is written,\n");
+	printf("                               with some additional checks.\n");
 	printf("  -a, --analyze                Same as -d except an analysis file is written\n");
 	printf("  -c, --stdout                 Write output to stdout\n");
 	printf("  -s, --silent                 Do not write runtime encode/decode statistics\n");
@@ -1410,7 +1411,8 @@ void show_explain(void)
 	printf("  -h, --help                   Show basic usage a list of all options\n");
 	printf("  -H, --explain                Show this screen\n");
 	printf("  -d, --decode                 Decode (the default behavior is to encode)\n");
-	printf("  -t, --test                   Same as -d except no decoded file is written\n");
+	printf("  -t, --test                   Same as -d except no decoded file is written,\n");
+	printf("                               with some additional checks.\n");
 	printf("  -a, --analyze                Same as -d except an analysis file is written\n");
 	printf("  -c, --stdout                 Write output to stdout\n");
 	printf("  -s, --silent                 Do not write runtime encode/decode statistics\n");
@@ -2203,10 +2205,14 @@ int decode_file(const char *infilename)
 		output_format = FORMAT_WAVE;
 
 	/* Now do subformats */
-	if(option_values.force_legacy_wave_format)
+	if(option_values.force_legacy_wave_format) {
+		output_format = FORMAT_WAVE;
 		output_subformat = SUBFORMAT_WAVE_PCM;
-	else if(option_values.force_extensible_wave_format)
+	}
+	else if(option_values.force_extensible_wave_format) {
+		output_format = FORMAT_WAVE;
 		output_subformat = SUBFORMAT_WAVE_EXTENSIBLE;
+	}
 	else if(option_values.force_aiff_c_none_format) {
 		output_format = FORMAT_AIFF_C;
 		output_subformat = SUBFORMAT_AIFF_C_NONE;

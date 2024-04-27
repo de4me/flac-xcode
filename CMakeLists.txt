@@ -114,7 +114,6 @@ check_include_file("inttypes.h" HAVE_INTTYPES_H)
 check_include_file("stdint.h" HAVE_STDINT_H)
 check_include_file("stdbool.h" HAVE_STDBOOL_H)
 check_include_file("arm_neon.h" FLAC__HAS_NEONINTRIN)
-check_include_file("semaphore.h" HAVE_SEMAPHORE_H)
 
 if(NOT HAVE_STDINT_H OR NOT HAVE_STDBOOL_H)
     message(SEND_ERROR "Header stdint.h and/or stdbool.h not found")
@@ -126,7 +125,15 @@ else()
     check_include_file("x86intrin.h" FLAC__HAS_X86INTRIN)
 endif()
 
-check_function_exists(fseeko HAVE_FSEEKO)
+
+if(ANDROID AND CMAKE_SYSTEM_VERSION VERSION_LESS 24 AND (CMAKE_SYSTEM_PROCESSOR MATCHES "i686" OR CMAKE_SYSTEM_PROCESSOR MATCHES "armv7-a"))
+    # fseeko/ftello may link, but it's not usable before Android API 24 on 32-bit Android
+    # https://android.googlesource.com/platform/bionic/+/main/docs/32-bit-abi.md
+    message(STATUS "Disabling fseeko/ftello for 32-bit Android before API 24")
+    set(HAVE_FSEEKO 0 CACHE INTERNAL "")
+else()
+    check_function_exists(fseeko HAVE_FSEEKO)
+endif()
 
 check_c_source_compiles("int main() { return __builtin_bswap16 (0) ; }" HAVE_BSWAP16)
 check_c_source_compiles("int main() { return __builtin_bswap32 (0) ; }" HAVE_BSWAP32)
@@ -158,7 +165,7 @@ elseif(NOT MSVC)
 endif()
 
 if(WITH_STACK_PROTECTOR)
-  if(NOT MSVC)
+  if(NOT MSVC AND NOT EMSCRIPTEN)
     check_c_compiler_flag("-fstack-protector-strong" HAVE_STACK_PROTECTOR_FLAG)
   endif()
 endif()
@@ -200,7 +207,7 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
     add_definitions(-DFLAC__OVERFLOW_DETECT)
 endif()
 
-if(ENABLE_MULTITHREADING AND HAVE_SEMAPHORE_H)
+if(ENABLE_MULTITHREADING)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads)
