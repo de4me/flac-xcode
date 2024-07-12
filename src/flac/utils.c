@@ -1,6 +1,6 @@
 /* flac - Command-line FLAC encoder/decoder
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2023  Xiph.Org Foundation
+ * Copyright (C) 2011-2024  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -235,7 +235,7 @@ void stats_new_file(void)
 void stats_clear(void)
 {
 	while (stats_char_count > 0 && stats_char_count--)
-		fprintf(stderr, "\b");
+		flac_fprintf(stderr, "\b");
 }
 
 void stats_print_name(int level, const char *name)
@@ -267,11 +267,11 @@ void stats_print_info(int level, const char *format, ...)
 		stats_clear();
 		if (len >= console_chars_left) {
 			clear_len = console_chars_left;
-			while (clear_len > 0 && clear_len--) fprintf(stderr, " ");
-			fprintf(stderr, "\n");
+			while (clear_len > 0 && clear_len--) flac_fprintf(stderr, " ");
+			flac_fprintf(stderr, "\n");
 			console_chars_left = console_width;
 		}
-		stats_char_count = fprintf(stderr, "%s", tmp);
+		stats_char_count = flac_fprintf(stderr, "%s", tmp);
 		fflush(stderr);
 	}
 }

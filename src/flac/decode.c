@@ -1,6 +1,6 @@
 /* flac - Command-line FLAC encoder/decoder
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2023  Xiph.Org Foundation
+ * Copyright (C) 2011-2024  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,6 +87,7 @@ typedef struct {
 
 	/* these are used only in analyze mode */
 	FLAC__uint64 decode_position;
+	FLAC__bool decode_position_valid;
 
 	FLAC__StreamDecoder *decoder;
 
@@ -249,6 +250,7 @@ FLAC__bool DecoderSession_construct(DecoderSession *d, FLAC__bool is_ogg, FLAC__
 	d->channel_mask = 0;
 
 	d->decode_position = 0;
+	d->decode_position_valid = true;
 
 	d->decoder = 0;
 
@@ -302,10 +304,7 @@ void DecoderSession_destroy(DecoderSession *d, FLAC__bool error_occurred)
 #endif
 		fclose(d->fout);
 
-#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-	/* Always delete output file when fuzzing */
 		if(error_occurred)
-#endif
 			flac_unlink(d->outfilename);
 	}
 }
@@ -401,7 +400,8 @@ FLAC__bool DecoderSession_process(DecoderSession *d)
 	}
 
 	if(d->analysis_mode)
-		FLAC__stream_decoder_get_decode_position(d->decoder, &d->decode_position);
+		if(!FLAC__stream_decoder_get_decode_position(d->decoder, &d->decode_position))
+			d->decode_position_valid = false;
 
 	if(d->abort_flag)
 		return false;
@@ -579,6 +579,11 @@ int DecoderSession_finish_ok(DecoderSession *d)
 			}
 		}
 	}
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	/* Delete output file when fuzzing */
+	if(0 != d->fout && d->fout != stdout)
+		flac_unlink(d->outfilename);
+#endif
 	return ok? 0 : 1;
 }
 
@@ -1231,9 +1236,10 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 		}
 	}
 
-	if(decoder_session->analysis_mode) {
+	if(decoder_session->analysis_mode && decoder_session->decode_position_valid) {
 		FLAC__uint64 dpos;
-		FLAC__stream_decoder_get_decode_position(decoder_session->decoder, &dpos);
+		if(!FLAC__stream_decoder_get_decode_position(decoder_session->decoder, &dpos))
+			decoder_session->decode_position_valid = false;
 		frame_bytes = (dpos-decoder_session->decode_position);
 		decoder_session->decode_position = dpos;
 	}
@@ -1280,7 +1286,7 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 
 
 		if(decoder_session->analysis_mode) {
-			flac__analyze_frame(frame, decoder_session->frame_counter-1, decoder_session->decode_position-frame_bytes, frame_bytes, decoder_session->aopts, fout);
+			flac__analyze_frame(frame, decoder_session->frame_counter-1, decoder_session->decode_position_valid, decoder_session->decode_position_valid?(decoder_session->decode_position-frame_bytes):0, frame_bytes, decoder_session->aopts, fout);
 		}
 		else if(!decoder_session->test_only) {
 			if(shift && !decoder_session->replaygain.apply) {
