@@ -2903,7 +2903,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2933,7 +2933,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3324,7 +3324,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3356,7 +3356,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3387,7 +3387,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3417,7 +3417,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3556,7 +3556,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3584,7 +3584,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2023 Xiph.Org Foundation";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2000-2009 Josh Coalson, 2011-2024 Xiph.Org Foundation";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
