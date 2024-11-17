@@ -3178,14 +3178,15 @@ void update_metadata_(const FLAC__StreamEncoder *encoder)
 				FLAC__STREAM_METADATA_STREAMINFO_BITS_PER_SAMPLE_LEN
 				- 4
 			) / 8;
+		FLAC__uint64 samples_uint36 = samples;
 		if(samples > (FLAC__U64L(1) << FLAC__STREAM_METADATA_STREAMINFO_TOTAL_SAMPLES_LEN))
-			samples = 0;
+			samples_uint36 = 0;
 
-		b[0] = ((FLAC__byte)(bps-1) << 4) | (FLAC__byte)((samples >> 32) & 0x0F);
-		b[1] = (FLAC__byte)((samples >> 24) & 0xFF);
-		b[2] = (FLAC__byte)((samples >> 16) & 0xFF);
-		b[3] = (FLAC__byte)((samples >> 8) & 0xFF);
-		b[4] = (FLAC__byte)(samples & 0xFF);
+		b[0] = ((FLAC__byte)(bps-1) << 4) | (FLAC__byte)((samples_uint36 >> 32) & 0x0F);
+		b[1] = (FLAC__byte)((samples_uint36 >> 24) & 0xFF);
+		b[2] = (FLAC__byte)((samples_uint36 >> 16) & 0xFF);
+		b[3] = (FLAC__byte)((samples_uint36 >> 8) & 0xFF);
+		b[4] = (FLAC__byte)(samples_uint36 & 0xFF);
 		if((seek_status = encoder->private_->seek_callback(encoder, encoder->protected_->streaminfo_offset + total_samples_byte_offset, encoder->private_->client_data)) != FLAC__STREAM_ENCODER_SEEK_STATUS_OK) {
 			if(seek_status == FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR)
 				encoder->protected_->state = FLAC__STREAM_ENCODER_CLIENT_ERROR;
@@ -3230,6 +3231,11 @@ void update_metadata_(const FLAC__StreamEncoder *encoder)
 	 */
 	if(0 != encoder->private_->seek_table && encoder->private_->seek_table->num_points > 0 && encoder->protected_->seektable_offset > 0) {
 		uint32_t i;
+
+		/* Convert unused seekpoints to placeholders */
+		for(i = 0; i < encoder->private_->seek_table->num_points; i++)
+			if(encoder->private_->seek_table->points[i].sample_number > samples)
+				encoder->private_->seek_table->points[i].sample_number = FLAC__STREAM_METADATA_SEEKPOINT_PLACEHOLDER;
 
 		FLAC__format_seektable_sort(encoder->private_->seek_table);
 
@@ -4994,9 +5000,6 @@ FLAC__bool set_partitioned_rice_(
 			rice_parameter = FLAC__bitmath_ilog2_wide(((mean - 1)*partition_samples_fixed_point_divisor)>>18) + 1;
 
 		if(rice_parameter >= rice_parameter_limit) {
-#ifndef NDEBUG
-			flac_fprintf(stderr, "clipping rice_parameter (%u -> %u) @6\n", rice_parameter, rice_parameter_limit - 1);
-#endif
 			rice_parameter = rice_parameter_limit - 1;
 		}
 
@@ -5009,9 +5012,6 @@ FLAC__bool set_partitioned_rice_(
 				min_rice_parameter = rice_parameter - rice_parameter_search_dist;
 			max_rice_parameter = rice_parameter + rice_parameter_search_dist;
 			if(max_rice_parameter >= rice_parameter_limit) {
-#ifndef NDEBUG
-				flac_fprintf(stderr, "clipping rice_parameter (%u -> %u) @7\n", max_rice_parameter, rice_parameter_limit - 1);
-#endif
 				max_rice_parameter = rice_parameter_limit - 1;
 			}
 		}

@@ -30,6 +30,14 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#else
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#endif
+
 #if !defined _MSC_VER && !defined __MINGW32__
 /* unlink is in stdio.h in VC++ */
 #include <unistd.h> /* for unlink() */
@@ -153,6 +161,7 @@ static struct share__option long_options_[] = {
 	{ "padding"                   , share__required_argument, 0, 'P' },
 #if FLAC__HAS_OGG
 	{ "ogg"                       , share__no_argument, 0, 0 },
+	{ "decode-chained-stream"     , share__no_argument, 0, 0 },
 	{ "serial-number"             , share__required_argument, 0, 0 },
 #endif
 	{ "blocksize"                 , share__required_argument, 0, 'b' },
@@ -237,6 +246,7 @@ static struct {
 	FLAC__bool analyze;
 	FLAC__bool use_ogg;
 	FLAC__bool has_serial_number; /* true iff --serial-number was used */
+	FLAC__bool decode_chained_stream;
 	long serial_number; /* this is the Ogg serial number and is unused for native FLAC */
 	FLAC__bool force_to_stdout;
 	FLAC__bool force_raw_format;
@@ -320,7 +330,35 @@ static int main_to_fuzz(int argc, char *argv[])
 	_setmode(fileno(stderr),_O_U8TEXT);
 #endif
 
-	srand((uint32_t)time(0));
+#ifdef HAVE_SYS_TIME_H
+	{
+		struct timeval tv;
+
+		if (gettimeofday(&tv, 0) < 0) {
+			/* fall back when gettimeofday fails */
+			srand(((uint32_t)time(0) << 8) + (uint32_t)clock());
+		}
+		else {
+			srand(((uint32_t)(tv.tv_sec) << 20) + (uint32_t)tv.tv_usec);
+		}
+	}
+#else
+#ifdef _WIN32
+	/* For Windows, use time and GetTickCount */
+	srand(((uint32_t)time(0) << 8) + ((uint32_t)GetTickCount() & 0xff));
+#else
+	/* time(0) does not have sufficient resolution when flac is invoked more than
+	 * once in quick succession (for example in the test suite). As far as I know,
+	 * clock() is the only sub-second portable alternative, but measures
+	 * execution time, which is often quite similar between runs. From limited
+	 * testing, it seems the value varies by about 100, so that would make
+	 * collision 100 times less likely than without. Therefore, use
+	 * both together to generate a random number seed.
+	 */
+	srand(((uint32_t)time(0) << 8) + (uint32_t)clock());
+#endif
+#endif
+
 #ifdef _WIN32
 	{
 		const char *var;
@@ -373,7 +411,9 @@ int do_it(void)
 		 */
 		if(!option_values.mode_decode) {
 			if(0 != option_values.cue_specification)
-				return usage_error("ERROR: --cue is not allowed in test mode\n");
+				return usage_error("ERROR: --cue must be used together with -d\n");
+			if(0 != option_values.decode_chained_stream)
+				return usage_error("ERROR: --decode-chained-streams must be used together with -d, -t or -a\n");
 		}
 		else {
 			if(option_values.test_only) {
@@ -473,6 +513,18 @@ int do_it(void)
 				return usage_error("ERROR: --keep-foreign-metadata is not allowed in analyis mode\n");
 			flac__utils_printf(stderr, 1, "NOTE: --keep-foreign-metadata is a new feature; make sure to test the output file before deleting the original.\n");
 		}
+		if(0 != option_values.decode_chained_stream) {
+			if(0 != option_values.skip_specification)
+				return usage_error("ERROR: --skip is not supported when decoding chained streams\n");
+			if(0 != option_values.until_specification)
+				return usage_error("ERROR: --until is not supported when decoding chained streams\n");
+			if(0 != option_values.cue_specification)
+				return usage_error("ERROR: --cue is not supported when decoding chained streams\n");
+			if(option_values.continue_through_decode_errors)
+				return usage_error("ERROR: decoding through errors is not supported when decoding chained streams\n");
+
+		}
+
 	}
 
 	flac__utils_printf(stderr, 2, "\n");
@@ -559,6 +611,7 @@ FLAC__bool init_options(void)
 	option_values.test_only = false;
 	option_values.analyze = false;
 	option_values.use_ogg = false;
+	option_values.decode_chained_stream = false;
 	option_values.has_serial_number = false;
 	option_values.serial_number = 0;
 	option_values.force_to_stdout = false;
@@ -605,15 +658,15 @@ FLAC__bool init_options(void)
 
 	option_values.num_files = 0;
 	option_values.filenames = 0;
-
-	if(0 == (option_values.vorbis_comment = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT)))
-		return false;
 	option_values.num_pictures = 0;
 
 	option_values.debug.disable_constant_subframes = false;
 	option_values.debug.disable_fixed_subframes = false;
 	option_values.debug.disable_verbatim_subframes = false;
 	option_values.debug.do_md5 = true;
+
+	if(0 == (option_values.vorbis_comment = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT)))
+		return false;
 
 	return true;
 }
@@ -798,6 +851,9 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 #if FLAC__HAS_OGG
 		else if(0 == strcmp(long_option, "ogg")) {
 			option_values.use_ogg = true;
+		}
+		else if (0 == strcmp(long_option, "decode-chained-stream")) {
+			option_values.decode_chained_stream = true;
 		}
 		else if(0 == strcmp(long_option, "serial-number")) {
 			option_values.has_serial_number = true;
@@ -1297,6 +1353,11 @@ void show_help(void)
 	printf("Decoding options:\n");
 	printf("  -F, --decode-through-errors  Continue decoding through stream errors\n");
 	printf("      --cue=[#.#][-[#.#]]      Set the beginning and ending cuepoints to decode\n");
+#if FLAC__HAS_OGG
+	printf("      --decode-chained-stream  Decode all links in a chained Ogg stream, not\n");
+	printf("                               just the first one\n");
+
+#endif
 	printf("\n");
 	printf("Encoding options, defaulting to -5, -A \"tukey(5e-1)\" and one CPU thread:\n");
 	printf("  -V, --verify                       Verify a correct encoding\n");
@@ -1349,14 +1410,13 @@ void show_help(void)
 	printf("      --force-aiff-c-none-format     Decode to AIFF-C NONE format\n");
 	printf("      --force-aiff-c-sowt-format     Decode to AIFF-C sowt format\n");
 	printf("      --force-raw-format             Treat input or output as raw samples\n");
-	printf("raw format options: (all options mandatory for encoding from raw input,\n");
-	printf("                   --sign and --endian are mandatory for decoding to raw output)\n");
-	printf("      --sign={signed|unsigned}       Sign of samples\n");
-	printf("      --endian={big|little}          Byte order for samples\n");
+	printf("raw format options:\n");
+	printf("      --sign={signed|unsigned}       Sign of samples (input/output) \n");
+	printf("      --endian={big|little}          Byte order for samples (input/output)\n");
 	printf("      --channels=#                   Number of channels in raw input\n");
 	printf("      --bps=#                        Number of bits per sample in raw input\n");
 	printf("      --sample-rate=#                Sample rate in Hz in raw input\n");
-	printf("      --input-size=#                 Size of the raw input in bytes\n");
+	printf("      --input-size=#                 Size in bytes of raw input from stdin\n");
 	printf("\n");
 	printf("Analysis options:\n");
 	printf("      --residual-text          Include residual signal in text output\n");
@@ -1615,10 +1675,14 @@ int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_
 	encode_options.use_ogg = option_values.use_ogg;
 	/* set a random serial number if one has not yet been specified */
 	if(!option_values.has_serial_number) {
-		option_values.serial_number = rand();
+	        if (RAND_MAX < 0x7fffffff)
+			option_values.serial_number = (uint32_t)(rand() & 0x7fff) << 16 | (uint32_t)(rand());
+	        else
+			option_values.serial_number = rand();
 		option_values.has_serial_number = true;
 	}
-	encode_options.serial_number = option_values.serial_number++;
+	encode_options.serial_number = option_values.serial_number;
+	option_values.serial_number = (uint32_t)option_values.serial_number + 1;
 #endif
 	encode_options.lax = option_values.lax;
 	encode_options.padding = option_values.padding;
@@ -1956,6 +2020,7 @@ int decode_file(const char *infilename)
 	decode_options.force_subformat = output_subformat;
 #if FLAC__HAS_OGG
 	decode_options.is_ogg = treat_as_ogg;
+	decode_options.decode_chained_stream = option_values.decode_chained_stream;
 	decode_options.use_first_serial_number = !option_values.has_serial_number;
 	decode_options.serial_number = option_values.serial_number;
 #endif

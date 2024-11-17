@@ -1119,7 +1119,7 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 			memset(encoder_session.md5sum_input,0,16);
 		}
 
-		stats_new_file();
+		stats_new_line();
 		/* init the encoder */
 		if(!EncoderSession_init_encoder(&encoder_session, options))
 			return EncoderSession_finish_error(&encoder_session);
@@ -1129,7 +1129,7 @@ int flac__encode_file(FILE *infile, FLAC__off_t infilesize, const char *infilena
 			switch(options.format) {
 				case FORMAT_RAW:
 					{
-						uint32_t skip_bytes = encoder_session.info.bytes_per_wide_sample * (uint32_t)skip;
+						uint64_t skip_bytes = encoder_session.info.bytes_per_wide_sample * skip;
 						if(skip_bytes > lookahead_length) {
 							skip_bytes -= lookahead_length;
 							lookahead_length = 0;
@@ -1635,12 +1635,6 @@ static void static_metadata_clear(static_metadata_t *m)
 static FLAC__bool static_metadata_append(static_metadata_t *m, FLAC__StreamMetadata *d, FLAC__bool needs_delete)
 {
 	void *x;
-#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-#ifdef __i386__
-/* Work around i386 ASAN bug */
-	if(0 == d) return true;
-#endif
-#endif
 	if(0 == (x = safe_realloc_nofree_muladd2_(m->metadata, sizeof(*m->metadata), /*times (*/m->num_metadata, /*+*/1/*)*/)))
 		return false;
 	m->metadata = (FLAC__StreamMetadata**)x;
@@ -1988,6 +1982,7 @@ FLAC__bool EncoderSession_init_encoder(EncoderSession *e, encode_options_t optio
 				}
 				if(!static_metadata_append(&static_metadata, p, /*needs_delete=*/true)) {
 					flac__utils_printf(stderr, 1, "%s: ERROR allocating memory for foreign metadata block\n", e->inbasefilename);
+					FLAC__metadata_object_delete(p);
 					static_metadata_clear(&static_metadata);
 					return false;
 				}
@@ -2919,13 +2914,6 @@ FLAC__bool fskip_ahead(FILE *f, FLAC__uint64 offset)
 {
 	static uint8_t dump[8192];
 	struct flac_stat_s stb;
-
-#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-#ifdef __i386__
-/* Work around i386 ASAN bug */
-	if(offset > (FLAC__uint64)(INT32_MAX)) return false;
-#endif
-#endif
 
 	if(flac_fstat(fileno(f), &stb) == 0 && (stb.st_mode & S_IFMT) == S_IFREG)
 	{

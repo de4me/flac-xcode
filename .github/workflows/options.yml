@@ -1,4 +1,4 @@
-name: GitHub Actions for specific options
+name: Building with specific options
 
 on:
   push:
@@ -20,6 +20,10 @@ jobs:
           - name: no-asm
             cppflags: ''
             configure-opts: --disable-asm-optimizations
+
+          - name: no-ogg
+            cppflags: ''
+            configure-opts: --disable-ogg
 
     runs-on: ubuntu-latest
 
