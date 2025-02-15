@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		BD2037C22D60C19800DD328C /* ALL-iOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = BD2037C52D60C19900DD328C /* Build configuration list for PBXAggregateTarget "ALL-iOS" */;
+			buildPhases = (
+			);
+			dependencies = (
+				BD2037C72D60C1C100DD328C /* PBXTargetDependency */,
+				BD2037C92D60C1C100DD328C /* PBXTargetDependency */,
+				BD2037CB2D60C1C100DD328C /* PBXTargetDependency */,
+				BD2037CD2D60C1C100DD328C /* PBXTargetDependency */,
+			);
+			name = "ALL-iOS";
+			packageProductDependencies = (
+			);
+			productName = "ALL-iOS";
+		};
 		BD679A1329D312E700E5D9F7 /* ALL */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = BD679A1429D312E700E5D9F7 /* Build configuration list for PBXAggregateTarget "ALL" */;
@@ -331,6 +347,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BD2037C62D60C1C100DD328C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD858E342AC9AABF0084BA79;
+			remoteInfo = "FLAC++-iOS";
+		};
+		BD2037C82D60C1C100DD328C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD858DF52AC9AAB60084BA79;
+			remoteInfo = "FLAC-iOS";
+		};
+		BD2037CA2D60C1C100DD328C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD858DE32AC9AAA80084BA79;
+			remoteInfo = "libFLAC++-iOS";
+		};
+		BD2037CC2D60C1C100DD328C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD858D9A2AC9AA9C0084BA79;
+			remoteInfo = "libFLAC-iOS";
+		};
 		BD2F07A02AC1F49E00AB5CE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BD3C8DFA274435CB008DED93 /* Project object */;
@@ -2087,6 +2131,9 @@
 						CreatedOnToolsVersion = 13.1;
 						ProvisioningStyle = Automatic;
 					};
+					BD2037C22D60C19800DD328C = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					BD3C8E01274435CB008DED93 = {
 						CreatedOnToolsVersion = 13.1;
 						ProvisioningStyle = Automatic;
@@ -2200,6 +2247,7 @@
 				BD858E5E2AC9AAEB0084BA79 /* libgrabbag-iOS */,
 				BD858E6D2AC9AAF50084BA79 /* libreplaygain_analysis-iOS */,
 				BD858E762AC9AAFE0084BA79 /* libreplaygain_synthesis-iOS */,
+				BD2037C22D60C19800DD328C /* ALL-iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -2693,6 +2741,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BD2037C72D60C1C100DD328C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD858E342AC9AABF0084BA79 /* FLAC++-iOS */;
+			targetProxy = BD2037C62D60C1C100DD328C /* PBXContainerItemProxy */;
+		};
+		BD2037C92D60C1C100DD328C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD858DF52AC9AAB60084BA79 /* FLAC-iOS */;
+			targetProxy = BD2037C82D60C1C100DD328C /* PBXContainerItemProxy */;
+		};
+		BD2037CB2D60C1C100DD328C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD858DE32AC9AAA80084BA79 /* libFLAC++-iOS */;
+			targetProxy = BD2037CA2D60C1C100DD328C /* PBXContainerItemProxy */;
+		};
+		BD2037CD2D60C1C100DD328C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD858D9A2AC9AA9C0084BA79 /* libFLAC-iOS */;
+			targetProxy = BD2037CC2D60C1C100DD328C /* PBXContainerItemProxy */;
+		};
 		BD2F07A12AC1F49E00AB5CE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BD53FAA4284B6A7100B71F7E /* libgetopt */;
@@ -2948,6 +3016,22 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BD2037C32D60C19800DD328C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BD2037C42D60C19800DD328C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -3633,6 +3717,15 @@
 			buildConfigurations = (
 				BD077CCD27443DD100C1E879 /* Debug */,
 				BD077CCE27443DD100C1E879 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD2037C52D60C19900DD328C /* Build configuration list for PBXAggregateTarget "ALL-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD2037C32D60C19800DD328C /* Debug */,
+				BD2037C42D60C19800DD328C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
