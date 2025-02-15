@@ -1,14 +1,10 @@
-# 3.1 is OK for most parts. However:
-# 3.3 is needed in src/libFLAC
-# 3.5 is needed in src/libFLAC/ia32
-# 3.9 is needed in 'doc' because of doxygen_add_docs()
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.12...3.31)
 
 if(NOT (CMAKE_BUILD_TYPE OR CMAKE_CONFIGURATION_TYPES OR DEFINED ENV{CFLAGS} OR DEFINED ENV{CXXFLAGS}))
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: None Debug Release RelWithDebInfo")
 endif()
 
-project(FLAC VERSION 1.4.3) # HOMEPAGE_URL "https://www.xiph.org/flac/")
+project(FLAC VERSION 1.5.0) # HOMEPAGE_URL "https://www.xiph.org/flac/")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 

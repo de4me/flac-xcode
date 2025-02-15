@@ -1,6 +1,6 @@
 /* libFLAC - Free Lossless Audio Codec library
  * Copyright (C) 2001-2009  Josh Coalson
- * Copyright (C) 2011-2024  Xiph.Org Foundation
+ * Copyright (C) 2011-2025  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1478,7 +1478,7 @@ static FLAC__bool chain_rewrite_metadata_in_place_(FLAC__Metadata_Chain *chain)
 static FLAC__bool chain_rewrite_file_(FLAC__Metadata_Chain *chain, const char *tempfile_path_prefix, const char *filename)
 {
 	FILE *f, *tempfile = NULL;
-	char *tempfilename;
+	char *tempfilename = 0;
 	FLAC__Metadata_SimpleIteratorStatus status;
 	const FLAC__Metadata_Node *node;
 

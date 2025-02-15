@@ -1,6 +1,6 @@
 /* flac - Command-line FLAC encoder/decoder
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2024  Xiph.Org Foundation
+ * Copyright (C) 2011-2025  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2914,6 +2914,9 @@ FLAC__bool fskip_ahead(FILE *f, FLAC__uint64 offset)
 {
 	static uint8_t dump[8192];
 	struct flac_stat_s stb;
+
+	if(offset > (FLAC__uint64)FLAC__OFF_T_MAX)
+		return false;
 
 	if(flac_fstat(fileno(f), &stb) == 0 && (stb.st_mode & S_IFMT) == S_IFREG)
 	{

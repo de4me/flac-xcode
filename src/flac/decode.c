@@ -1,6 +1,6 @@
 /* flac - Command-line FLAC encoder/decoder
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2024  Xiph.Org Foundation
+ * Copyright (C) 2011-2025  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -776,7 +776,7 @@ FLAC__bool write_iff_headers(FILE *f, DecoderSession *decoder_session, FLAC__uin
 	else if(format == FORMAT_AIFF)
 		iff_size = 46 + foreign_metadata_size + aligned_data_size;
 	else /* AIFF-C */
-		iff_size = 16 + foreign_metadata_size + aligned_data_size + (fm?fm->aifc_comm_length:0);
+		iff_size = 16 + foreign_metadata_size + aligned_data_size + (fm?fm->aifc_comm_length:36);
 
 	if(format != FORMAT_WAVE64 && format != FORMAT_RF64 && iff_size >= 0xFFFFFFF4) {
 		flac__utils_printf(stderr, 1, "%s: ERROR: stream is too big to fit in a single %s file\n", decoder_session->inbasefilename, fmt_desc);
@@ -1293,6 +1293,15 @@ FLAC__StreamDecoderWriteStatus write_callback(const FLAC__StreamDecoder *decoder
 		}
 	}
 
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	if(decoder_session->samples_processed > (1 << 23)) {
+			decoder_session->abort_flag = true;
+			decoder_session->aborting_due_to_until = true;
+			return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
+	}
+#endif
+
+
 	if(decoder_session->analysis_mode && decoder_session->decode_position_valid) {
 		FLAC__uint64 dpos;
 		if(!FLAC__stream_decoder_get_decode_position(decoder_session->decoder, &dpos))
@@ -1659,7 +1668,11 @@ void metadata_callback(const FLAC__StreamDecoder *decoder, const FLAC__StreamMet
 
 		FLAC__ASSERT(decoder_session->skip_specification->value.samples >= 0);
 		FLAC__ASSERT(decoder_session->until_specification->value.samples >= 0);
-		FLAC__ASSERT((FLAC__uint64)decoder_session->until_specification->value.samples <= decoder_session->total_samples);
+		if((FLAC__uint64)decoder_session->until_specification->value.samples > decoder_session->total_samples) {
+			flac__utils_printf(stderr, 1, "%s: ERROR specified cuepoints exceed length of file\n", decoder_session->inbasefilename);
+			decoder_session->abort_flag = true;
+			return;
+		}
 		FLAC__ASSERT(decoder_session->skip_specification->value.samples <= decoder_session->until_specification->value.samples);
 
 		decoder_session->total_samples = decoder_session->until_specification->value.samples - decoder_session->skip_specification->value.samples;
