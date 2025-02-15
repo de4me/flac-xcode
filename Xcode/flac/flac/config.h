@@ -215,7 +215,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.4.3"
+#define PACKAGE_STRING "flac 1.5.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
@@ -224,7 +224,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.4.3"
+#define PACKAGE_VERSION "1.5.0"
 
 /* The size of `off_t', as computed by sizeof. */
 /* #undef SIZEOF_OFF_T */
