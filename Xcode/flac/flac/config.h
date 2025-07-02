@@ -106,9 +106,6 @@
 /* define if building for Linux */
 /* #undef FLAC__SYS_LINUX */
 
-/* define to enable use of Altivec instructions */
-/* #undef FLAC__USE_ALTIVEC */
-
 /* define to enable use of AVX instructions */
 /* #undef WITH_AVX */
 #ifdef WITH_AVX
@@ -128,13 +125,16 @@
 /* #undef GIT_COMMIT_TAG */
 
 /* Compiler has the __builtin_bswap16 intrinsic */
-/* #undef HAVE_BSWAP16 */
+#define HAVE_BSWAP16 1
 
 /* Compiler has the __builtin_bswap32 intrinsic */
-/* #undef HAVE_BSWAP32 */
+#define HAVE_BSWAP32 2
 
 /* Define to 1 if you have the <byteswap.h> header file. */
 /* #undef HAVE_BYTESWAP_H */
+
+/* Define if multithreading is enable and <threads.h> is available */
+/* #undef HAVE_C11THREADS */
 
 /* define if you have clock_gettime */
 /* #undef HAVE_CLOCK_GETTIME */
@@ -163,7 +163,7 @@
 /* Define to 1 if you have the <memory.h> header file. */
 /* #undef HAVE_MEMORY_H */
 
-/* Define if multithreading is enabled */
+/* Define if multithreading is enable and pthread is available */
 #define HAVE_PTHREAD 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
@@ -183,6 +183,9 @@
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 /* #undef HAVE_SYS_STAT_H */
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#define HAVE_SYS_TIME_H 1
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 /* #undef HAVE_SYS_TYPES_H */
